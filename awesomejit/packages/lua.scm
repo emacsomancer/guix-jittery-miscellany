@@ -12,7 +12,7 @@
   (let ((branch "master")
         (commit "43d0a19158ceabaa51b0462c1ebc97612b420a2e"))
     (package
-      (name "luajit")
+      (name "luajit-master")
       (version (git-version branch "0" commit))
       (source (origin
                 (method git-fetch)

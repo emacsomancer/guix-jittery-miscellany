@@ -9,7 +9,7 @@
   #:use-module (gnu packages wm))
 
 (define-public awesome-next
-  (let ((commit "21b908bef9043c8fe80e0f98c9460991f37b3d10")
+  (let ((commit "375d9d723550023f75ff0066122aba99fdbb2a93")
         (revision "0"))
     (package (inherit awesome)
              (name "awesome-next")

@@ -1,8 +1,8 @@
 (define-module (awesomejit packages lua)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
-  #:use-module (gnu packages)
-  #:use-module (gnu packages package-management)
+  ;; #:use-module (gnu packages)
+  ;; #:use-module (gnu packages package-management)
   #:use-module (guix git-download)
   #:use-module (guix build-system gnu)
   #:use-module (guix utils)
@@ -43,8 +43,9 @@
        "Just in time compiler for Lua programming language version 5.1")
       ;; On powerpc64le-linux, the build fails with an error: "No support for
       ;; PowerPC 64 bit mode (yet)".  See: https://issues.guix.gnu.org/49220
-      (supported-systems (fold delete %supported-systems
-                               (list "powerpc64le-linux" "riscv64-linux")))
+      ;; [bms: I'm not sure what module "fold" is part of; commented out for now.]
+      ;; (supported-systems (fold delete %supported-systems
+      ;;                          (list "powerpc64le-linux" "riscv64-linux")))
       (description
        "LuaJIT is a Just-In-Time Compiler (JIT) for the Lua
 programming language.  Lua is a powerful, dynamic and light-weight programming

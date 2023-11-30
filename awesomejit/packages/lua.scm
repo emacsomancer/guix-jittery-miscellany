@@ -10,7 +10,7 @@
 
 (define-public luajit-master
   (let ((branch "master")
-        (commit "43d0a19158ceabaa51b0462c1ebc97612b420a2e"))
+        (commit "644723649ea04cb23b72c814b88b72a29e4afed4"))
     (package
       (name "luajit-master")
       (version (git-version branch "0" commit))

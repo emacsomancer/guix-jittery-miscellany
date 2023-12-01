@@ -8,11 +8,11 @@
   #:use-module (guix utils)
   #:use-module (gnu packages lua))
 
-(define-public luajit-master
+(define-public luajit
   (let ((branch "master")
         (commit "644723649ea04cb23b72c814b88b72a29e4afed4"))
     (package
-      (name "luajit-master")
+      (name "luajit")
       (version (git-version branch "0" commit))
       (source (origin
                 (method git-fetch)

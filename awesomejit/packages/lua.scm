@@ -9,8 +9,8 @@
   #:use-module (gnu packages lua))
 
 (define-public luajit
-  (let ((branch "master")
-        (commit "644723649ea04cb23b72c814b88b72a29e4afed4"))
+  (let ((branch "2.1")
+        (commit "43d0a19158ceabaa51b0462c1ebc97612b420a2e"))
     (package
       (name "luajit")
       (version (git-version branch "0" commit))

@@ -8,11 +8,11 @@
   #:use-module (guix utils)
   #:use-module (gnu packages lua))
 
-(define-public luajit-2.1.ROLLING
+(define-public luajit
   (let ((branch "2.1")
         (commit "43d0a19158ceabaa51b0462c1ebc97612b420a2e"))
     (package
-      (name "luajit-2.1.ROLLING")
+      (name "luajit")
       (version (git-version branch "0" commit))
       (source (origin
                 (method git-fetch)

@@ -89,7 +89,7 @@
     (inherit awesome-next)
     (name "awesome-next-luajit-master")
     (inputs (modify-inputs (package-inputs awesome-next)
-              (replace "lua" luajit-tip)
+              (replace "lua" luajit-2.1.ROLLING)
               (replace "lua-lgi" lua5.1-lgi)))
     (arguments
      (substitute-keyword-arguments

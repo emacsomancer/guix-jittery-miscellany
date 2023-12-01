@@ -9,9 +9,9 @@
   #:use-module (gnu packages lua))
 
 (define-public luajit-tip
-  (package
-   (let ((branch "2.1")
-         (commit "43d0a19158ceabaa51b0462c1ebc97612b420a2e"))
+  (let ((branch "2.1")
+        (commit "43d0a19158ceabaa51b0462c1ebc97612b420a2e"))
+    (package
      (inherit luajit)
      (version (git-version branch "0" commit))
      (source (origin

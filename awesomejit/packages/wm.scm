@@ -6,7 +6,7 @@
   #:use-module (guix utils)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages lua)
-  ;; #:use-module (awesomejit packages lua)
+  #:use-module (awesomejit packages lua)
   #:use-module (gnu packages wm))
 
 (define-public awesome-next

@@ -5,25 +5,8 @@
   #:use-module (guix git-download)
   #:use-module (guix build-system gnu)
   #:use-module (guix utils)
-  #:use-module (gnu packages lua))
-
-;; (define-public luajit-tip
-;;   (let ((branch "2.1")
-;;         (commit "43d0a19158ceabaa51b0462c1ebc97612b420a2e"))
-;;     (package
-;;      (inherit luajit)
-;;      (version (git-version branch "0" commit))
-;;      (source (origin
-;;               (method git-fetch)
-;;               (uri (git-reference
-;;                     (url "https://luajit.org/git/luajit.git") ;; same issues with https://github.com/LuaJIT/LuaJIT.git
-;;                     (commit commit)))
-;;               (file-name (git-file-name name version))
-;;               (sha256
-;;                (base32
-;;                 "1wpv0vckpgp72dqlj8c9akm9w4jsk5pxf7j2660pv6caxh6g227h")))))))
-
-
+  #:use-module (gnu packages lua)
+  #:use-module (srfi srfi-1))
 
 (define-public luajit-tip
   (let ((branch "2.1")
@@ -61,9 +44,8 @@
        "Just in time compiler for Lua programming language version 5.1")
       ;; On powerpc64le-linux, the build fails with an error: "No support for
       ;; PowerPC 64 bit mode (yet)".  See: https://issues.guix.gnu.org/49220
-      ;; [bms: I'm not sure what module "fold" is part of; commented out for now.]
-      ;; (supported-systems (fold delete %supported-systems
-      ;;                          (list "powerpc64le-linux" "riscv64-linux")))
+      (supported-systems (fold delete %supported-systems
+                               (list "powerpc64le-linux" "riscv64-linux")))
       (description
        "LuaJIT is a Just-In-Time Compiler (JIT) for the Lua
 programming language.  Lua is a powerful, dynamic and light-weight programming

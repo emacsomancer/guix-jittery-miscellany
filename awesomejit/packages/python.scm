@@ -22,7 +22,7 @@
 
 (define-public python-ical2org
   (package
-   (name "ical2org")
+   (name "python-ical2org")
    (version "0.5")
    (source
     (origin

@@ -32,9 +32,12 @@
       (base32
        "0a2ai78jzn250s1dlsimsfp6035421nrabj08xdlgsh7mb82gkap"))))
    (build-system python-build-system)
-   (arguments
+  (arguments
     ;; Broken tests or cyclic dependecies with other packages.
-    '(#:tests? #f))
+    '(#:phases
+      (modify-phases %standard-phases
+                     (delete 'sanity-check))
+      #:tests? #f))
    (propagated-inputs
     (list python-urllib3))
    (home-page

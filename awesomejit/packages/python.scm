@@ -30,7 +30,7 @@
      (uri (pypi-uri "ical2orgpy" version))
      (sha256
       (base32
-       "039hf9knvl4s3hp21bzwsp1g5ri9gxsh504dp48lc6nr1av35byy"))))
+       "0a2ai78jzn250s1dlsimsfp6035421nrabj08xdlgsh7mb82gkap"))))
    (build-system python-build-system)
    (propagated-inputs
     (list python-urllib3))

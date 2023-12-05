@@ -20,6 +20,32 @@
   #:use-module (guix utils)
   #:use-module (srfi srfi-1))
 
+(define-public python-recurring-ical-events
+  (package
+   (name "python-recurring-ical-events")
+   (version "2.1.1")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "recurring-ical-events" version))
+     (sha256
+      (base32
+       "0a2ai78jzn250s1dlsimsfp6035421nrabj08xdlgsh7mb82gkap"))))
+   (build-system python-build-system)
+  (arguments
+    ;; Broken tests or cyclic dependecies with other packages.
+    '(#:phases
+      (modify-phases %standard-phases
+                     (delete 'sanity-check))
+      #:tests? #f))
+   (propagated-inputs
+    (list python-urllib3))
+   (home-page
+    "https://github.com/niccokunzmann/python-recurring-ical-events")
+   (synopsis "Python library for recurrence of ical events based on icalendar")
+   (description "ICal has some complexity to it: Events, TODOs and Journal entries can be repeated, removed from the feed and edited later on. This tool takes care of these circumstances.")
+   (license license:lgpl3+)))
+
 (define-public python-ical2orgpy
   (package
    (name "python-ical2orgpy")
@@ -39,9 +65,9 @@
                      (delete 'sanity-check))
       #:tests? #f))
    (propagated-inputs
-    (list python-urllib3))
+    (list python-recurring-ical-events))
    (home-page
     "https://github.com/ical2org-py/ical2org.py")
    (synopsis "Convert ical .ics file to org-mode")
-   (description "This script converts an ical calendar (for instance, as exported from google calendar) into an org-mode document. It is conceived as a replacement of the awk script located here [http://orgmode.org/worg/org-tutorials/org-google-sync.html]. The main difference is that ical2orgpy correctly manages recurring events of 'yearly', 'daily' and 'weekly' types. ical2orgpy duplicates all recurring events falling into a specified time-frame into the exported org-document.")
+   (description "This python script converts an ical calendar (for instance, as exported from google calendar) into an org-mode document. It is conceived as a replacement of the awk script located at https://orgmode.org/worg/org-tutorials/org-google-sync.html. The main difference is that ical2orgpy correctly manages recurring events of 'yearly', 'daily' and 'weekly' types. ical2orgpy duplicates all recurring events falling into a specified time-frame into the exported org-document.")
    (license license:gpl3+)))

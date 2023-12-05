@@ -32,7 +32,7 @@
       (base32
        "00k4l800j2d3zfqhxjlzjk0b6493wqhmg4r58xsp12sx2ia2sxla"))))
    (build-system python-build-system)
-  (arguments
+   (arguments
     ;; Broken tests or cyclic dependecies with other packages.
     '(#:phases
       (modify-phases %standard-phases
@@ -56,7 +56,7 @@
       (base32
        "0a2ai78jzn250s1dlsimsfp6035421nrabj08xdlgsh7mb82gkap"))))
    (build-system python-build-system)
-  (arguments
+   (arguments
     ;; Broken tests or cyclic dependecies with other packages.
     '(#:phases
       (modify-phases %standard-phases
@@ -64,6 +64,9 @@
       #:tests? #f))
    (propagated-inputs
     (list python-click
+          python-icalendar
+          python-pytz
+          python-tzlocal
           python-recurring-ical-events))
    (home-page
     "https://github.com/ical2org-py/ical2org.py")

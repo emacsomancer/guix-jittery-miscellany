@@ -21,6 +21,33 @@
   #:use-module (guix utils)
   #:use-module (srfi srfi-1))
 
+(define-public python-x-wr-timezone
+  (package
+   (name "python-x-wr-timezone")
+   (version "2.1.1")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "x-wr-timezone" version))
+     (sha256
+      (base32
+       "00k4l800j2d3zfqhxjlzjk0b6493wqhmg4r58xsp12sx2ia2sxla"))))
+   (build-system python-build-system)
+   (arguments
+    ;; Broken tests or cyclic dependecies with other packages.
+    '(#:phases
+      (modify-phases %standard-phases
+                     (delete 'sanity-check))
+      #:tests? #f))
+   (propagated-inputs
+    (list python-x-wr-timezone))
+   (home-page
+    "https://github.com/niccokunzmann/x-wr-timezone")
+   (synopsis "Handling of non-standard X-WR-TIMEZONE icalendar property in Python and Command Line")
+   (description "Some calendar providers introduce the non-standard X-WR-TIMEZONE parameter to ICS calendar files. Strict interpretations according to RFC 5545 ignore the X-WR-TIMEZONE parameter. This causes the times of the events to differ from those which make use of X-WR-TIMEZONE. This module aims to bridge the gap by converting calendars using X-WR-TIMEZONE to a strict RFC 5545 calendars.")
+   (license license:lgpl3+)))
+
+
 (define-public python-recurring-ical-events
   (package
    (name "python-recurring-ical-events")

@@ -40,7 +40,8 @@
                      (delete 'sanity-check))
       #:tests? #f))
    (propagated-inputs
-    (list python-x-wr-timezone))
+    (list python-icalendar
+          python-pytz))
    (home-page
     "https://github.com/niccokunzmann/x-wr-timezone")
    (synopsis "Handling of non-standard X-WR-TIMEZONE icalendar property in Python and Command Line")
@@ -66,6 +67,10 @@
       (modify-phases %standard-phases
                      (delete 'sanity-check))
       #:tests? #f))
+   (propagated-inputs
+    (list python-x-wr-timezone
+          python-icalendar
+          python-pytz))
    (home-page
     "https://github.com/niccokunzmann/python-recurring-ical-events")
    (synopsis "Python library for recurrence of ical events based on icalendar")

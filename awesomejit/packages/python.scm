@@ -24,11 +24,11 @@
 (define-public python-x-wr-timezone
   (package
    (name "python-x-wr-timezone")
-   (version "2.1.1")
+   (version "0.0.6")
    (source
     (origin
      (method url-fetch)
-     (uri (pypi-uri "x_wr_timezone" version))
+     (uri (pypi-uri "x-wr-timezone" version))
      (sha256
       (base32
        "00k4l800j2d3zfqhxjlzjk0b6493wqhmg4r58xsp12sx2ia2sxla"))))

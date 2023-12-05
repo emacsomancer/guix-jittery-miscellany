@@ -30,7 +30,7 @@
      (uri (pypi-uri "recurring_ical_events" version))
      (sha256
       (base32
-       "0a2ai78jzn250s1dlsimsfp6035421nrabj08xdlgsh7mb82gkap"))))
+       "00k4l800j2d3zfqhxjlzjk0b6493wqhmg4r58xsp12sx2ia2sxla"))))
    (build-system python-build-system)
   (arguments
     ;; Broken tests or cyclic dependecies with other packages.

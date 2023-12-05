@@ -63,7 +63,8 @@
                      (delete 'sanity-check))
       #:tests? #f))
    (propagated-inputs
-    (list python-recurring-ical-events))
+    (list python-click
+          python-recurring-ical-events))
    (home-page
     "https://github.com/ical2org-py/ical2org.py")
    (synopsis "Convert ical .ics file to org-mode")

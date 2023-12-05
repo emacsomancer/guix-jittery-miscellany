@@ -27,7 +27,7 @@
    (source
     (origin
      (method url-fetch)
-     (uri (pypi-uri "recurring-ical-events" version))
+     (uri (pypi-uri "recurring_ical_events" version))
      (sha256
       (base32
        "0a2ai78jzn250s1dlsimsfp6035421nrabj08xdlgsh7mb82gkap"))))

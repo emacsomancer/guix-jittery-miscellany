@@ -20,14 +20,14 @@
   #:use-module (guix utils)
   #:use-module (srfi srfi-1))
 
-(define-public python-ical2org
+(define-public python-ical2orgpy
   (package
-   (name "python-ical2org")
+   (name "python-ical2orgpy")
    (version "0.5")
    (source
     (origin
      (method url-fetch)
-     (uri (pypi-uri "ical2org" version))
+     (uri (pypi-uri "ical2orgpy" version))
      (sha256
       (base32
        "039hf9knvl4s3hp21bzwsp1g5ri9gxsh504dp48lc6nr1av35byy"))))

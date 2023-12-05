@@ -38,8 +38,6 @@
       (modify-phases %standard-phases
                      (delete 'sanity-check))
       #:tests? #f))
-   (propagated-inputs
-    (list python-urllib3))
    (home-page
     "https://github.com/niccokunzmann/python-recurring-ical-events")
    (synopsis "Python library for recurrence of ical events based on icalendar")

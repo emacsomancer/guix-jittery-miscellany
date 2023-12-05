@@ -28,7 +28,7 @@
    (source
     (origin
      (method url-fetch)
-     (uri (pypi-uri "x-wr-timezone" version))
+     (uri (pypi-uri "x_wr_timezone" version))
      (sha256
       (base32
        "00k4l800j2d3zfqhxjlzjk0b6493wqhmg4r58xsp12sx2ia2sxla"))))

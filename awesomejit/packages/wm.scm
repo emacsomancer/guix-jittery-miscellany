@@ -82,12 +82,12 @@
               `("LD_LIBRARY_PATH" suffix (,cairo)))
              #t)))))))))
 
-(define-public awesome-next-luajit-master
+(define-public awesome-next-luajit-tip
   ;; Requires commit 353ccfb0dde0dc5c264595f9d17e47a23c82bcdf or later, because
   ;; we need the -DLUA_EXECUTABLE flag.
   (package
     (inherit awesome-next)
-    (name "awesome-next-luajit-master")
+    (name "awesome-next-luajit-tip")
     (inputs (modify-inputs (package-inputs awesome-next)
               (replace "lua" luajit-tip)
               (replace "lua-lgi" lua5.1-lgi)))

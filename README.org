@@ -1,0 +1,30 @@
+
+* What is this?
+A [[https://guix.gnu.org/][Guix]] channel.
+
+* What's in this channel?
+It started as a channel to have the latest git-tip of Luajit and the latest git-tip of the Awesome window manager (and a definition for AwesomeWM using Luajit rather than plain Lua, both Guix's current Luajit (=awesome-next-luajit=) and using the tip of the Luajit git repo (=awesome-next-luajit-tip=)).
+
+Thus "awesomejit".
+
+But there's some other things in it now.
+
+So, perhaps, a "just in time" channel for "awesome" packages.
+
+(Currently this means the Python package =ical2orgpy=, which converts icalendar =.ics= files to Org-mode =.org= files.)
+
+* To use this channel
+Add to your =channels.scm= file (maybe in =~/.config/guix/=):
+
+#+begin_src scheme
+(cons* (channel (name other-channel... ....
+       (channel
+        (name 'awesomejit)
+        (url "https://gitlab.com/emacsomancer/guix-awesomejit")
+        (branch "main"))
+       %default-channels)
+#+end_src
+
+(Where =(channel (name other-channel... ....= represents other channels you may have added.)
+
+And then execute =guix pull= and then procedure however you add packages to your Guix.

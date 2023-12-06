@@ -11,7 +11,7 @@ But there's some other things in it now.
 
 So, perhaps, a "just in time" channel for "awesome" packages.
 
-(Currently this means the Python package =ical2orgpy=, which converts icalendar =.ics= files to Org-mode =.org= files.)
+(Currently this means the Python package =ical2orgpy=, which converts icalendar =.ics= files to Org-mode =.org= files, and the (recursive) Python dependencies it needs.)
 
 * To use this channel
 Add to your =channels.scm= file (maybe in =~/.config/guix/=):

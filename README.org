@@ -27,4 +27,4 @@ Add to your =channels.scm= file (maybe in =~/.config/guix/=):
 
 (Where =(channel (name other-channel... ....= represents other channels you may have added.)
 
-And then execute =guix pull= and then procedure however you add packages to your Guix.
+And then execute =guix pull= and then proceed however you add packages to your Guix.

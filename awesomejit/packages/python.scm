@@ -79,7 +79,8 @@ parameter to ICS calendar files.  Strict interpretations according to RFC 5545 i
     "https://github.com/niccokunzmann/python-recurring-ical-events")
    (synopsis "Python library for recurrence of ical events based on icalendar")
    (description "ICal has some complexity to it: Events, TODOs and Journal entries can
- be repeated, removed from the feed and edited later on.  This tool takes care of these circumstances.")
+ be repeated, removed from the feed and edited later on.
+This tool takes care of these circumstances.")
    (license license:lgpl3+)))
 
 (define-public python-ical2orgpy

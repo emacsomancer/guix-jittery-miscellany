@@ -45,7 +45,11 @@
    (home-page
     "https://github.com/niccokunzmann/x-wr-timezone")
    (synopsis "Handling of non-standard X-WR-TIMEZONE icalendar property in Python and Command Line")
-   (description "Some calendar providers introduce the non-standard X-WR-TIMEZONE parameter to ICS calendar files. Strict interpretations according to RFC 5545 ignore the X-WR-TIMEZONE parameter. This causes the times of the events to differ from those which make use of X-WR-TIMEZONE. This module aims to bridge the gap by converting calendars using X-WR-TIMEZONE to a strict RFC 5545 calendars.")
+   (description "Some calendar providers introduce the non-standard X-WR-TIMEZONE
+parameter to ICS calendar files.  Strict interpretations according to RFC 5545 ignore
+ the X-WR-TIMEZONE parameter.  This causes the times of the events to differ from those
+ which make use of X-WR-TIMEZONE.  This module aims to bridge the gap by converting
+ calendars using X-WR-TIMEZONE to a strict RFC 5545 calendars.")
    (license license:lgpl3+)))
 
 
@@ -74,7 +78,8 @@
    (home-page
     "https://github.com/niccokunzmann/python-recurring-ical-events")
    (synopsis "Python library for recurrence of ical events based on icalendar")
-   (description "ICal has some complexity to it: Events, TODOs and Journal entries can be repeated, removed from the feed and edited later on. This tool takes care of these circumstances.")
+   (description "ICal has some complexity to it: Events, TODOs and Journal entries can
+ be repeated, removed from the feed and edited later on.  This tool takes care of these circumstances.")
    (license license:lgpl3+)))
 
 (define-public python-ical2orgpy
@@ -104,5 +109,10 @@
    (home-page
     "https://github.com/ical2org-py/ical2org.py")
    (synopsis "Convert ical .ics file to org-mode")
-   (description "This python script converts an ical calendar (for instance, as exported from google calendar) into an org-mode document. It is conceived as a replacement of the awk script located at https://orgmode.org/worg/org-tutorials/org-google-sync.html. The main difference is that ical2orgpy correctly manages recurring events of 'yearly', 'daily' and 'weekly' types. ical2orgpy duplicates all recurring events falling into a specified time-frame into the exported org-document.")
+   (description "This python script converts an ical calendar (for instance, as exported
+ from google calendar) into an org-mode document. It is conceived as a replacement of
+ the awk script located at @indicateurl{https://orgmode.org/worg/org-tutorials/org-google-sync.html}.
+  The main difference is that ical2orgpy correctly manages recurring events of
+ @dfn{yearly}, @dfn{daily} and @dfn{weekly} types.  ical2orgpy duplicates all recurring events
+ falling into a specified time-frame into the exported org-document.")
    (license license:gpl3+)))

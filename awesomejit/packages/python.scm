@@ -44,7 +44,7 @@
           python-pytz))
    (home-page
     "https://github.com/niccokunzmann/x-wr-timezone")
-   (synopsis "Handling of non-standard X-WR-TIMEZONE icalendar property in Python and Command Line")
+   (synopsis "Handling of non-standard X-WR-TIMEZONE icalendar property")
    (description "Some calendar providers introduce the non-standard X-WR-TIMEZONE
 parameter to ICS calendar files.  Strict interpretations according to RFC 5545 ignore
  the X-WR-TIMEZONE parameter.  This causes the times of the events to differ from those

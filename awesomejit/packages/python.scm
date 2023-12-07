@@ -112,7 +112,7 @@ parameter to ICS calendar files.  Strict interpretations according to RFC 5545 i
    (description "This python script converts an ical calendar (for instance, as exported
  from google calendar) into an org-mode document.  It is conceived as a replacement of
  the awk script located at
-@indicateurl{https://orgmode.org/worg/org-tutorials/org-google-sync.html}.
+@url{https://orgmode.org/worg/org-tutorials/org-google-sync.html}.
   The main difference is that ical2orgpy correctly manages recurring events of
  @dfn{yearly}, @dfn{daily} and @dfn{weekly} types.  ical2orgpy duplicates all recurring
  events falling into a specified time-frame into the exported org-document.")

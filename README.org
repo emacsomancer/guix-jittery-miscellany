@@ -3,7 +3,7 @@
 A [[https://guix.gnu.org/][Guix]] channel.
 
 * What's in this channel?
-It started as a channel to have the latest git-tip of Luajit and the latest git-tip of the Awesome window manager (and a definition for AwesomeWM using Luajit (originally based on [[https://git.sr.ht/~shtwzrd/sht-channel][shtwzrd's Guix channel]], which hasn't been updated in a while) rather than plain Lua, both Guix's current Luajit (=awesome-next-luajit=) and using the tip of the Luajit git repo (=awesome-next-luajit-tip=)).
+It started as a channel to have the latest git-tip of Luajit and the latest git-tip of the Awesome window manager (and a definition for AwesomeWM using Luajit (originally based on [[https://git.sr.ht/~shtwzrd/sht-channel][shtwzrd's Guix channel]], which hasn't been updated in a while)) rather than plain Lua, both Guix's current Luajit (=awesome-next-luajit=) and using the tip of the Luajit git repo (=awesome-next-luajit-tip=)).
 
 Thus "awesomejit".
 

@@ -78,7 +78,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (gnu packages xdisorg)
+(define-module (awesomejit packages xdisorg)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system copy)
   #:use-module (guix build-system glib-or-gtk)
@@ -149,6 +149,7 @@
   #:use-module (gnu packages wm)
   #:use-module (gnu packages webkit)
   #:use-module (gnu packages xorg)
+  #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages)
   #:use-module (ice-9 match))
 

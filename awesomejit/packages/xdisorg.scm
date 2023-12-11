@@ -154,9 +154,9 @@
   #:use-module (ice-9 match))
 
 
-(define-public xsecurelock
+(define-public xsecurelock-xscreensaver
   (package
-    (name "xsecurelock")
+    (name "xsecurelock-xscreensaver")
     (version "1.8.0")
     (source (origin
               (method url-fetch)

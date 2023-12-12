@@ -18,6 +18,7 @@
   #:use-module (gnu packages time)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages python-web)
+  #:use-module (gnu packages python-build)
   #:use-module (gnu packages xml)
   #:use-module (guix utils)
   #:use-module (srfi srfi-1))

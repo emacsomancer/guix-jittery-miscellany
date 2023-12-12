@@ -171,7 +171,7 @@
        '("--with-pam-service-name=login"
          "--with-xkb"
          "--with-default-authproto-module=/run/setuid-programs/authproto_pam"
-         "--with-xscreensaver=${xscreensaver}/libexec/xscreensaver")))
+         "--with-xscreensaver=/run/current-system/libexec/xscreensaver")))
     (native-inputs
      (list pandoc pkg-config))
     (inputs

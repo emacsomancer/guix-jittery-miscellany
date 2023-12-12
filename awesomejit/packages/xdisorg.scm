@@ -168,7 +168,7 @@
                       ;; "/download/v" version "/xsecurelock-" version ".tar.gz"
                       ))
                 (sha256
-                 (base32 "1i7vhzysirr5kra15vd501b79k0jgs11lkb9ck3hx6vicxm204d3"))))
+                 (base32 "1pvm6s6d0r6ajsl7gyfxf5z3l53bmyf1d07nff2alzx2zsj2jxrs"))))
       (build-system gnu-build-system)
       (arguments
        '(#:configure-flags

@@ -155,43 +155,47 @@
 
 
 (define-public xsecurelock-xscreensaver
-  (package
-    (name "xsecurelock-xscreensaver")
-    (version "1.8.0")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append
-                    "https://github.com/google/xsecurelock/releases"
-                    "/download/v" version "/xsecurelock-" version ".tar.gz"))
-              (sha256
-               (base32 "1i7vhzysirr5kra15vd501b79k0jgs11lkb9ck3hx6vicxm204d3"))))
-    (build-system gnu-build-system)
-    (arguments
-     '(#:configure-flags
-       '("--with-pam-service-name=login"
-         "--with-xkb"
-         "--with-default-authproto-module=/run/setuid-programs/authproto_pam"
-         "--with-xscreensaver=/run/current-system/profile/libexec/xscreensaver"
-         ;; "--with-xscreensaver=/run/current-system/profile/bin/xscreensaver"
-         )))
-    (native-inputs
-     (list pandoc pkg-config))
-    (inputs
-     (list fontconfig
-           libx11
-           libxcomposite
-           libxext
-           libxfixes
-           libxft
-           libxmu
-           libxrandr
-           libxscrnsaver
-           linux-pam))
-    (propagated-inputs
-     (list xscreensaver))
-    (home-page "https://github.com/google/xsecurelock")
-    (synopsis "X11 screen lock utility with the primary goal of security")
-    (description "@code{xsecurelock} is an X11 screen locker which uses
+  (let ((branch "master")
+        (commit "28d1c68708b1081ce0e315297e7423f9ea246cfa"))
+    (package
+      (name "xsecurelock-xscreensaver")
+      (version (git-version branch "0" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/google/xsecurelock/")
+                      (commit commit)
+                      ;; "/download/v" version "/xsecurelock-" version ".tar.gz"
+                      ))
+                (sha256
+                 (base32 "1i7vhzysirr5kra15vd501b79k0jgs11lkb9ck3hx6vicxm204d3"))))
+      (build-system gnu-build-system)
+      (arguments
+       '(#:configure-flags
+         '("--with-pam-service-name=login"
+           "--with-xkb"
+           "--with-default-authproto-module=/run/setuid-programs/authproto_pam"
+           "--with-xscreensaver=/run/current-system/profile/libexec/xscreensaver"
+           ;; "--with-xscreensaver=/run/current-system/profile/bin/xscreensaver"
+           )))
+      (native-inputs
+       (list pandoc pkg-config))
+      (inputs
+       (list fontconfig
+             libx11
+             libxcomposite
+             libxext
+             libxfixes
+             libxft
+             libxmu
+             libxrandr
+             libxscrnsaver
+             linux-pam))
+      (propagated-inputs
+       (list xscreensaver))
+      (home-page "https://github.com/google/xsecurelock")
+      (synopsis "X11 screen lock utility with the primary goal of security")
+      (description "@code{xsecurelock} is an X11 screen locker which uses
 a modular design to avoid the usual pitfalls of screen locking utility design.
 
 As a consequence of the modular design, the usual screen locker service
@@ -204,4 +208,4 @@ binary to setuid-binaries:
    (program (file-append xsecurelock \"/libexec/xsecurelock/authproto_pam\")))
   %setuid-programs))
 @end example")
-    (license license:asl2.0)))
+      (license license:asl2.0))))

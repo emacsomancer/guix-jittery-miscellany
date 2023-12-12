@@ -170,7 +170,8 @@
      '(#:configure-flags
        '("--with-pam-service-name=login"
          "--with-xkb"
-         "--with-default-authproto-module=/run/setuid-programs/authproto_pam")))
+         "--with-default-authproto-module=/run/setuid-programs/authproto_pam"
+         "--with-xscreensaver=${xscreensaver}/libexec/xscreensaver")))
     (native-inputs
      (list pandoc pkg-config))
     (inputs

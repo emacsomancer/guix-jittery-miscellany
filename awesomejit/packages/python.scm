@@ -106,24 +106,24 @@ This tool takes care of these circumstances.")
  events falling into a specified time-frame into the exported org-document.")
     (license license:gpl3+)))
 
-(define-public python-youtube-transcript-downloader
-  (package
-    (name "python-youtube-transcript-downloader")
-    (version "0.1.2")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "youtube_transcript_downloader" version))
-       (sha256
-        (base32 "0a2ai78jzn250s1dlsimsfp6035421nrabj08xdlgsh7mb82gkap"))))
-    (build-system python-build-system)
-    (arguments
-     ;; Broken tests or cyclic dependecies with other packages.
-     '(#:phases (modify-phases %standard-phases
-                  (delete 'sanity-check))
-       #:tests? #f))
-    (propagated-inputs (list python-wheel python-setuptools))
-    (home-page "https://github.com/t4skmanag3r/youtube_transcript_downloader")
-    (synopsis "Package for retrieving transcripts from YouTube")
-    (description #f)
-    (license license:gpl3+)))
+;; (define-public python-youtube-transcript-downloader
+;;   (package
+;;     (name "python-youtube-transcript-downloader")
+;;     (version "0.1.2")
+;;     (source
+;;      (origin
+;;        (method url-fetch)
+;;        (uri (pypi-uri "youtube_transcript_downloader" version))
+;;        (sha256
+;;         (base32 "0a2ai78jzn250s1dlsimsfp6035421nrabj08xdlgsh7mb82gkap"))))
+;;     (build-system python-build-system)
+;;     (arguments
+;;      ;; Broken tests or cyclic dependecies with other packages.
+;;      '(#:phases (modify-phases %standard-phases
+;;                   (delete 'sanity-check))
+;;        #:tests? #f))
+;;     (propagated-inputs (list python-wheel python-setuptools))
+;;     (home-page "https://github.com/t4skmanag3r/youtube_transcript_downloader")
+;;     (synopsis "Package for retrieving transcripts from YouTube")
+;;     (description #f)
+;;     (license license:gpl3+)))

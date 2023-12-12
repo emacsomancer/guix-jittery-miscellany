@@ -179,7 +179,7 @@
            ;; "--with-xscreensaver=/run/current-system/profile/bin/xscreensaver"
            )))
       (native-inputs
-       (list pandoc pkg-config))
+       (list pandoc pkg-config autoconf automake))
       (inputs
        (list fontconfig
              libx11

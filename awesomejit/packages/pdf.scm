@@ -128,7 +128,7 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0bmy51w6ypz927hxwp5g7wapqvzqmsi3w32rch6i3f94kg1152ck"))))
+        (base32 "0kj84sf5hgr2v2ra6dxmxqcr173h17cpnhg9lcq36shdbdnncwg4"))))
     (build-system cmake-build-system)
     (arguments
      '(#:tests? #f          ; no test target

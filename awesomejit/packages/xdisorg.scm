@@ -157,7 +157,7 @@
 (define-public xsecurelock-xscreensaver
   (package
     (name "xsecurelock-xscreensaver")
-    (version "1.8.0")
+    (version "1.9.0")
     (source (origin
               (method url-fetch)
               (uri (string-append

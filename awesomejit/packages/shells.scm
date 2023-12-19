@@ -96,7 +96,7 @@
                            "releases/download/" version "/"
                            "fish-" version ".tar.xz"))
        (sha256
-        (base32 "1cj91fyba259vhbxvq55w2yf2p2vj201gr15pa59swx6gjs2nh2m"))))
+        (base32 "14y39dfhvsg684r59w7x2sxr3kryc9vamj42x3xr5q0db0762gqg"))))
     (build-system cmake-build-system)
     (inputs
      (list fish-foreign-env ncurses pcre2

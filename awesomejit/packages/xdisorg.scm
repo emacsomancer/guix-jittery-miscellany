@@ -154,9 +154,9 @@
   #:use-module (ice-9 match))
 
 
-(define-public xsecurelock-xscreensaver
+(define-public xsecurelock
   (package
-    (name "xsecurelock-xscreensaver")
+    (name "xsecurelock")
     (version "1.9.0")
     (source (origin
               (method url-fetch)
@@ -164,7 +164,7 @@
                     "https://github.com/google/xsecurelock/releases"
                     "/download/v" version "/xsecurelock-" version ".tar.gz"))
               (sha256
-               (base32 "1i7vhzysirr5kra15vd501b79k0jgs11lkb9ck3hx6vicxm204d3"))))
+               (base32 "09c0br8vwx9q728i4iv1pcp4s0sm0cd1c5ligag4k2730kcg93bf"))))
     (build-system gnu-build-system)
     (arguments
      '(#:configure-flags

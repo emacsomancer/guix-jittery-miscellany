@@ -114,6 +114,7 @@
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg)
+  #:use-module (gnu packages aidc)  ;; need to add this for qrencode
   #:use-module (srfi srfi-1))
 
 (define-public pdfpc
@@ -144,7 +145,7 @@
     (inputs
      `(("cairo" ,cairo)
        ("discount" ,discount) ; libmarkdown
-       ("qrencode" ,qrencode)
+       ("qrencode" ,qrencode) ; needs gnu packages aidc
        ("gtk+" ,gtk+)
        ("gstreamer" ,gstreamer)
        ("gst-plugins-base" ,gst-plugins-base)

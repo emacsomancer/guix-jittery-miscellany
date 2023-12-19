@@ -188,7 +188,7 @@
            libxscrnsaver
            linux-pam))
     (propagated-inputs
-     (list xscreensaver))
+     (list xscreensaver xrdb))
     (home-page "https://github.com/google/xsecurelock")
     (synopsis "X11 screen lock utility with the primary goal of security")
     (description "@code{xsecurelock} is an X11 screen locker which uses

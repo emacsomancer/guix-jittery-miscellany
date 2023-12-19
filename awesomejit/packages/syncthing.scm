@@ -54,7 +54,7 @@
                                   "/syncthing-source-v" version ".tar.gz"))
               (sha256
                (base32
-                "18cyg0wnf34xi964fxvzxgcq6z0pbirk0k4z82w1cqi3f3l9jlg2"))))
+                "0d1qlzh07a9h2wx2fxm2fdask2sm750pqwk7jx62x2hcwmb08ysw"))))
     (build-system go-build-system)
     ;; The primary Syncthing executable goes to "out", while the auxiliary
     ;; server programs and utility tools go to "utils".  This reduces the size

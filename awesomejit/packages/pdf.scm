@@ -144,6 +144,7 @@
     (inputs
      `(("cairo" ,cairo)
        ("discount" ,discount) ; libmarkdown
+       ("qrencode" ,qrencode)
        ("gtk+" ,gtk+)
        ("gstreamer" ,gstreamer)
        ("gst-plugins-base" ,gst-plugins-base)

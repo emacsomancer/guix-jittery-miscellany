@@ -54,39 +54,40 @@ language.")
       (license license:x11))))
 
 (define-public fennel
- (name "fennel")
- (version "1.4.0")
- (source (origin
-          (method git-fetch)
-          (uri (git-reference
-                (url "https://git.sr.ht/~technomancy/fennel")
-                (commit version)))
-          (file-name (git-file-name name version))
-          (sha256
-           (base32
-            "12zm3rd0vvkqazv1cv5bhwk6igsj18im2qakqw7cf4a20rc9wpmx"))))
- (build-system gnu-build-system)
- (arguments
-  (list #:make-flags #~(list (string-append "PREFIX="
-                                            (assoc-ref %outputs "out")))
-        #:tests? #t ;even on cross-build
-        #:test-target "test"
-        #:phases #~(modify-phases %standard-phases
-                                  (delete 'configure)
-                                  (add-after 'build 'patch-fennel
-                                             (lambda* (#:key inputs #:allow-other-keys)
-                                               (substitute* "fennel"
-                                                            (("/usr/bin/env .*lua")
-                                                             (search-input-file inputs "/bin/lua")))))
-                                  (delete 'check)
-p                                  (add-after 'install 'check
-                                             (assoc-ref %standard-phases
-                                                        'check)))))
- (inputs (list lua))
- (home-page "https://fennel-lang.org/")
- (synopsis "Lisp that compiles to Lua")
- (description
-  "Fennel is a programming language that brings together the speed,
+  (package
+    (name "fennel")
+    (version "1.4.0")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://git.sr.ht/~technomancy/fennel")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "12zm3rd0vvkqazv1cv5bhwk6igsj18im2qakqw7cf4a20rc9wpmx"))))
+    (build-system gnu-build-system)
+    (arguments
+     (list #:make-flags #~(list (string-append "PREFIX="
+                                               (assoc-ref %outputs "out")))
+           #:tests? #t ;even on cross-build
+           #:test-target "test"
+           #:phases #~(modify-phases %standard-phases
+                        (delete 'configure)
+                        (add-after 'build 'patch-fennel
+                          (lambda* (#:key inputs #:allow-other-keys)
+                            (substitute* "fennel"
+                              (("/usr/bin/env .*lua")
+                               (search-input-file inputs "/bin/lua")))))
+                        (delete 'check)
+                        (add-after 'install 'check
+                          (assoc-ref %standard-phases
+                                     'check)))))
+    (inputs (list lua))
+    (home-page "https://fennel-lang.org/")
+    (synopsis "Lisp that compiles to Lua")
+    (description
+     "Fennel is a programming language that brings together the speed,
 simplicity, and reach of Lua with the flexibility of a Lisp syntax and macro
 system.")
- (license license:expat))
+    (license license:expat)))

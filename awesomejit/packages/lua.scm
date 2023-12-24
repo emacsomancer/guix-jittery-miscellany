@@ -53,9 +53,9 @@ language.  It may be embedded or used as a general-purpose, stand-alone
 language.")
       (license license:x11))))
 
-(define-public fennel-luajit
+(define-public fennel
   (package
-    (name "fennel-luajit")
+    (name "fennel")
     (version "1.4.0")
     (source (origin
               (method git-fetch)
@@ -83,7 +83,7 @@ language.")
                         (add-after 'install 'check
                           (assoc-ref %standard-phases
                                      'check)))))
-    (inputs (list luajit-tip))
+    (inputs (list lua))
     (home-page "https://fennel-lang.org/")
     (synopsis "Lisp that compiles to Lua")
     (description

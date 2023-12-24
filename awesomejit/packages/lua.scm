@@ -53,9 +53,9 @@ language.  It may be embedded or used as a general-purpose, stand-alone
 language.")
       (license license:x11))))
 
-(define-public fennel
+(define-public fennel-luajit
   (package
-    (name "fennel")
+    (name "fennel-luajit")
     (version "1.4.0")
     (source (origin
               (method git-fetch)

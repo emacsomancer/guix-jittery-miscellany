@@ -7,7 +7,7 @@
   #:use-module (guix utils)
   #:use-module (gnu packages lua)
   #:use-module (srfi srfi-1))
-
+n
 (define-public luajit-tip
   (let ((branch "2.1")
         (commit "43d0a19158ceabaa51b0462c1ebc97612b420a2e"))
@@ -83,7 +83,7 @@ language.")
                         (add-after 'install 'check
                           (assoc-ref %standard-phases
                                      'check)))))
-    (inputs (list lua))
+    (inputs (list luajit-tip))
     (home-page "https://fennel-lang.org/")
     (synopsis "Lisp that compiles to Lua")
     (description

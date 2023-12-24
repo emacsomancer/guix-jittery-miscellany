@@ -78,9 +78,9 @@ language.  It may be embedded or used as a general-purpose, stand-alone
 language.")
       (license license:x11))))
 
-(define-public fennel-1.4.0
+(define-public fennel
   (package
-    (name "fennel-1.4.0")
+    (name "fennel")
     (version "1.4.0")
     (source (origin
               (method git-fetch)

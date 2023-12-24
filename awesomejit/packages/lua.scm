@@ -53,7 +53,7 @@ language.  It may be embedded or used as a general-purpose, stand-alone
 language.")
       (license license:x11))))
 
-(package
+(define-public fennel
  (name "fennel")
  (version "1.4.0")
  (source (origin
@@ -79,7 +79,7 @@ language.")
                                                             (("/usr/bin/env .*lua")
                                                              (search-input-file inputs "/bin/lua")))))
                                   (delete 'check)
-                                  (add-after 'install 'check
+p                                  (add-after 'install 'check
                                              (assoc-ref %standard-phases
                                                         'check)))))
  (inputs (list lua))
@@ -89,4 +89,4 @@ language.")
   "Fennel is a programming language that brings together the speed,
 simplicity, and reach of Lua with the flexibility of a Lisp syntax and macro
 system.")
- (license license:expat)))
+ (license license:expat))

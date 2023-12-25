@@ -48,7 +48,7 @@
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "1wpv0vckpgp72dqlj8c9akm9w4jsk5pxf7j2660pv6caxh6g227h"))))
+                  "1v5vb8zgxgsis8gmnd91sxx3vbnpvlnbfj8719s6gw0f35114mzb"))))
       (build-system gnu-build-system)
       (arguments
        `(#:tests? #f                    ; luajit is distributed without tests

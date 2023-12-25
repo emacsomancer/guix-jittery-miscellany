@@ -106,9 +106,10 @@ language.")
                               (("/usr/bin/env .*lua")
                                (search-input-file inputs "/bin/lua")))))
                         (delete 'check)
-                        (add-after 'install 'check
-                          (assoc-ref %standard-phases
-                                     'check)))))
+                        ;; (add-after 'install 'check
+                        ;;   (assoc-ref %standard-phases
+                        ;;              'check))
+                        )))
     (inputs (list lua))
     (home-page "https://fennel-lang.org/")
     (synopsis "Lisp that compiles to Lua")

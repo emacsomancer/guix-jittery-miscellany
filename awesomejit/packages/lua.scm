@@ -43,7 +43,7 @@
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
-                      (url "https://luajit.org/git/luajit.git") ;; same issues with https://github.com/LuaJIT/LuaJIT.git
+                      (url "https://luajit.org/git/luajit.git") 
                       (commit commit)))
                 (file-name (git-file-name name version))
                 (sha256
@@ -118,3 +118,44 @@ language.")
 simplicity, and reach of Lua with the flexibility of a Lisp syntax and macro
 system.")
     (license license:expat)))
+
+(define-public fennel-git-tip
+  (let ((branch "main")
+        (commit "3927010da56fc6161598a0e2edd2bad1b1a1a1af"))
+    (package
+     (name "fennel-git-tip")
+     (version (git-version branch "0" commit))
+     (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://git.sr.ht/~technomancy/fennel") 
+                    (file-name (git-file-name name version))
+                    (sha256
+                     (base32
+                      "1v5vb8zgxgsis8gmnd91sxx3vbnpvlnbfj8719s6gw0f35114mzb"))))
+              (build-system gnu-build-system)
+              (arguments
+               (list #:make-flags #~(list (string-append "PREFIX="
+                                                         (assoc-ref %outputs "out")))
+                     #:tests? #t ;even on cross-build
+                     #:test-target "test"
+                     #:phases #~(modify-phases %standard-phases
+                                               (delete 'configure)
+                                               (add-after 'build 'patch-fennel
+                                                          (lambda* (#:key inputs #:allow-other-keys)
+                                                            (substitute* "fennel"
+                                                                         (("/usr/bin/env .*lua")
+                                                                          (search-input-file inputs "/bin/lua")))))
+                                               (delete 'check)
+                                               (add-after 'install 'check
+                                                 (assoc-ref %standard-phases
+                                                            'check))
+                                               )))
+              (inputs (list lua))
+              (home-page "https://fennel-lang.org/")
+              (synopsis "Lisp that compiles to Lua")
+              (description
+               "Fennel is a programming language that brings together the speed,
+simplicity, and reach of Lua with the flexibility of a Lisp syntax and macro
+system.")
+              (license license:expat))))

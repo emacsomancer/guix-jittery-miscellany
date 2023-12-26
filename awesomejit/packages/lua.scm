@@ -148,8 +148,8 @@ system.")
                                                                           (search-input-file inputs "/bin/lua")))))
                                                (delete 'check)
                                                (add-after 'install 'check
-                                                 (assoc-ref %standard-phases
-                                                            'check))
+                                                          (assoc-ref %standard-phases
+                                                                     'check))
                                                )))
               (inputs (list lua))
               (home-page "https://fennel-lang.org/")
@@ -158,4 +158,4 @@ system.")
                "Fennel is a programming language that brings together the speed,
 simplicity, and reach of Lua with the flexibility of a Lisp syntax and macro
 system.")
-              (license license:expat))))
+              (license license:expat))))))

@@ -95,9 +95,11 @@
   #:use-module (gnu packages tcl)
   #:use-module (gnu packages tex)
   #:use-module (gnu packages texinfo)
+  #:use-module (gnu packages text-editors)   ;; added
   #:use-module (gnu packages tls)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages xorg)
+  #:use-module (gnu packages lisp)  
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1))
 

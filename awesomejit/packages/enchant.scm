@@ -54,7 +54,7 @@
                                   version ".tar.gz"))
               (sha256
                (base32
-                "00vcykbb7lxh51prvmsb62a06q18a6rlk9ba5a7g45c1awaj43rv"))))
+                "0b5xvcyrsjfl4c9a8p29a59i9ba0g9maqfjlgs3arsfv01b4sfw3"))))
     (build-system gnu-build-system)
     (arguments
      '(#:configure-flags '("--disable-static"

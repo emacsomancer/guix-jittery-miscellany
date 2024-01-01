@@ -43,42 +43,42 @@
   #:use-module (srfi srfi-1))
 
 
-(define-public enchant
-  (package
-    (name "enchant")
-    (version "2.6.4")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "https://github.com/AbiWord/enchant/releases"
-                                  "/download/v" version "/enchant-"
-                                  version ".tar.gz"))
-              (sha256
-               (base32
-                "0b5xvcyrsjfl4c9a8p29a59i9ba0g9maqfjlgs3arsfv01b4sfw3"))))
-    (build-system gnu-build-system)
-    (arguments
-     '(#:configure-flags '("--disable-static"
-                           ;; Tests require a relocatable build.
-                           "--enable-relocatable")))
-    (inputs
-     (list aspell hunspell))
-    (propagated-inputs
-     ;; Required by enchant.pc.
-     (list glib))
-    (native-inputs
-     `(("glib:bin" ,glib "bin")
-       ("pkg-config" ,pkg-config)
-       ("unittest-cpp" ,unittest-cpp)))
-    (synopsis "Multi-backend spell-checking library wrapper")
-    (description
-      "On the surface, Enchant appears to be a generic spell checking library.
-Looking closer, you'll see the Enchant is more-or-less a fancy wrapper around
-the dlopen() system call.
+;; (define-public enchant
+;;   (package
+;;     (name "enchant")
+;;     (version "2.6.4")
+;;     (source (origin
+;;               (method url-fetch)
+;;               (uri (string-append "https://github.com/AbiWord/enchant/releases"
+;;                                   "/download/v" version "/enchant-"
+;;                                   version ".tar.gz"))
+;;               (sha256
+;;                (base32
+;;                 "0b5xvcyrsjfl4c9a8p29a59i9ba0g9maqfjlgs3arsfv01b4sfw3"))))
+;;     (build-system gnu-build-system)
+;;     (arguments
+;;      '(#:configure-flags '("--disable-static"
+;;                            ;; Tests require a relocatable build.
+;;                            "--enable-relocatable")))
+;;     (inputs
+;;      (list aspell hunspell))
+;;     (propagated-inputs
+;;      ;; Required by enchant.pc.
+;;      (list glib))
+;;     (native-inputs
+;;      `(("glib:bin" ,glib "bin")
+;;        ("pkg-config" ,pkg-config)
+;;        ("unittest-cpp" ,unittest-cpp)))
+;;     (synopsis "Multi-backend spell-checking library wrapper")
+;;     (description
+;;       "On the surface, Enchant appears to be a generic spell checking library.
+;; Looking closer, you'll see the Enchant is more-or-less a fancy wrapper around
+;; the dlopen() system call.
 
-Enchant steps in to provide uniformity and conformity on top of these libraries,
-and implement certain features that may be lacking in any individual provider
-library.  Everything should \"just work\" for any and every definition of \"just
-working\".")
-    (home-page "https://abiword.github.io/enchant/")
-    (license lgpl2.1+)))
+;; Enchant steps in to provide uniformity and conformity on top of these libraries,
+;; and implement certain features that may be lacking in any individual provider
+;; library.  Everything should \"just work\" for any and every definition of \"just
+;; working\".")
+;;     (home-page "https://abiword.github.io/enchant/")
+;;     (license lgpl2.1+)))
 

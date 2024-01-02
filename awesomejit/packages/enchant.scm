@@ -64,7 +64,7 @@
      (list aspell hunspell))
     (propagated-inputs
      ;; Required by enchant.pc.
-     (list glib))
+     (list glib groff))
     (native-inputs
      `(("glib:bin" ,glib "bin")
        ("pkg-config" ,pkg-config)

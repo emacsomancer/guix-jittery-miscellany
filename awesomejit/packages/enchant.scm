@@ -27,6 +27,7 @@
   #:use-module (gnu packages check)
   #:use-module (gnu packages enchant)
   #:use-module (gnu packages glib)
+  #:use-module (gnu packages groff) ;; ADDED
   #:use-module (gnu packages hunspell)
   #:use-module (gnu packages icu4c)
   #:use-module (gnu packages man)

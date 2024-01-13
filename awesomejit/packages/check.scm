@@ -110,38 +110,37 @@
   #:use-module (guix deprecation)
   #:use-module (srfi srfi-1))
 
-(define-public catch2-3
-  (package
-    (name "catch2")
-    (version "3.5.1")
-    (home-page "https://github.com/catchorg/Catch2")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/catchorg/Catch2")
-                    (commit (string-append "v" version))))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "0p7rk01n4qfnnm1bgakllyqi83n1kbpz11gh65z1vspfz58hs9iv"))))
-    (build-system cmake-build-system)
-    (arguments
-     (list
-      #:configure-flags
-      #~(list "-DCMAKE_CXX_COMPILER=clang++" ; tests fail with gcc-11 on i686
-              "-DCMAKE_CXX_STANDARD=14"
-              "-DCMAKE_CXX_STANDARD_REQUIRED=ON"
-              "-DCMAKE_CXX_EXTENSIONS=OFF"
-              "-DCATCH_DEVELOPMENT_BUILD=ON"
-              "-DCATCH_ENABLE_WERROR=OFF"
-              "-DBUILD_SHARED_LIBS=ON")
-      #:tests? #f))
-    (native-inputs (list clang-10))
-    (inputs (list python-wrapper))
-    (synopsis "Automated test framework for C++ and Objective-C")
-    (description "Catch2 stands for C++ Automated Test Cases in Headers and is
-a multi-paradigm automated test framework for C++ and Objective-C.")
-    (license license:boost1.0)))
+;; (define-public catch2-3
+;;   (package
+;;     (name "catch2")
+;;     (version "3.5.1")
+;;     (home-page "https://github.com/catchorg/Catch2")
+;;     (source (origin
+;;               (method git-fetch)
+;;               (uri (git-reference
+;;                     (url "https://github.com/catchorg/Catch2")
+;;                     (commit (string-append "v" version))))
+;;               (file-name (git-file-name name version))
+;;               (sha256
+;;                (base32
+;;                 "0p7rk01n4qfnnm1bgakllyqi83n1kbpz11gh65z1vspfz58hs9iv"))))
+;;     (build-system cmake-build-system)
+;;     (arguments
+;;      (list
+;;       #:configure-flags
+;;       #~(list "-DCMAKE_CXX_COMPILER=clang++" ; tests fail with gcc-11 on i686
+;;               "-DCMAKE_CXX_STANDARD=14"
+;;               "-DCMAKE_CXX_STANDARD_REQUIRED=ON"
+;;               "-DCMAKE_CXX_EXTENSIONS=OFF"
+;;               "-DCATCH_DEVELOPMENT_BUILD=ON"
+;;               "-DCATCH_ENABLE_WERROR=OFF"
+;;               "-DBUILD_SHARED_LIBS=ON")))
+;;     (native-inputs (list clang-10))
+;;     (inputs (list python-wrapper))
+;;     (synopsis "Automated test framework for C++ and Objective-C")
+;;     (description "Catch2 stands for C++ Automated Test Cases in Headers and is
+;; a multi-paradigm automated test framework for C++ and Objective-C.")
+;;     (license license:boost1.0)))
 
 
 

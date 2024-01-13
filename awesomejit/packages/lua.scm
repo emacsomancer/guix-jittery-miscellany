@@ -86,7 +86,7 @@ language.")
     (source (origin
               (method git-fetch)
               (uri (git-reference
-                    (url "https://git.sr.ht/~technomancy/fennel")
+                    (url "https://github.com/bakpakin/Fennel.git")
                     (commit version)))
               (file-name (git-file-name name version))
               (sha256

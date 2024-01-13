@@ -138,10 +138,7 @@
     (native-inputs (list clang-10))
     (inputs (list python-wrapper))
     (arguments
-     ;; Broken tests or cyclic dependecies with other packages.
-     '(#:phases (modify-phases %standard-phases
-                  (delete 'sanity-check))
-       #:tests? #f))
+     `(#:tests? #f))                    ; no test target)
     (synopsis "Automated test framework for C++ and Objective-C")
     (description "Catch2 stands for C++ Automated Test Cases in Headers and is
 a multi-paradigm automated test framework for C++ and Objective-C.")

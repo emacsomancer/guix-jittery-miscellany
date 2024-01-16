@@ -108,7 +108,7 @@
   (let ((commit "3b5ffad81767ce63e2562f65a9e8a2a992952799") (revision "0"))
     (package
       (name "lispe")
-      (version (git-version nil revision commit))
+      (version (git-version branch revision commit))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference

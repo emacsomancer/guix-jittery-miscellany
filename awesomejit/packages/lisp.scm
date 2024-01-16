@@ -134,7 +134,7 @@
       ;;                      (string-append doc "/share/doc/" name))))))))
       ;; (native-inputs (list doxygen))
       (home-page "https://github.com/naver/lispe")
-      (synopsis "C++11 command line argument parser")
+      (synopsis "A compact lisp with a variety of functional and array language features")
       (description
        "An implementation of a full fledged Lisp interpreter with
  Data Structure, Pattern Programming and High level Functions with

@@ -57,6 +57,7 @@
   #:use-module (guix utils)
   #:use-module (guix build-system copy)
   #:use-module (guix build-system gnu)
+  #:use-module (guix build-system cmake)
   #:use-module (guix build-system haskell)
   #:use-module (guix build-system trivial)
   #:use-module (gnu packages admin)

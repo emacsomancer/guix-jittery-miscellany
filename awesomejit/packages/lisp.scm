@@ -120,7 +120,7 @@
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "1flkgh524lq3024p7ld5lg743s1v7qnbmgv77578rzmn2rjzr77n"))))
+                  "0xhwxg8x7ljd6was9vwlhf0irab4r8q25lsdpmq9c076ggid6liy"))))
       (build-system cmake-build-system)
       ;; (outputs '("out" "doc"))
       ;; (arguments

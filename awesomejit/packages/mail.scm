@@ -200,65 +200,64 @@
   #:use-module (srfi srfi-1))
 
 
-(define-public mu
-  (package
-    (name "mu")
-    (version "1.12.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/djcb/mu/releases/download/v"
-                           version "/mu-" version ".tar.xz"))
-       (sha256
-        (base32 "1kg744v6sz17xc4dj6q3n13jimkfkwchs35x513w2y73kzm2n1sm"))))
-    (build-system meson-build-system)
-    (native-inputs
-     (list pkg-config
-           emacs-minimal
-           gnupg                        ; for tests
-           python
-           texinfo))
-    (inputs
-     (list glib gmime guile-3.0 xapian))
-    (arguments
-     (list
-      #:modules '((guix build meson-build-system)
-                  (guix build emacs-utils)
-                  (guix build utils))
-      #:imported-modules `(,@%meson-build-system-modules
-                           ()
-                           (guix build emacs-utils))
-      #:configure-flags
-      #~(list (format #f "-Dguile-extension-dir=~a/lib" #$output))
-      #:phases
-      #~(modify-phases %standard-phases
-          (add-after 'unpack 'patch-bin-references
-            (lambda _
-              (substitute* '(
-                             ;; "guile/tests/test-mu-guile.cc"
-                             ;; "mu/tests/test-mu-cmd.cc"
-                             ;; "mu/tests/test-mu-cmd-cfind.cc"
-                             "mu/tests/test-mu-query.cc")
-                (("/bin/sh") (which "sh")))
-              (substitute* '("lib/testbbs/bench-indexer.cc"
-                             "lib/utils/mu-test-utils.cc")
-                (("/bin/rm") (which "rm")))))
-          (add-after 'install 'fix-ffi
-            (lambda _
-              (substitute* (find-files #$output "mu.scm")
-                (("\"libguile-mu\"")
-                 (format #f "\"~a/lib/libguile-mu\"" #$output)))))
-          (add-after 'install 'install-emacs-autoloads
-            (lambda* (#:key outputs #:allow-other-keys)
-              (emacs-generate-autoloads
-               "mu4e"
-               (string-append (assoc-ref outputs "out")
-                              "/share/emacs/site-lisp/mu4e")))))))
-    (home-page "https://www.djcbsoftware.nl/code/mu/")
-    (synopsis "Quickly find emails")
-    (description
-     "Mu is a tool for dealing with e-mail messages stored in the
-Maildir format.  Mu's purpose in life is to help you to quickly find the
-messages you need; in addition, it allows you to view messages, extract
-attachments, create new maildirs, and so on.")
-    (license license:gpl3+)))
+;; (define-public mu
+;;   (package
+;;     (name "mu")
+;;     (version "1.12.0")
+;;     (source
+;;      (origin
+;;        (method url-fetch)
+;;        (uri (string-append "https://github.com/djcb/mu/releases/download/v"
+;;                            version "/mu-" version ".tar.xz"))
+;;        (sha256
+;;         (base32 "1kg744v6sz17xc4dj6q3n13jimkfkwchs35x513w2y73kzm2n1sm"))))
+;;     (build-system meson-build-system)
+;;     (native-inputs
+;;      (list pkg-config
+;;            emacs-minimal
+;;            gnupg                        ; for tests
+;;            texinfo))
+;;     (inputs
+;;      (list glib gmime guile-3.0 xapian python))
+;;     (arguments
+;;      (list
+;;       #:modules '((guix build meson-build-system)
+;;                   (guix build emacs-utils)
+;;                   (guix build utils))
+;;       #:imported-modules `(,@%meson-build-system-modules
+;;                            ()
+;;                            (guix build emacs-utils))
+;;       #:configure-flags
+;;       #~(list (format #f "-Dguile-extension-dir=~a/lib" #$output))
+;;       #:phases
+;;       #~(modify-phases %standard-phases
+;;           (add-after 'unpack 'patch-bin-references
+;;             (lambda _
+;;               (substitute* '(
+;;                              ;; "guile/tests/test-mu-guile.cc"
+;;                              ;; "mu/tests/test-mu-cmd.cc"
+;;                              ;; "mu/tests/test-mu-cmd-cfind.cc"
+;;                              "mu/tests/test-mu-query.cc")
+;;                 (("/bin/sh") (which "sh")))
+;;               (substitute* '("lib/testbbs/bench-indexer.cc"
+;;                              "lib/utils/mu-test-utils.cc")
+;;                 (("/bin/rm") (which "rm")))))
+;;           (add-after 'install 'fix-ffi
+;;             (lambda _
+;;               (substitute* (find-files #$output "mu.scm")
+;;                 (("\"libguile-mu\"")
+;;                  (format #f "\"~a/lib/libguile-mu\"" #$output)))))
+;;           (add-after 'install 'install-emacs-autoloads
+;;             (lambda* (#:key outputs #:allow-other-keys)
+;;               (emacs-generate-autoloads
+;;                "mu4e"
+;;                (string-append (assoc-ref outputs "out")
+;;                               "/share/emacs/site-lisp/mu4e")))))))
+;;     (home-page "https://www.djcbsoftware.nl/code/mu/")
+;;     (synopsis "Quickly find emails")
+;;     (description
+;;      "Mu is a tool for dealing with e-mail messages stored in the
+;; Maildir format.  Mu's purpose in life is to help you to quickly find the
+;; messages you need; in addition, it allows you to view messages, extract
+;; attachments, create new maildirs, and so on.")
+;;     (license license:gpl3+)))

@@ -132,6 +132,7 @@
   #:use-module (gnu packages lsof)
   #:use-module (gnu packages lua)
   #:use-module (gnu packages m4)
+  #:use-module (gnu packages mail)
   #:use-module (gnu packages man)
   #:use-module (gnu packages mercury)
   #:use-module (gnu packages ncurses)

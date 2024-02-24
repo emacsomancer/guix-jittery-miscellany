@@ -216,6 +216,7 @@
      (list pkg-config
            emacs-minimal
            gnupg                        ; for tests
+           python
            texinfo))
     (inputs
      (list glib gmime guile-3.0 xapian))
@@ -225,6 +226,7 @@
                   (guix build emacs-utils)
                   (guix build utils))
       #:imported-modules `(,@%meson-build-system-modules
+                           ()
                            (guix build emacs-utils))
       #:configure-flags
       #~(list (format #f "-Dguile-extension-dir=~a/lib" #$output))
@@ -238,7 +240,7 @@
                              ;; "mu/tests/test-mu-cmd-cfind.cc"
                              "mu/tests/test-mu-query.cc")
                 (("/bin/sh") (which "sh")))
-              (substitute* '("lib/tests/bench-indexer.cc"
+              (substitute* '("lib/testbbs/bench-indexer.cc"
                              "lib/utils/mu-test-utils.cc")
                 (("/bin/rm") (which "rm")))))
           (add-after 'install 'fix-ffi

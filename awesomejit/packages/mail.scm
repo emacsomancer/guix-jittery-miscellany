@@ -210,7 +210,7 @@
        (uri (string-append "https://github.com/djcb/mu/releases/download/v"
                            version "/mu-" version ".tar.xz"))
        (sha256
-        (base32 "129m6rz8vbd7370c3h3ma66bxqdkm6wsdix5qkmv1vm7sanxh4bb"))))
+        (base32 "1kg744v6sz17xc4dj6q3n13jimkfkwchs35x513w2y73kzm2n1sm"))))
     (build-system meson-build-system)
     (native-inputs
      (list pkg-config

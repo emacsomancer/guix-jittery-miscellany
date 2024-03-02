@@ -227,7 +227,7 @@
       #:imported-modules `(,@%meson-build-system-modules
                            ()
                            (guix build emacs-utils))
-      #:configure-flags
+      ;; #:configure-flags
       ;; #~(list (format #f "-Dguile-extension-dir=~a/lib" #$output))
       #:phases
       #~(modify-phases %standard-phases

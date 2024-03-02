@@ -228,7 +228,7 @@
                            ()
                            (guix build emacs-utils))
       #:configure-flags
-      #~(list (format #f "-Dguile-extension-dir=~a/lib" #$output))
+      ;; #~(list (format #f "-Dguile-extension-dir=~a/lib" #$output))
       #:phases
       #~(modify-phases %standard-phases
           (add-after 'unpack 'patch-bin-references
@@ -242,11 +242,11 @@
               (substitute* '("lib/testbbs/bench-indexer.cc"
                              "lib/utils/mu-test-utils.cc")
                 (("/bin/rm") (which "rm")))))
-          (add-after 'install 'fix-ffi
-            (lambda _
-              (substitute* (find-files #$output "mu.scm")
-                (("\"guile\"")
-                 (format #f "\"~a/guile\"" #$output)))))
+          ;; (add-after 'install 'fix-ffi
+          ;;   (lambda _
+          ;;     (substitute* (find-files #$output "mu.scm")
+          ;;       (("\"libguile-mu\"")
+          ;;        (format #f "\"~a/lib/libguile-mu\"" #$output)))))
           (add-after 'install 'install-emacs-autoloads
             (lambda* (#:key outputs #:allow-other-keys)
               (emacs-generate-autoloads

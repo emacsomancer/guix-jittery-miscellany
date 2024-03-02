@@ -246,7 +246,7 @@
             (lambda _
               (substitute* (find-files #$output "mu.scm")
                 (("\"guile\"")
-                 (format #f "\"~a/lib/guile\"" #$output)))))
+                 (format #f "\"~a/guile\"" #$output)))))
           (add-after 'install 'install-emacs-autoloads
             (lambda* (#:key outputs #:allow-other-keys)
               (emacs-generate-autoloads

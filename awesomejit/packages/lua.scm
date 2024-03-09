@@ -82,7 +82,7 @@ language.")
 (define-public fennel
   (package
     (name "fennel")
-    (version "1.4.0")
+    (version "1.4.2")
     (source (origin
               (method git-fetch)
               (uri (git-reference

@@ -117,53 +117,53 @@
   #:use-module (gnu packages aidc)  ;; need to add this for qrencode
   #:use-module (srfi srfi-1))
 
-(define-public pdfpc
-  (package
-    (name "pdfpc")
-    (version "4.6.0")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/pdfpc/pdfpc")
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "0kj84sf5hgr2v2ra6dxmxqcr173h17cpnhg9lcq36shdbdnncwg4"))))
-    (build-system cmake-build-system)
-    (arguments
-     '(#:tests? #f          ; no test target
-       #:phases
-       (modify-phases %standard-phases
-         ;; This is really a bug in Vala.
-         ;; https://github.com/pdfpc/pdfpc/issues/594
-         (add-after 'unpack 'fix-vala-API-conflict
-           (lambda _
-             (substitute* "src/classes/action/movie.vala"
-               (("info.from_caps\\(caps\\)")
-                "Gst.Video.info_from_caps(out info, caps)")))))))
-    (inputs
-     `(("cairo" ,cairo)
-       ("discount" ,discount) ; libmarkdown
-       ("qrencode" ,qrencode) ; needs gnu packages aidc
-       ("gtk+" ,gtk+)
-       ("gstreamer" ,gstreamer)
-       ("gst-plugins-base" ,gst-plugins-base)
-       ("json-glib" ,json-glib)
-       ("libgee" ,libgee)
-       ("poppler" ,poppler)
-       ("pango" ,pango)
-       ("vala" ,vala)
-       ("webkitgtk" ,webkitgtk-with-libsoup2)))
-    (native-inputs
-     (list pkg-config))
-    (home-page "https://pdfpc.github.io/")
-    (synopsis "Presenter console with multi-monitor support for PDF files")
-    (description
-     "pdfpc is a presentation viewer application which uses multi-monitor
-output to provide meta information to the speaker during the presentation.  It
-is able to show a normal presentation window on one screen, while showing a
-more sophisticated overview on the other one providing information like a
-picture of the next slide, as well as the left over time till the end of the
-presentation.  The input files processed by pdfpc are PDF documents.")
-    (license license:gpl3+)))
+;; (define-public pdfpc
+;;   (package
+;;     (name "pdfpc")
+;;     (version "4.6.0")
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri (git-reference
+;;              (url "https://github.com/pdfpc/pdfpc")
+;;              (commit (string-append "v" version))))
+;;        (file-name (git-file-name name version))
+;;        (sha256
+;;         (base32 "0kj84sf5hgr2v2ra6dxmxqcr173h17cpnhg9lcq36shdbdnncwg4"))))
+;;     (build-system cmake-build-system)
+;;     (arguments
+;;      '(#:tests? #f          ; no test target
+;;        #:phases
+;;        (modify-phases %standard-phases
+;;          ;; This is really a bug in Vala.
+;;          ;; https://github.com/pdfpc/pdfpc/issues/594
+;;          (add-after 'unpack 'fix-vala-API-conflict
+;;            (lambda _
+;;              (substitute* "src/classes/action/movie.vala"
+;;                (("info.from_caps\\(caps\\)")
+;;                 "Gst.Video.info_from_caps(out info, caps)")))))))
+;;     (inputs
+;;      `(("cairo" ,cairo)
+;;        ("discount" ,discount) ; libmarkdown
+;;        ("qrencode" ,qrencode) ; needs gnu packages aidc
+;;        ("gtk+" ,gtk+)
+;;        ("gstreamer" ,gstreamer)
+;;        ("gst-plugins-base" ,gst-plugins-base)
+;;        ("json-glib" ,json-glib)
+;;        ("libgee" ,libgee)
+;;        ("poppler" ,poppler)
+;;        ("pango" ,pango)
+;;        ("vala" ,vala)
+;;        ("webkitgtk" ,webkitgtk-with-libsoup2)))
+;;     (native-inputs
+;;      (list pkg-config))
+;;     (home-page "https://pdfpc.github.io/")
+;;     (synopsis "Presenter console with multi-monitor support for PDF files")
+;;     (description
+;;      "pdfpc is a presentation viewer application which uses multi-monitor
+;; output to provide meta information to the speaker during the presentation.  It
+;; is able to show a normal presentation window on one screen, while showing a
+;; more sophisticated overview on the other one providing information like a
+;; picture of the next slide, as well as the left over time till the end of the
+;; presentation.  The input files processed by pdfpc are PDF documents.")
+;;     (license license:gpl3+)))

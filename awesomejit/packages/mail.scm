@@ -234,7 +234,7 @@
             (lambda _
               (substitute* '("guile/tests/test-mu-guile.cc"
                              ;; "mu/tests/test-mu-cmd.cc"
-                             "mu/tests/test-mu-cmd-cfind.cc"
+                             ;; "mu/tests/test-mu-cmd-cfind.cc"
                              "mu/tests/test-mu-query.cc")
                 (("/bin/sh") (which "sh")))
               (substitute* '("lib/tests/bench-indexer.cc"

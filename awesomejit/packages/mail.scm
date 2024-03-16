@@ -218,7 +218,7 @@
            gnupg                        ; for tests
            texinfo))
     (inputs
-     (list glib gmime guile-3.0 xapian))
+     (list glib gmime guile-3.0 xapian readline python))
     (arguments
      (list
       #:modules '((guix build meson-build-system)

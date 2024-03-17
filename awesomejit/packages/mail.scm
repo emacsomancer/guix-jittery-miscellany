@@ -240,7 +240,7 @@
               (substitute* '("lib/tests/bench-indexer.cc"
                              "lib/utils/mu-test-utils.cc")
                 (("/bin/rm") (which "rm")))
-              (substitute* '("mu/test/test-mu-maildir.cc")
+              (substitute* '("lib/test/test-mu-maildir.cc")
                 (("/bin/mv") (which "mv")))))
           (add-after 'install 'fix-ffi
             (lambda _

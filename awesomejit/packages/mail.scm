@@ -233,14 +233,15 @@
           (add-after 'unpack 'patch-bin-references
             (lambda _
               (substitute* '("guile/tests/test-mu-guile.cc"
-                             "mu/test/test-mu-maildir.cc"
                              ;; "mu/tests/test-mu-cmd.cc"
                              ;; "mu/tests/test-mu-cmd-cfind.cc"
                              "mu/tests/test-mu-query.cc")
                 (("/bin/sh") (which "sh")))
               (substitute* '("lib/tests/bench-indexer.cc"
                              "lib/utils/mu-test-utils.cc")
-                (("/bin/rm") (which "rm")))))
+                (("/bin/rm") (which "rm")))
+              (substitute* '("mu/test/test-mu-maildir.cc")
+                (("/bin/mv") (which "mv")))))
           (add-after 'install 'fix-ffi
             (lambda _
               (substitute* (find-files #$output "mu.scm")

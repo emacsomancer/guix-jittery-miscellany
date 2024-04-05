@@ -19,7 +19,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (gnu system mapped-devices)
+(define-module (awesomejit system mapped-devices)
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module ((guix modules) #:hide (file-name->module-name))

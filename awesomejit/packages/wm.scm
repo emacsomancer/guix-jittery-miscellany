@@ -9,6 +9,101 @@
   #:use-module (awesomejit packages lua)
   #:use-module (gnu packages wm))
 
+(define-public stumpwm
+    (let ((commit "c802c7edd6323c9e768dd9383e3813a71aa8d59b")
+        (revision "0"))
+      (package
+        ;; (inherit awesome)
+             (name "stumpwm")
+             (version (git-version "19.11.51.g2948b7c" revision commit))
+             (source
+              (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/stumpwm/stumpwm")
+                      (commit commit)))
+                (sha256
+                 (base32 "0ycis7519d7znyaa2x9dxgs0asfr4w7xsb34lcifygnlwnz11hpm"))))
+  ;; (package
+  ;;   (name "stumpwm")
+  ;;   (version "22.11")
+  ;;   (source
+  ;;    (origin
+  ;;      (method git-fetch)
+  ;;      (uri (git-reference
+  ;;            (url "https://github.com/stumpwm/stumpwm")
+  ;;            (commit version)))
+  ;;      (file-name (git-file-name "stumpwm" version))
+  ;;      (sha256
+  ;;       (base32 "1wxgddmkgmpml44a3m6bd8y529b13jz14apxxipmij10wzpgay6d"))))
+    (build-system asdf-build-system/sbcl)
+    (native-inputs
+     (list sbcl-fiasco
+           texinfo
+
+           ;; To build the manual.
+           autoconf
+           automake))
+    (inputs
+     (list sbcl-alexandria
+           sbcl-cl-ppcre
+           sbcl-clx))
+    (outputs '("out" "lib"))
+    (arguments
+     (list
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'unpack 'fix-tests
+            (lambda _
+              (substitute* "stumpwm-tests.asd"
+                (("\"ALL-TESTS\"")
+                 "\"RUN-PACKAGE-TESTS\" :package"))))
+          (add-after 'create-asdf-configuration 'build-program
+            (lambda* (#:key outputs #:allow-other-keys)
+              (build-program
+               (string-append (assoc-ref outputs "out") "/bin/stumpwm")
+               outputs
+               #:entry-program '((stumpwm:stumpwm) 0))))
+          (add-after 'build-program 'create-desktop-file
+            (lambda* (#:key outputs #:allow-other-keys)
+              (let* ((out (assoc-ref outputs "out"))
+                     (xsessions (string-append out "/share/xsessions")))
+                (mkdir-p xsessions)
+                (call-with-output-file
+                    (string-append xsessions "/stumpwm.desktop")
+                  (lambda (file)
+                    (format file
+                       "[Desktop Entry]~@
+                        Name=stumpwm~@
+                        Comment=The Stump Window Manager~@
+                        Exec=~a/bin/stumpwm~@
+                        TryExec=~@*~a/bin/stumpwm~@
+                        Icon=~@
+                        Type=Application~%"
+                       out))))))
+          (add-after 'install 'install-manual
+            (lambda* (#:key (make-flags '()) outputs #:allow-other-keys)
+              (let* ((out  (assoc-ref outputs "out"))
+                     (info (string-append out "/share/info")))
+                (invoke "./autogen.sh")
+                (invoke "sh" "./configure" "SHELL=sh")
+                (apply invoke "make" "stumpwm.info" make-flags)
+                (install-file "stumpwm.info" info))))
+          (add-after 'install-manual 'remove-temporary-cache
+            (lambda* (#:key outputs #:allow-other-keys)
+              (delete-file-recursively (string-append (assoc-ref outputs "lib")
+                                                      "/.cache")))))))
+    (synopsis "Window manager written in Common Lisp")
+    (description
+     "Stumpwm is a window manager written entirely in Common Lisp.
+It attempts to be highly customizable while relying entirely on the keyboard
+for input.  These design decisions reflect the growing popularity of
+productive, customizable lisp based systems.")
+    (home-page "https://github.com/stumpwm/stumpwm")
+    (license license:gpl2+)
+    (properties `((cl-source-variant . ,(delay cl-stumpwm)))))))
+
+
 (define-public awesome-next
   (let ((commit "375d9d723550023f75ff0066122aba99fdbb2a93")
         (revision "0"))

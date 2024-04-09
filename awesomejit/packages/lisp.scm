@@ -105,44 +105,44 @@
   #:use-module (srfi srfi-1))
 
 
-(define-public lispe
-  (let ((commit "3b5ffad81767ce63e2562f65a9e8a2a992952799")
-        (revision "0")
-        (branch "master"))
-    (package
-      (name "lispe")
-      (version (git-version branch revision commit))
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://github.com/naver/lispe")
-                      (commit commit)))
-                (file-name (git-file-name name version))
-                (sha256
-                 (base32
-                  "0xhwxg8x7ljd6was9vwlhf0irab4r8q25lsdpmq9c076ggid6liy"))))
-      (build-system cmake-build-system)
-      ;; (outputs '("out" "doc"))
-      ;; (arguments
-      ;;  `(#:phases (modify-phases %standard-phases
-      ;;               (add-after 'install 'move-doc
-      ;;                 (lambda* (#:key outputs #:allow-other-keys)
-      ;;                   (let* ((name ,(package-name argagg)) (out (assoc-ref
-      ;;                                                              outputs
-      ;;                                                              "out"))
-      ;;                          (doc (assoc-ref outputs "doc")))
-      ;;                     (mkdir-p (string-append doc "/share/doc"))
-      ;;                     (rename-file
-      ;;                      (string-append out "/share/doc/" name)
-      ;;                      (string-append doc "/share/doc/" name))))))))
-      ;; (native-inputs (list doxygen))
-      (home-page "https://github.com/naver/lispe")
-      (synopsis "A compact lisp with a variety of functional and array language features")
-      (description
-       "An implementation of a full fledged Lisp interpreter with
- Data Structure, Pattern Programming and High level Functions with
- Lazy Evaluation à la Haskell. ")
-      (license license:bsd-3))))
+;; (define-public lispe
+;;   (let ((commit "3b5ffad81767ce63e2562f65a9e8a2a992952799")
+;;         (revision "0")
+;;         (branch "master"))
+;;     (package
+;;       (name "lispe")
+;;       (version (git-version branch revision commit))
+;;       (source (origin
+;;                 (method git-fetch)
+;;                 (uri (git-reference
+;;                       (url "https://github.com/naver/lispe")
+;;                       (commit commit)))
+;;                 (file-name (git-file-name name version))
+;;                 (sha256
+;;                  (base32
+;;                   "0xhwxg8x7ljd6was9vwlhf0irab4r8q25lsdpmq9c076ggid6liy"))))
+;;       (build-system cmake-build-system)
+;;       ;; (outputs '("out" "doc"))
+;;       ;; (arguments
+;;       ;;  `(#:phases (modify-phases %standard-phases
+;;       ;;               (add-after 'install 'move-doc
+;;       ;;                 (lambda* (#:key outputs #:allow-other-keys)
+;;       ;;                   (let* ((name ,(package-name argagg)) (out (assoc-ref
+;;       ;;                                                              outputs
+;;       ;;                                                              "out"))
+;;       ;;                          (doc (assoc-ref outputs "doc")))
+;;       ;;                     (mkdir-p (string-append doc "/share/doc"))
+;;       ;;                     (rename-file
+;;       ;;                      (string-append out "/share/doc/" name)
+;;       ;;                      (string-append doc "/share/doc/" name))))))))
+;;       ;; (native-inputs (list doxygen))
+;;       (home-page "https://github.com/naver/lispe")
+;;       (synopsis "A compact lisp with a variety of functional and array language features")
+;;       (description
+;;        "An implementation of a full fledged Lisp interpreter with
+;;  Data Structure, Pattern Programming and High level Functions with
+;;  Lazy Evaluation à la Haskell. ")
+;;       (license license:bsd-3))))
 
 (define-public sbcl
   (package

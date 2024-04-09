@@ -1,6 +1,7 @@
 (define-module (awesomejit packages wm)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
+  #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix build-system asdf)
   #:use-module (guix build-system cmake)

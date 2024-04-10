@@ -21,7 +21,7 @@
       (package
         ;; (inherit awesome)
              (name "stumpwm")
-             (version (git-version "19.11.51.g2948b7c" revision commit))
+             (version (git-version "22.11.1.g2948b7c" revision commit))
              (source
               (origin
                 (method git-fetch)

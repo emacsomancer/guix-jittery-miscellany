@@ -203,7 +203,7 @@
 (define-public mu
   (package
     (name "mu")
-    (version "1.12.2")
+    (version "1.12.3")
     (source
      (origin
        (method url-fetch)

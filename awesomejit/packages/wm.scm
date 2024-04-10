@@ -59,11 +59,11 @@
      (list
       #:phases
       #~(modify-phases %standard-phases
-          (add-after 'unpack 'fix-tests
-            (lambda _
-              (substitute* "stumpwm-tests.asd"
-                (("\"ALL-TESTS\"")
-                 "\"RUN-PACKAGE-TESTS\" :package"))))
+          ;; (add-after 'unpack 'fix-tests
+          ;;   (lambda _
+          ;;     (substitute* "stumpwm-tests.asd"
+          ;;       (("\"ALL-TESTS\"")
+          ;;        "\"RUN-PACKAGE-TESTS\" :package"))))
           (add-after 'create-asdf-configuration 'build-program
             (lambda* (#:key outputs #:allow-other-keys)
               (build-program

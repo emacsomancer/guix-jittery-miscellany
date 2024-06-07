@@ -230,7 +230,7 @@
              (commit version)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1cy8cpqwq6yfsbrnln3qqp9lsjckn20m6w7b890ha7jahyir5m1n"))))
+        (base32 "13j6vg0kxfw3hppq7gzbz2d72g415071gh5arkwzj902rh0c7777"))))
     (arguments
      (substitute-keyword-arguments (package-arguments youtube-dl)
        ((#:tests? _) (not (%current-target-system)))

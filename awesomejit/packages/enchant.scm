@@ -47,7 +47,7 @@
 (define-public enchant
   (package
     (name "enchant")
-    (version "2.6.2")
+    (version "2.8.1")
     (source (origin
               (method url-fetch)
               (uri (string-append "https://github.com/AbiWord/enchant/releases"

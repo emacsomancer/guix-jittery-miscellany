@@ -154,7 +154,7 @@
        (uri (string-append "mirror://sourceforge/sbcl/sbcl/" version "/sbcl-"
                            version "-source.tar.bz2"))
        (sha256
-        (base32 "1wn3nwq3qn33r6pxr57kwjhdx4w80f51akrx9b3x6amqjbgsmjc9"))
+        (base32 "1lbvb9rzlkl3h8s75i2js4dnmgxmvs41jxjb5dj0f603r688xxjd"))
        (modules '((guix build utils)))
        (snippet
         '(begin

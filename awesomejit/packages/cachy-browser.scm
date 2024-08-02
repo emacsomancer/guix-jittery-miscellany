@@ -48,7 +48,7 @@
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages hunspell)
-  #:use-module (atomized packages icu4c)
+;;  #:use-module (atomized packages icu4c)
   #:use-module (gnu packages image)
   #:use-module (gnu packages jemalloc)
   #:use-module (gnu packages kerberos)

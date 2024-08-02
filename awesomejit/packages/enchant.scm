@@ -29,7 +29,7 @@
   #:use-module (gnu packages glib)
   #:use-module (gnu packages groff) ;; ADDED
   #:use-module (gnu packages hunspell)
-  #:use-module (gnu packages icu4c)
+;;  #:use-module (gnu packages icu4c)
   #:use-module (gnu packages man)
   #:use-module (gnu packages perl)
   #:use-module (gnu packages pkg-config)

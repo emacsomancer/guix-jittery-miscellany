@@ -211,9 +211,10 @@
                            version "/isync-" version ".tar.gz"))
        (sha256 (base32
                 "13gpawspfpiw87wm2p6gzrm98xwy741k2ib1l6fjggw7jc81xj50"))
-       (patches
-        ;; Likely to be included in next version
-        (search-patches "isync-openssl3-fix.patch"))))
+       ;; (patches
+       ;;  ;; Likely to be included in next version
+       ;;  (search-patches "isync-openssl3-fix.patch"))
+       ))
     (build-system gnu-build-system)
     (arguments
      (list

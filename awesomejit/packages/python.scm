@@ -59,7 +59,7 @@ parameter to ICS calendar files.  Strict interpretations according to RFC 5545 i
        (method url-fetch)
        (uri (pypi-uri "recurring_ical_events" version))
        (sha256
-        (base32 "00k4l800j2d3zfqhxjlzjk0b6493wqhmg4r58xsp12sx2ia2sxla"))))
+        (base32 "141ri349jmybabw3gks0pz5d537lk037ychqsr2h860s7nq4yzwf"))))
     (build-system python-build-system)
     (arguments
      ;; Broken tests or cyclic dependecies with other packages.

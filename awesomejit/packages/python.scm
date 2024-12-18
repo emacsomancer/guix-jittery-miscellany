@@ -26,7 +26,7 @@
 (define-public python-x-wr-timezone
   (package
     (name "python-x-wr-timezone")
-    (version "0.0.6")
+    (version "2.0.0")
     (source
      (origin
        (method url-fetch)
@@ -53,7 +53,7 @@ parameter to ICS calendar files.  Strict interpretations according to RFC 5545 i
 (define-public python-recurring-ical-events
   (package
     (name "python-recurring-ical-events")
-    (version "2.1.1")
+    (version "3.3.4")
     (source
      (origin
        (method url-fetch)

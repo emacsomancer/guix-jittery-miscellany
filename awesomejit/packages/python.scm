@@ -32,7 +32,7 @@
        (method url-fetch)
        (uri (pypi-uri "x_wr_timezone" version))
        (sha256
-        (base32 "0j5zjvrshn7smq6cgbh7l66dl64wqs18cfyfnq1np1y00g320pha"))))
+        (base32 "0raj8n022qh407sjzwn9w4vfj952fdblp2yq1iajh8fdxlnmsiqy"))))
     (build-system python-build-system)
     (arguments
      ;; Broken tests or cyclic dependecies with other packages.

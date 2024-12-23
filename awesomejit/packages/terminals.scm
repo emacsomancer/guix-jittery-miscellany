@@ -131,118 +131,118 @@
   #:use-module (srfi srfi-26))
 
 
-(define-public kitty
-  (package
-    (name "kitty")
-    (version "0.38.0")
-    (home-page "https://sw.kovidgoyal.net/kitty/")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/kovidgoyal/kitty")
-             (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "082j4mpmi57dj766izilj5zbk0fa4p8b6g9fgvffhd9li98nhi2x"))
-       ;; (patches (search-patches "kitty-fix-wayland-protocols.patch"))
-       (modules '((guix build utils)))
-       (snippet
-        '(begin
-           ;; patch needed as sphinx-build is used as a python script
-           ;; whereas the guix package uses a bash script launching the
-           ;; python script
-           (substitute* "docs/conf.py"
-             (("(from kitty.constants import str_version)" kitty-imp)
-              (string-append "sys.path.append(\"..\")\n" kitty-imp)))
-           (substitute* "docs/Makefile"
-             (("^SPHINXBUILD[[:space:]]+= (python3.*)$")
-              "SPHINXBUILD = sphinx-build\n"))
-           #t))))
-    (build-system gnu-build-system)
-    (native-inputs
-     (list dbus
-           mesa
-           libxcursor
-           libxi
-           libxinerama
-           libxkbcommon
-           libxrandr
-           ncurses ;; for tic command
-           pkg-config
-           python-sphinx
-           openssl ;; libcrypto
-           xxhash ;; libxxhash
-           wayland-protocols))
-    (inputs
-     (list fontconfig
-           freetype
-           harfbuzz
-           lcms
-           libcanberra
-           libpng
-           python-pygments
-           python-wrapper
-           wayland
-           zlib))
-    (arguments
-     (list
-      #:phases
-      #~(modify-phases %standard-phases
-          (delete 'configure)   ;no configure script
-          (replace 'build
-            (lambda* (#:key inputs #:allow-other-keys)
-              ;; The "kitty" sub-directory must be writable prior to
-              ;; configuration (e.g., un-setting updates).
-              (for-each make-file-writable (find-files "kitty"))
-              (invoke "python3" "setup.py" "linux-package"
-                      ;; Do not phone home.
-                      "--update-check-interval=0"
-                      ;; Wayland backend requires EGL, which isn't
-                      ;; found out-of-the-box for some reason.
-                      (string-append "--egl-library="
-                                     (search-input-file inputs "/lib/libEGL.so.1")))))
-          (replace 'check
-            (lambda* (#:key tests? #:allow-other-keys)
-              (when tests?
-                ;; Fix "cannot find kitty executable" error when running
-                ;; tests.
-                (setenv "PATH" (string-append "linux-package/bin:"
-                                              (getenv "PATH")))
-                (invoke "python3" "test.py"))))
-          (add-before 'install 'rm-pycache
-            ;; created python cache __pycache__ are non deterministic
-            (lambda _
-              (let ((pycaches (find-files "linux-package/"
-                                          "__pycache__"
-                                          #:directories? #t)))
-                (for-each delete-file-recursively pycaches))))
-          (replace 'install
-            (lambda _
-              (let* ((obin (string-append #$output "/bin"))
-                     (olib (string-append #$output "/lib"))
-                     (oshare (string-append #$output "/share")))
-                (copy-recursively "linux-package/bin" obin)
-                (copy-recursively "linux-package/share" oshare)
-                (copy-recursively "linux-package/lib" olib)))))))
-    (synopsis "Fast, featureful, GPU based terminal emulator")
-    (description "Kitty is a fast and featureful GPU-based terminal emulator:
-@itemize
-@item Offloads rendering to the GPU for lower system load and buttery smooth
-scrolling.  Uses threaded rendering to minimize input latency.
-@item Supports all modern terminal features: graphics (images), unicode,
-true-color, OpenType ligatures, mouse protocol, focus tracking, bracketed
-paste and several new terminal protocol extensions.
-@item Supports tiling multiple terminal windows side by side in different
-layouts without needing to use an extra program like tmux.
-@item Can be controlled from scripts or the shell prompt, even over SSH.
-@item Has a framework for Kittens, small terminal programs that can be used to
-extend kitty's functionality.  For example, they are used for Unicode input,
-hints, and side-by-side diff.
-@item Supports startup sessions which allow you to specify the window/tab
-layout, working directories and programs to run on startup.
-@item Allows you to open the scrollback buffer in a separate window using
-arbitrary programs of your choice.  This is useful for browsing the history
-comfortably in a pager or editor.
-@end itemize")
-    (license license:gpl3+)))
+;; (define-public kitty
+;;   (package
+;;     (name "kitty")
+;;     (version "0.38.0")
+;;     (home-page "https://sw.kovidgoyal.net/kitty/")
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri (git-reference
+;;              (url "https://github.com/kovidgoyal/kitty")
+;;              (commit (string-append "v" version))))
+;;        (file-name (git-file-name name version))
+;;        (sha256
+;;         (base32 "082j4mpmi57dj766izilj5zbk0fa4p8b6g9fgvffhd9li98nhi2x"))
+;;        ;; (patches (search-patches "kitty-fix-wayland-protocols.patch"))
+;;        (modules '((guix build utils)))
+;;        (snippet
+;;         '(begin
+;;            ;; patch needed as sphinx-build is used as a python script
+;;            ;; whereas the guix package uses a bash script launching the
+;;            ;; python script
+;;            (substitute* "docs/conf.py"
+;;              (("(from kitty.constants import str_version)" kitty-imp)
+;;               (string-append "sys.path.append(\"..\")\n" kitty-imp)))
+;;            (substitute* "docs/Makefile"
+;;              (("^SPHINXBUILD[[:space:]]+= (python3.*)$")
+;;               "SPHINXBUILD = sphinx-build\n"))
+;;            #t))))
+;;     (build-system gnu-build-system)
+;;     (native-inputs
+;;      (list dbus
+;;            mesa
+;;            libxcursor
+;;            libxi
+;;            libxinerama
+;;            libxkbcommon
+;;            libxrandr
+;;            ncurses ;; for tic command
+;;            pkg-config
+;;            python-sphinx
+;;            openssl ;; libcrypto
+;;            xxhash ;; libxxhash
+;;            wayland-protocols))
+;;     (inputs
+;;      (list fontconfig
+;;            freetype
+;;            harfbuzz
+;;            lcms
+;;            libcanberra
+;;            libpng
+;;            python-pygments
+;;            python-wrapper
+;;            wayland
+;;            zlib))
+;;     (arguments
+;;      (list
+;;       #:phases
+;;       #~(modify-phases %standard-phases
+;;           (delete 'configure)   ;no configure script
+;;           (replace 'build
+;;             (lambda* (#:key inputs #:allow-other-keys)
+;;               ;; The "kitty" sub-directory must be writable prior to
+;;               ;; configuration (e.g., un-setting updates).
+;;               (for-each make-file-writable (find-files "kitty"))
+;;               (invoke "python3" "setup.py" "linux-package"
+;;                       ;; Do not phone home.
+;;                       "--update-check-interval=0"
+;;                       ;; Wayland backend requires EGL, which isn't
+;;                       ;; found out-of-the-box for some reason.
+;;                       (string-append "--egl-library="
+;;                                      (search-input-file inputs "/lib/libEGL.so.1")))))
+;;           (replace 'check
+;;             (lambda* (#:key tests? #:allow-other-keys)
+;;               (when tests?
+;;                 ;; Fix "cannot find kitty executable" error when running
+;;                 ;; tests.
+;;                 (setenv "PATH" (string-append "linux-package/bin:"
+;;                                               (getenv "PATH")))
+;;                 (invoke "python3" "test.py"))))
+;;           (add-before 'install 'rm-pycache
+;;             ;; created python cache __pycache__ are non deterministic
+;;             (lambda _
+;;               (let ((pycaches (find-files "linux-package/"
+;;                                           "__pycache__"
+;;                                           #:directories? #t)))
+;;                 (for-each delete-file-recursively pycaches))))
+;;           (replace 'install
+;;             (lambda _
+;;               (let* ((obin (string-append #$output "/bin"))
+;;                      (olib (string-append #$output "/lib"))
+;;                      (oshare (string-append #$output "/share")))
+;;                 (copy-recursively "linux-package/bin" obin)
+;;                 (copy-recursively "linux-package/share" oshare)
+;;                 (copy-recursively "linux-package/lib" olib)))))))
+;;     (synopsis "Fast, featureful, GPU based terminal emulator")
+;;     (description "Kitty is a fast and featureful GPU-based terminal emulator:
+;; @itemize
+;; @item Offloads rendering to the GPU for lower system load and buttery smooth
+;; scrolling.  Uses threaded rendering to minimize input latency.
+;; @item Supports all modern terminal features: graphics (images), unicode,
+;; true-color, OpenType ligatures, mouse protocol, focus tracking, bracketed
+;; paste and several new terminal protocol extensions.
+;; @item Supports tiling multiple terminal windows side by side in different
+;; layouts without needing to use an extra program like tmux.
+;; @item Can be controlled from scripts or the shell prompt, even over SSH.
+;; @item Has a framework for Kittens, small terminal programs that can be used to
+;; extend kitty's functionality.  For example, they are used for Unicode input,
+;; hints, and side-by-side diff.
+;; @item Supports startup sessions which allow you to specify the window/tab
+;; layout, working directories and programs to run on startup.
+;; @item Allows you to open the scrollback buffer in a separate window using
+;; arbitrary programs of your choice.  This is useful for browsing the history
+;; comfortably in a pager or editor.
+;; @end itemize")
+;;     (license license:gpl3+)))

@@ -165,6 +165,8 @@
     (native-inputs
      (list dbus
            fontconfig
+           go
+           golang-std
            mesa
            libxcursor
            libxi

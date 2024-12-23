@@ -190,6 +190,12 @@
      (list
       #:phases
       #~(modify-phases %standard-phases
+
+          (add-before 'build 'set-HOME
+            ;; The build spams ‘Fontconfig error: No writable cache
+            ;; directories’ in a seemingly endless loop otherwise.
+            (lambda _
+              (setenv "HOME" "/tmp")))
           (delete 'configure)   ;no configure script
           (replace 'build
             (lambda* (#:key inputs #:allow-other-keys)

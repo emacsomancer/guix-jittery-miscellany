@@ -143,7 +143,7 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0y0mg8rr18mn0wzym7v48x6kl0ixd5q387kr5jhbdln55ph2jk9d"))
+        (base32 "082j4mpmi57dj766izilj5zbk0fa4p8b6g9fgvffhd9li98nhi2x"))
        (patches (search-patches "kitty-fix-wayland-protocols.patch"))
        (modules '((guix build utils)))
        (snippet

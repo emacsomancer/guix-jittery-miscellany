@@ -105,7 +105,6 @@
   #:use-module (gnu packages sdl)
   #:use-module (gnu packages xorg))
 
-
 (define-public font-nerd-fonts-symbols
   (package
     (name "font-nerd-fonts-symbols")
@@ -118,7 +117,7 @@
                     "/NerdFontsSymbolsOnly.zip"))
               (sha256
                (base32
-                "0dq54qk4q1ymdqnp0skxdxzhx475g2gihzs8ijx0nffa29fwzn9g"))))
+                "0h53ldrkydxaps4kv087k71xgmb40b1s2nv2kvxc4bvs3qy60y10"))))
     (build-system font-build-system)
     (home-page "https://www.nerdfonts.com")
     (synopsis "Nerd Font icons")

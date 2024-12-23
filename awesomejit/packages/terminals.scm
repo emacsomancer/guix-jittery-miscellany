@@ -170,6 +170,7 @@
            ncurses ;; for tic command
            pkg-config
            python-sphinx
+           r-openssl
            wayland-protocols))
     (inputs
      (list fontconfig

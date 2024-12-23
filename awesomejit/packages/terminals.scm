@@ -128,6 +128,7 @@
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg)
+  #:use-module (awesomejit packages fonts)
   #:use-module (srfi srfi-26))
 
 
@@ -170,6 +171,7 @@
            libxkbcommon
            libxrandr
            ncurses ;; for tic command
+           font-nerd-fonts-symbols ;; needed font
            pkg-config
            python-sphinx
            openssl ;; libcrypto

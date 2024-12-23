@@ -176,6 +176,7 @@
            python-sphinx
            openssl ;; libcrypto
            xxhash ;; libxxhash
+           simde 
            wayland-protocols))
     (inputs
      (list fontconfig

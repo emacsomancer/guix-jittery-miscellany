@@ -122,7 +122,7 @@
   #:use-module (gnu packages serialization)
   #:use-module (gnu packages sphinx)
   #:use-module (gnu packages ssh)
-  ;; #:use-module (gnu packages statistics)
+  #:use-module (gnu packages digest)
   #:use-module (gnu packages textutils)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages xdisorg)
@@ -171,7 +171,8 @@
            ncurses ;; for tic command
            pkg-config
            python-sphinx
-           openssl
+           openssl ;; libcrypto
+           xxhash ;; libxxhash
            wayland-protocols))
     (inputs
      (list fontconfig

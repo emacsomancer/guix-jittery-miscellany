@@ -318,9 +318,9 @@
     ;;      (delete 'configure)            ; no configure script
     ;;    )))
     (native-inputs
-     (list pkg-config python))
+     (list pkg-config python libxmu))
     (inputs
-     (list freetype libxmu glew))
+     (list freetype glew))
     (home-page "https://tomscii.sig7.se/zutty/")
     (synopsis "X terminal emulator rendering through OpenGL ES Compute Shaders")
     (description "Zutty is a GPU-accelerated terminal emulator for the X Window

@@ -275,6 +275,11 @@
         (base32
          "115skr3lcw0hdshgxl72qnh635ajy7kk07dnrh9fhbx1bhvqcm3k"))))
     (build-system gnu-build-system)
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (delete 'configure)            ; no configure script
+       )))
     (native-inputs
      (list pkg-config python-waf python))
     (inputs

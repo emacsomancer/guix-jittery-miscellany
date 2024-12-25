@@ -273,7 +273,7 @@
        (file-name (git-file-name name version))
        (sha256
         (base32
-         "1vvjydqf0ax47nvdyyl67jafw5b3sfsav00xid6qpgia1gs2r72n"))))
+         "115skr3lcw0hdshgxl72qnh635ajy7kk07dnrh9fhbx1bhvqcm3k"))))
     (build-system gnu-build-system)
     (native-inputs
      (list pkg-config python-waf python))

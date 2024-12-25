@@ -270,10 +270,10 @@
        (uri (git-reference
              (url "https://git.hq.sig7.se/zutty.git")
              (commit version)))
-       (file-name (git-file-name name version)
-                  (sha256
-                   (base32
-                    "x")))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "x"))))
     (build-system gnu-build-system)
     (native-inputs
      (list pkg-config python-waf python))
@@ -281,13 +281,12 @@
      (list freetype libxmu glew))
     (home-page "https://tomscii.sig7.se/zutty/")
     (synopsis "X terminal emulator rendering through OpenGL ES Compute Shaders")
-    (description "Zutty is a terminal emulator for the X Window System,
-functionally similar to several other X terminal emulators such as xterm.
-Zutty is written in C++ and only relies on OpenGL ES 3.1 for rendering.
-It is also similar to other, much more modern, GPU-accelerated terminal emulators
-such as Alacritty and Kitty. What really sets Zutty apart is its radically simple,
-yet extremely efficient rendering implementation, coupled with a sufficiently
-complete (VTxxx) feature set to make it useful for a wide range of users.
-Zutty offers high throughput with low latency, and strives to conform to relevant
-(published or de-facto) standards.")
+    (description "Zutty is a GPU-accelerated terminal emulator for the X Window
+System, Zutty is written in C++ and only relying on OpenGL ES 3.1 for rendering.
+What really sets Zutty apart is its radically simple, yet extremely efficient
+rendering implementation, coupled with a sufficiently complete (VTxxx) feature
+set to make it useful for a wide range of users. Zutty offers high throughput
+with low latency, and strives to conform to relevant (published or de-facto)
+standards. Zutty provides a clean implementation written from scratch, resulting
+in a minimal, maintainable, modern codebase unencumbered by historical baggage.")
     (license license:gpl3)))

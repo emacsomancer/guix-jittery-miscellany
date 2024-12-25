@@ -317,8 +317,10 @@
     ;;    (modify-phases %standard-phases
     ;;      (delete 'configure)            ; no configure script
     ;;    )))
+    (propagated-inputs
+       (list libxmu))
     (native-inputs
-     (list pkg-config python libxmu))
+     (list pkg-config python))
     (inputs
      (list freetype glew))
     (home-page "https://tomscii.sig7.se/zutty/")

@@ -312,11 +312,11 @@
         (base32
          "115skr3lcw0hdshgxl72qnh635ajy7kk07dnrh9fhbx1bhvqcm3k"))))
     (build-system waf-build-system)
-    ;; (arguments
-    ;;  `(#:phases
-    ;;    (modify-phases %standard-phases
-    ;;      (delete 'configure)            ; no configure script
-    ;;    )))
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (delete 'check)            ; no check
+       )))
     ;; (propagated-inputs
     ;;  (list libxmu))
     (native-inputs

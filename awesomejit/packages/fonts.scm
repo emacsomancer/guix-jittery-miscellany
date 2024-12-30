@@ -104,7 +104,7 @@
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages sdl)
   #:use-module (gnu packages xorg)
-  #:use-module (nonguix licenses))
+  #:use-module (nonguix packages fonts))
 
 (define-public font-nerd-fonts-symbols
   (package

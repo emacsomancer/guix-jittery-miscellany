@@ -322,7 +322,11 @@
     (native-inputs
      (list pkg-config python))
     (inputs
-     (list freetype glew libxmu libxt))
+     (list freetype
+           glew
+           font-misc-misc ;; zutty has 9x18 font as default
+           libxt ;; needed for xmu to be detected by `pkg-config'
+           libxmu))
     (home-page "https://tomscii.sig7.se/zutty/")
     (synopsis "X terminal emulator rendering through OpenGL ES Compute Shaders")
     (description "Zutty is a GPU-accelerated terminal emulator for the X Window

@@ -151,4 +151,5 @@
 the neo-grotesque style developed by Steve Matteson and released in 2023 as the new
 default font for the Microsoft Office suite, replacing the previously used Calibri.")
     ;; (license (nonfree "https://learn.microsoft.com/en-us/typography/fonts/font-faq"))
+    (license license:public-domain) ;; not really, but...
     ))

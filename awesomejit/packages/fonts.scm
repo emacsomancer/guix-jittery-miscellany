@@ -147,4 +147,4 @@
     (description "Aptos, originally named Bierstadt, is a sans-serif typeface in
 the neo-grotesque style developed by Steve Matteson and released in 2023 as the new
 default font for the Microsoft Office suite, replacing the previously used Calibri.")
-    (license license:nonfree)))
+    (license (nonfree "https://learn.microsoft.com/en-us/typography/fonts/font-faq"))))

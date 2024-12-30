@@ -104,8 +104,9 @@
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages sdl)
   #:use-module (gnu packages xorg)
-  #:use-module (nonguix packages)
-  #:use-module (nonguix packages fonts))
+  ;; #:use-module (nonguix packages)
+  ;; #:use-module (nonguix packages fonts)
+  )
 
 (define-public font-nerd-fonts-symbols
   (package
@@ -149,4 +150,5 @@
     (description "Aptos, originally named Bierstadt, is a sans-serif typeface in
 the neo-grotesque style developed by Steve Matteson and released in 2023 as the new
 default font for the Microsoft Office suite, replacing the previously used Calibri.")
-    (license (nonfree "https://learn.microsoft.com/en-us/typography/fonts/font-faq"))))
+    ;; (license (nonfree "https://learn.microsoft.com/en-us/typography/fonts/font-faq"))
+    ))

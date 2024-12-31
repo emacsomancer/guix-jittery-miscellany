@@ -136,11 +136,12 @@
     (source (origin
               (method url-fetch)
               (uri (string-append
-                    "https://web.archive.org/web/" ;; stabilise version
+                    "'https://web.archive.org/web/" ;; stabilise version
                     "20241210203207" ;; archive.org snapshot date
                     "https://download.microsoft.com/download/" ;; archived from microsoft
                     "8/6/0/860a94fa-7feb-44ef-ac79-c072d9113d69/"
-                    "Microsoft" " " "Aptos" " " "Fonts.zip"))
+                    ;; http://web.archive.org/web/20241210203207/https://download.microsoft.com/download/8/6/0/860a94fa-7feb-44ef-ac79-c072d9113d69/Microsoft%20Aptos%20Fonts.zip
+                    "Microsoft" " " "Aptos" " " "Fonts.zip'"))
               (sha256
                (base32
                 "0h53ldrkydxaps4kv087k71xgmb40b1s2nv2kvxc4bvs3qy60y10"))))

@@ -329,8 +329,8 @@
            libxmu))
     (home-page "https://tomscii.sig7.se/zutty/")
     (synopsis "X terminal emulator rendering through OpenGL ES Compute Shaders")
-    (description "Zutty is a GPU-accelerated terminal emulator for the X Window
-System, Zutty is written in C++ and only relying on OpenGL ES 3.1 for rendering.
+    (description "Zutty [zuːc̟] is a GPU-accelerated terminal emulator for the X
+Window, written in C++ and only relying on OpenGL ES 3.1 for rendering.
 What really sets Zutty apart is its radically simple, yet extremely efficient
 rendering implementation, coupled with a sufficiently complete (VTxxx) feature
 set to make it useful for a wide range of users. Zutty offers high throughput

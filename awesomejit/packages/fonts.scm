@@ -140,7 +140,7 @@
                     "20241210203207" ;; archive.org snapshot date
                     "https://download.microsoft.com/download/" ;; archived from microsoft
                     "8/6/0/860a94fa-7feb-44ef-ac79-c072d9113d69/"
-                    "Microsoft\ Aptos\ Fonts.zip"))
+                    "Microsoft Aptos Fonts.zip"))
               (sha256
                (base32
                 "0h53ldrkydxaps4kv087k71xgmb40b1s2nv2kvxc4bvs3qy60y10"))))

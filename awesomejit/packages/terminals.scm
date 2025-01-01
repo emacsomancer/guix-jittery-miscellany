@@ -130,6 +130,7 @@
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg)
+  #:use-module (gnu packages zig)
   #:use-module (awesomejit packages fonts)
   #:use-module (srfi srfi-26))
 
@@ -338,3 +339,48 @@ with low latency, and strives to conform to relevant (published or de-facto)
 standards. Zutty provides a clean implementation written from scratch, resulting
 in a minimal, maintainable, modern codebase unencumbered by historical baggage.")
     (license license:gpl3)))
+
+(define-public ghostty
+  (package
+    (name "ghostty")
+    (version "1.0.1")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/ghostty-org/ghostty")
+             (commit (string-append "v" version))
+             ;; (recursive? #t)
+             ))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1nvhqs6wwisf8ama7y1y3q3nf2jm9sh5bn46z8kyds8cikm0x1vh"))))
+    (build-system zig-build-system)
+    ;; (arguments
+    ;;  (list
+    ;;   #:phases
+    ;;   #~(modify-phases %standard-phases
+    ;;       (add-after 'install 'install-wayland-session
+    ;;         (lambda* (#:key outputs #:allow-other-keys)
+    ;;           (let* ((out (assoc-ref outputs "out"))
+    ;;                  (wayland-sessions
+    ;;                   (string-append out "/share/wayland-sessions")))
+    ;;             (mkdir-p wayland-sessions)
+    ;;             (install-file "contrib/river.desktop"
+    ;;                           wayland-sessions)))))
+    ;;   #:zig-build-flags #~(list "-Dxwayland") ;experimental xwayland support
+    ;;   #:zig-release-type "safe"))
+    (native-inputs (list pandoc
+                         pkg-config
+                         glib))
+    (inputs (list fontconfig
+                  freetype
+                  harfbuzz
+                  gtk
+                  libadwaita))
+    (home-page "")
+    (synopsis "GPU-accelerated terminal emulator")
+    (description
+     "Ghostty is a terminal emulator that differentiates itself by being
+fast, feature-rich, and native.")
+    (license license:mit)))

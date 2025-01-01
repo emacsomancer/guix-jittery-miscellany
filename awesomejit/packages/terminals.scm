@@ -384,4 +384,4 @@ in a minimal, maintainable, modern codebase unencumbered by historical baggage."
     (description
      "Ghostty is a terminal emulator that differentiates itself by being
 fast, feature-rich, and native.")
-    (license license:mit)))
+    (license license:expat)))

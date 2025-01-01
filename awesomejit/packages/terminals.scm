@@ -70,6 +70,7 @@
   #:use-module (guix build-system pyproject)
   #:use-module (guix build-system python)
   #:use-module (guix build-system waf)
+  #:use-module (guix build-system zig)
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix gexp)

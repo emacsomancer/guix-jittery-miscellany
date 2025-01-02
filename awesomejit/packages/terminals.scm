@@ -351,7 +351,7 @@ in a minimal, maintainable, modern codebase unencumbered by historical baggage."
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/ghostty-org/ghostty")
-             (commit (string-append "v" version))
+             (commit version)
              ;; (recursive? #t)
              ))
        (file-name (git-file-name name version))

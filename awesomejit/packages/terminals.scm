@@ -345,14 +345,14 @@ in a minimal, maintainable, modern codebase unencumbered by historical baggage."
 (define-public ghostty
   (package
     (name "ghostty")
-    (version "tip")
+    (version "1.0.1")
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/ghostty-org/ghostty")
-             (commit version)
-             ;; (commit (string-append "v" version))
+             ;; (commit version)
+             (commit (string-append "v" version))
              ))
        (file-name (git-file-name name version))
        (sha256

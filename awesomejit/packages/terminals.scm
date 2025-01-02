@@ -345,7 +345,7 @@ in a minimal, maintainable, modern codebase unencumbered by historical baggage."
 (define-public ghostty
   (package
     (name "ghostty")
-    (version "1.0.1")
+    (version "tip")
     (source
      (origin
        (method git-fetch)

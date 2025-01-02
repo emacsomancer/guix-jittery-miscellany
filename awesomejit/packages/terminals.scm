@@ -348,15 +348,15 @@ in a minimal, maintainable, modern codebase unencumbered by historical baggage."
     (version "1.0.1")
     (source
      (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/ghostty-org/ghostty")
-             (commit version)
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/ghostty-org/ghostty/archive/refs/tags/v"
+             version ".zip"))
+             ;; https://github.com/ghostty-org/ghostty/archive/refs/tags/v1.0.1.tar.gz
              ;; (recursive? #t)
              ))
-       (file-name (git-file-name name version))
        (sha256
-        (base32 "096lmhla6lgdf6hm4a2p4ixj4r82ardr88bndlp8qj6p3kibapjp"))))
+        (base32 "096lmhla6lgdf6hm4a2p4ixj4r82ardr88bndlp8qj6p3kibapjp"))
     (build-system zig-build-system)
     ;; (arguments
     ;;  (list

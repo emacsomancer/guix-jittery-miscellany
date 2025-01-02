@@ -354,7 +354,7 @@ in a minimal, maintainable, modern codebase unencumbered by historical baggage."
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "096lmhla6lgdf6hm4a2p4ixj4r82ardr88bndlp8qj6p3kibapjp"))))
+        (base32 "05czkg0f6ixjgabi6w1wa8jklr345crbihmci8lidy0bx8swa986"))))
     ;; (source
     ;;  (origin
     ;;    (method url-fetch)

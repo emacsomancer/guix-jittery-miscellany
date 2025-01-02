@@ -351,7 +351,7 @@ in a minimal, maintainable, modern codebase unencumbered by historical baggage."
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/ghostty-org/ghostty")
-             (commit version)))
+             (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
         (base32 "096lmhla6lgdf6hm4a2p4ixj4r82ardr88bndlp8qj6p3kibapjp"))))
@@ -387,7 +387,7 @@ in a minimal, maintainable, modern codebase unencumbered by historical baggage."
                   harfbuzz
                   gtk
                   libadwaita))
-    (home-page "")
+    (home-page "https://ghostty.org")
     (synopsis "GPU-accelerated terminal emulator")
     (description
      "Ghostty is a terminal emulator that differentiates itself by being

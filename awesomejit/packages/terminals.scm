@@ -342,56 +342,56 @@ standards. Zutty provides a clean implementation written from scratch, resulting
 in a minimal, maintainable, modern codebase unencumbered by historical baggage.")
     (license license:gpl3)))
 
-(define-public ghostty
-  (package
-    (name "ghostty")
-    (version "1.0.1")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/ghostty-org/ghostty")
-             ;; (commit version)
-             (commit (string-append "v" version))
-             ))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "05czkg0f6ixjgabi6w1wa8jklr345crbihmci8lidy0bx8swa986"))))
-    ;; (source
-    ;;  (origin
-    ;;    (method url-fetch)
-    ;;    (uri (string-append
-    ;;          "https://github.com/ghostty-org/ghostty/archive/refs/tags/v"
-    ;;          version ".zip"))
-    ;;    (sha256
-    ;;     (base32 "096lmhla6lgdf6hm4a2p4ixj4r82ardr88bndlp8qj6p3kibapjp"))))
+;; (define-public ghostty
+;;   (package
+;;     (name "ghostty")
+;;     (version "1.0.1")
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri (git-reference
+;;              (url "https://github.com/ghostty-org/ghostty")
+;;              ;; (commit version)
+;;              (commit (string-append "v" version))
+;;              ))
+;;        (file-name (git-file-name name version))
+;;        (sha256
+;;         (base32 "05czkg0f6ixjgabi6w1wa8jklr345crbihmci8lidy0bx8swa986"))))
+;;     ;; (source
+;;     ;;  (origin
+;;     ;;    (method url-fetch)
+;;     ;;    (uri (string-append
+;;     ;;          "https://github.com/ghostty-org/ghostty/archive/refs/tags/v"
+;;     ;;          version ".zip"))
+;;     ;;    (sha256
+;;     ;;     (base32 "096lmhla6lgdf6hm4a2p4ixj4r82ardr88bndlp8qj6p3kibapjp"))))
       
-    (build-system zig-build-system)
-    ;; (arguments
-    ;;  (list
-    ;;   #:phases
-    ;;   #~(modify-phases %standard-phases
-    ;;       (add-after 'install 'install-wayland-session
-    ;;         (lambda* (#:key outputs #:allow-other-keys)
-    ;;           (let* ((out (assoc-ref outputs "out"))
-    ;;                  (wayland-sessions
-    ;;                   (string-append out "/share/wayland-sessions")))
-    ;;             (mkdir-p wayland-sessions)
-    ;;             (install-file "contrib/river.desktop"
-    ;;                           wayland-sessions)))))
-    ;;   #:zig-build-flags #~(list "-Dxwayland") ;experimental xwayland support
-    ;;   #:zig-release-type "safe"))
-    (native-inputs (list pandoc
-                         pkg-config
-                         glib))
-    (inputs (list fontconfig
-                  freetype
-                  harfbuzz
-                  gtk
-                  libadwaita))
-    (home-page "https://ghostty.org")
-    (synopsis "GPU-accelerated terminal emulator")
-    (description
-     "Ghostty is a terminal emulator that differentiates itself by being
-fast, feature-rich, and native.")
-    (license license:expat)))
+;;     (build-system zig-build-system)
+;;     ;; (arguments
+;;     ;;  (list
+;;     ;;   #:phases
+;;     ;;   #~(modify-phases %standard-phases
+;;     ;;       (add-after 'install 'install-wayland-session
+;;     ;;         (lambda* (#:key outputs #:allow-other-keys)
+;;     ;;           (let* ((out (assoc-ref outputs "out"))
+;;     ;;                  (wayland-sessions
+;;     ;;                   (string-append out "/share/wayland-sessions")))
+;;     ;;             (mkdir-p wayland-sessions)
+;;     ;;             (install-file "contrib/river.desktop"
+;;     ;;                           wayland-sessions)))))
+;;     ;;   #:zig-build-flags #~(list "-Dxwayland") ;experimental xwayland support
+;;     ;;   #:zig-release-type "safe"))
+;;     (native-inputs (list pandoc
+;;                          pkg-config
+;;                          glib))
+;;     (inputs (list fontconfig
+;;                   freetype
+;;                   harfbuzz
+;;                   gtk
+;;                   libadwaita))
+;;     (home-page "https://ghostty.org")
+;;     (synopsis "GPU-accelerated terminal emulator")
+;;     (description
+;;      "Ghostty is a terminal emulator that differentiates itself by being
+;; fast, feature-rich, and native.")
+;;     (license license:expat)))

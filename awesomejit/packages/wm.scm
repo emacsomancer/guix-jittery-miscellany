@@ -123,7 +123,7 @@
                       (url "https://github.com/awesomeWM/awesome")
                       (commit commit)))
                 (sha256
-                 (base32 "0mf4xhbv5mw5s5prdc2ilx35rgkxrx3f3j4smqqxiw6pp42j9axr"))))
+                 (base32 "1xlv0rl7lg8rgnhdgzr3zwdgn28axiz079g6f0sg9lks9522918q"))))
              (arguments
               (substitute-keyword-arguments
                (package-arguments awesome)

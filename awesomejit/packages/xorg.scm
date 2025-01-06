@@ -127,7 +127,7 @@
 (define-public xterm
   (package
     (name "xterm")
-    (version "396")
+    (version "397")
     (source
      (origin
        (method url-fetch)

@@ -77,34 +77,34 @@ parameter to ICS calendar files.  Strict interpretations according to RFC 5545 i
 This tool takes care of these circumstances.")
     (license license:lgpl3+)))
 
-(define-public python-icalendar
-  (package
-    (name "python-icalendar")
-    (version "6.1.0")
-    (source (origin
-             (method url-fetch)
-             (uri (pypi-uri "icalendar" version))
-             (sha256
-              (base32
-               "1bbbg6dhgnignzq8qj5dvp6z4svh3q9ydxj89r7n77cm6a3dphj3"))))
-    (build-system pyproject-build-system)
-    (arguments
-     (list
-      #:phases
-      #~(modify-phases %standard-phases
-          (replace 'check
-            (lambda* (#:key tests? #:allow-other-keys)
-              (when tests?
-                (invoke "pytest" "-vv" "src/icalendar/tests")))))))
-    (propagated-inputs
-     (list python-dateutil python-pytz python-tzdata))
-    (native-inputs
-     (list python-hatch-vcs python-hatchling python-pytest python-pytz python-setuptools python-wheel))
-    (synopsis "Python library for parsing and generating iCalendar files")
-    (description
-     "@code{icalendar} is a Python library for parsing and generating iCalendar files.")
-    (home-page "https://github.com/collective/icalendar")
-    (license license:bsd-2)))
+;; (define-public python-icalendar
+;;   (package
+;;     (name "python-icalendar")
+;;     (version "6.1.0")
+;;     (source (origin
+;;              (method url-fetch)
+;;              (uri (pypi-uri "icalendar" version))
+;;              (sha256
+;;               (base32
+;;                "1bbbg6dhgnignzq8qj5dvp6z4svh3q9ydxj89r7n77cm6a3dphj3"))))
+;;     (build-system pyproject-build-system)
+;;     (arguments
+;;      (list
+;;       #:phases
+;;       #~(modify-phases %standard-phases
+;;           (replace 'check
+;;             (lambda* (#:key tests? #:allow-other-keys)
+;;               (when tests?
+;;                 (invoke "pytest" "-vv" "src/icalendar/tests")))))))
+;;     (propagated-inputs
+;;      (list python-dateutil python-pytz python-tzdata))
+;;     (native-inputs
+;;      (list python-hatch-vcs python-hatchling python-pytest python-pytz python-setuptools python-wheel))
+;;     (synopsis "Python library for parsing and generating iCalendar files")
+;;     (description
+;;      "@code{icalendar} is a Python library for parsing and generating iCalendar files.")
+;;     (home-page "https://github.com/collective/icalendar")
+;;     (license license:bsd-2)))
 
 
 (define-public python-ical2orgpy

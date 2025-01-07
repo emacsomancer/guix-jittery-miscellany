@@ -99,7 +99,7 @@ This tool takes care of these circumstances.")
     (propagated-inputs
      (list python-dateutil python-pytz python-tzdata))
     (native-inputs
-     (list python-hatchling python-pytest python-pytz python-setuptools python-wheel))
+     (list python-hatch-vcs python-hatchling python-pytest python-pytz python-setuptools python-wheel))
     (synopsis "Python library for parsing and generating iCalendar files")
     (description
      "@code{icalendar} is a Python library for parsing and generating iCalendar files.")

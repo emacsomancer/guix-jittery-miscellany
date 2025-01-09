@@ -27,7 +27,7 @@
              (commit version)))
        (file-name (git-file-name "stumpwm" version))
        (sha256
-        (base32 "0akrkxwmlk2596b0kl3q0nfi81ypfrpyyyf65vw7px5x17gsnq5i"))))
+        (base32 "0b8h33raf0ffl2zv678sxqpvq5xhy6sa88sdm7krnwcd15q8gb85"))))
     (build-system asdf-build-system/sbcl)
     (native-inputs
      (list sbcl-fiasco

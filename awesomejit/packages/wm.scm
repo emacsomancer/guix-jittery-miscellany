@@ -80,9 +80,10 @@
                 (invoke "sh" "./configure" "SHELL=sh")
                 (apply invoke "make" "stumpwm.info" make-flags)
                 (install-file "stumpwm.info" info))))
-          (add-after 'install-manual 'remove-temporary-cache
-            (lambda* (#:key outputs #:allow-other-keys)
-              (delete-file-recursively (string-append #$output "/.cache")))))))
+          ;; (add-after 'install-manual 'remove-temporary-cache
+          ;;   (lambda* (#:key outputs #:allow-other-keys)
+          ;;     (delete-file-recursively (string-append #$output "/.cache"))))
+          )))
     (synopsis "Window manager written in Common Lisp")
     (description
      "Stumpwm is a window manager written entirely in Common Lisp.

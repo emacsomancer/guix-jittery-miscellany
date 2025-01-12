@@ -29,10 +29,7 @@
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix packages)
-  #:export (croc-bin
-            jdtls-bin
-            maven-bin
-            zen-browser-bin
+  #:export (zen-browser-bin
             zen-browser-twilight-bin))
 
 (define zen-browser-bin

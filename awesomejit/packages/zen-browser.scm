@@ -160,7 +160,7 @@ We care about your experience, not your data.")
                 "twilight"
                 "/zen.linux-x86_64.tar.bz2"))
         (sha256
-          (base32 "0aa7sdxljzcbkxbn69lz8p38k65hx9k44izdy9rygrkli7qdhiph"))))
+          (base32 "0s9s075hjk501c5n3xdzdm03ai93xbc488xw9f4sm0c303mx4pmy"))))
     (build-system copy-build-system)
     (arguments
       (list #:install-plan

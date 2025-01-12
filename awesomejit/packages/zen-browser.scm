@@ -199,7 +199,7 @@ We care about your experience, not your data.")
                 (add-after 'patch-elf 'install-bin
                   (lambda _
                     (let* ((zen (string-append #$output "/lib/zen/zen"))
-                           (bin-zen (string-append #$output "/bin/zen")))
+                           (bin-zen (string-append #$output "/bin/zen-twilight")))
                       (mkdir (string-append #$output "/bin"))
                       (symlink zen bin-zen))))
                 (add-after 'install-bin 'install-desktop

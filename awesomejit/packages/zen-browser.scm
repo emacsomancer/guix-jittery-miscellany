@@ -32,7 +32,8 @@
   #:export (croc-bin
             jdtls-bin
             maven-bin
-            zen-browser-bin))
+            zen-browser-bin
+            zen-browser-twilight-bin))
 
 (define zen-browser-bin
   (package

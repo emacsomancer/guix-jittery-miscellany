@@ -15,84 +15,84 @@
   #:use-module (awesomejit packages lua)
   #:use-module (gnu packages wm))
 
-(define-public stumpwm
-  (package
-    (name "stumpwm")
-    (version "24.11")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/stumpwm/stumpwm")
-             (commit version)))
-       (file-name (git-file-name "stumpwm" version))
-       (sha256
-        (base32 "0b8h33raf0ffl2zv678sxqpvq5xhy6sa88sdm7krnwcd15q8gb85"))))
-    (build-system asdf-build-system/sbcl)
-    (native-inputs
-     (list sbcl-fiasco
-           texinfo
+;; (define-public stumpwm
+;;   (package
+;;     (name "stumpwm")
+;;     (version "24.11")
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri (git-reference
+;;              (url "https://github.com/stumpwm/stumpwm")
+;;              (commit version)))
+;;        (file-name (git-file-name "stumpwm" version))
+;;        (sha256
+;;         (base32 "0b8h33raf0ffl2zv678sxqpvq5xhy6sa88sdm7krnwcd15q8gb85"))))
+;;     (build-system asdf-build-system/sbcl)
+;;     (native-inputs
+;;      (list sbcl-fiasco
+;;            texinfo
 
-           ;; To build the manual.
-           autoconf
-           automake))
-    (inputs
-     (list sbcl-alexandria
-           sbcl-cl-ppcre
-           sbcl-clx))
-    (arguments
-     (list
-      #:phases
-      #~(modify-phases %standard-phases
-          ;; (add-after 'unpack 'fix-tests
-          ;;   (lambda _
-          ;;     (substitute* "stumpwm-tests.asd"
-          ;;       (("\"ALL-TESTS\"")
-          ;;        "\"RUN-PACKAGE-TESTS\" :package"))))
-          (add-after 'create-asdf-configuration 'build-program
-            (lambda* (#:key outputs #:allow-other-keys)
-              (build-program
-               (string-append #$output "/bin/stumpwm")
-               outputs
-               #:entry-program '((stumpwm:stumpwm) 0))))
-          (add-after 'build-program 'create-desktop-file
-            (lambda* (#:key outputs #:allow-other-keys)
-              (let* ((out #$output)
-                     (xsessions (string-append out "/share/xsessions")))
-                (mkdir-p xsessions)
-                (call-with-output-file
-                    (string-append xsessions "/stumpwm.desktop")
-                  (lambda (file)
-                    (format file
-                       "[Desktop Entry]~@
-                        Name=stumpwm~@
-                        Comment=The Stump Window Manager~@
-                        Exec=~a/bin/stumpwm~@
-                        TryExec=~@*~a/bin/stumpwm~@
-                        Icon=~@
-                        Type=Application~%"
-                       out))))))
-          (add-after 'create-desktop-file 'install-manual
-            (lambda* (#:key (make-flags '()) outputs #:allow-other-keys)
-              (let* ((out  #$output)
-                     (info (string-append out "/share/info")))
-                (invoke "./autogen.sh")
-                (invoke "sh" "./configure" "SHELL=sh")
-                (apply invoke "make" "stumpwm.info" make-flags)
-                (install-file "stumpwm.info" info))))
-          ;; (add-after 'install-manual 'remove-temporary-cache
-          ;;   (lambda* (#:key outputs #:allow-other-keys)
-          ;;     (delete-file-recursively (string-append #$output "/.cache"))))
-          )))
-    (synopsis "Window manager written in Common Lisp")
-    (description
-     "Stumpwm is a window manager written entirely in Common Lisp.
-It attempts to be highly customizable while relying entirely on the keyboard
-for input.  These design decisions reflect the growing popularity of
-productive, customizable lisp based systems.")
-    (home-page "https://github.com/stumpwm/stumpwm")
-    (license license:gpl2+)
-    (properties `((cl-source-variant . ,(delay cl-stumpwm))))))
+;;            ;; To build the manual.
+;;            autoconf
+;;            automake))
+;;     (inputs
+;;      (list sbcl-alexandria
+;;            sbcl-cl-ppcre
+;;            sbcl-clx))
+;;     (arguments
+;;      (list
+;;       #:phases
+;;       #~(modify-phases %standard-phases
+;;           ;; (add-after 'unpack 'fix-tests
+;;           ;;   (lambda _
+;;           ;;     (substitute* "stumpwm-tests.asd"
+;;           ;;       (("\"ALL-TESTS\"")
+;;           ;;        "\"RUN-PACKAGE-TESTS\" :package"))))
+;;           (add-after 'create-asdf-configuration 'build-program
+;;             (lambda* (#:key outputs #:allow-other-keys)
+;;               (build-program
+;;                (string-append #$output "/bin/stumpwm")
+;;                outputs
+;;                #:entry-program '((stumpwm:stumpwm) 0))))
+;;           (add-after 'build-program 'create-desktop-file
+;;             (lambda* (#:key outputs #:allow-other-keys)
+;;               (let* ((out #$output)
+;;                      (xsessions (string-append out "/share/xsessions")))
+;;                 (mkdir-p xsessions)
+;;                 (call-with-output-file
+;;                     (string-append xsessions "/stumpwm.desktop")
+;;                   (lambda (file)
+;;                     (format file
+;;                        "[Desktop Entry]~@
+;;                         Name=stumpwm~@
+;;                         Comment=The Stump Window Manager~@
+;;                         Exec=~a/bin/stumpwm~@
+;;                         TryExec=~@*~a/bin/stumpwm~@
+;;                         Icon=~@
+;;                         Type=Application~%"
+;;                        out))))))
+;;           (add-after 'create-desktop-file 'install-manual
+;;             (lambda* (#:key (make-flags '()) outputs #:allow-other-keys)
+;;               (let* ((out  #$output)
+;;                      (info (string-append out "/share/info")))
+;;                 (invoke "./autogen.sh")
+;;                 (invoke "sh" "./configure" "SHELL=sh")
+;;                 (apply invoke "make" "stumpwm.info" make-flags)
+;;                 (install-file "stumpwm.info" info))))
+;;           ;; (add-after 'install-manual 'remove-temporary-cache
+;;           ;;   (lambda* (#:key outputs #:allow-other-keys)
+;;           ;;     (delete-file-recursively (string-append #$output "/.cache"))))
+;;           )))
+;;     (synopsis "Window manager written in Common Lisp")
+;;     (description
+;;      "Stumpwm is a window manager written entirely in Common Lisp.
+;; It attempts to be highly customizable while relying entirely on the keyboard
+;; for input.  These design decisions reflect the growing popularity of
+;; productive, customizable lisp based systems.")
+;;     (home-page "https://github.com/stumpwm/stumpwm")
+;;     (license license:gpl2+)
+;;     (properties `((cl-source-variant . ,(delay cl-stumpwm))))))
 
 
 (define-public awesome-next

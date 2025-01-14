@@ -108,7 +108,7 @@
                                       "application/x-xpinstall"
                                       "application/pdf"
                                       "application/json")
-                        #:startup-w-m-class "zen-beta")))))))
+                        #:startup-w-m-class "zen")))))))
     (native-inputs (list patchelf))
     (inputs (list alsa-lib
                   at-spi2-core
@@ -193,12 +193,12 @@ We care about your experience, not your data.")
                         (append
                           (map
                             (lambda (binary)
-                              (string-append #$output "/lib/zen-twilight/" binary))
+                              (string-append #$output "/lib/zen/" binary))
                             '("glxtest" "updater" "vaapitest" "zen-twilight" "zen-twilight-bin" "pingsender"))
-                          (find-files (string-append #$output "/lib/zen-twilight") ".*\\.so.*"))))))
+                          (find-files (string-append #$output "/lib/zen") ".*\\.so.*"))))))
                 (add-after 'patch-elf 'install-bin
                   (lambda _
-                    (let* ((zen (string-append #$output "/lib/zen-twilight/zen-twilight"))
+                    (let* ((zen (string-append #$output "/lib/zen/zen"))
                            (bin-zen (string-append #$output "/bin/zen-twilight")))
                       (mkdir (string-append #$output "/bin"))
                       (symlink zen bin-zen))))

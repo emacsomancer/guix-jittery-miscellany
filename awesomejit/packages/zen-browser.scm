@@ -164,7 +164,7 @@ We care about your experience, not your data.")
     (build-system copy-build-system)
     (arguments
       (list #:install-plan
-            #~'(("." "lib/zen"))
+            #~'(("." "lib/zen-twilight"))
             #:phases
             #~(modify-phases %standard-phases
                 (add-after 'install 'patch-elf
@@ -173,7 +173,7 @@ We care about your experience, not your data.")
                                                 #$(glibc-dynamic-linker)))
                           (rpath (string-join
                                    (cons*
-                                     (string-append #$output "/lib/zen")
+                                     (string-append #$output "/lib/zen-twilight")
                                      (string-append #$(this-package-input "gtk+") "/share")
                                      (map
                                        (lambda (input)
@@ -193,12 +193,12 @@ We care about your experience, not your data.")
                         (append
                           (map
                             (lambda (binary)
-                              (string-append #$output "/lib/zen/" binary))
-                            '("glxtest" "updater" "vaapitest" "zen" "zen-bin" "pingsender"))
-                          (find-files (string-append #$output "/lib/zen") ".*\\.so.*"))))))
+                              (string-append #$output "/lib/zen-twilight/" binary))
+                            '("glxtest" "updater" "vaapitest" "zen-twilight" "zen-twilight-bin" "pingsender"))
+                          (find-files (string-append #$output "/lib/zen-twilight") ".*\\.so.*"))))))
                 (add-after 'patch-elf 'install-bin
                   (lambda _
-                    (let* ((zen (string-append #$output "/lib/zen/zen"))
+                    (let* ((zen (string-append #$output "/lib/zen-twilight/zen-twilight"))
                            (bin-zen (string-append #$output "/bin/zen-twilight")))
                       (mkdir (string-append #$output "/bin"))
                       (symlink zen bin-zen))))

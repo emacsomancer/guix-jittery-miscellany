@@ -1,0 +1,150 @@
+(define-module (awesomejit packages brave-browser)
+  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (gnu packages base)
+  #:use-module (gnu packages bootstrap)
+  #:use-module (gnu packages commencement)
+  #:use-module (gnu packages elf)
+  #:use-module (gnu packages fontutils)
+  #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages gcc)
+  #:use-module (gnu packages gl)
+  #:use-module (gnu packages glib)
+  #:use-module (gnu packages gnome)
+  #:use-module (gnu packages gnuzilla)
+  #:use-module (gnu packages gtk)
+  #:use-module (gnu packages image)
+  #:use-module (gnu packages libevent)
+  #:use-module (gnu packages libffi)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages nss)
+  #:use-module (gnu packages pulseaudio)
+  #:use-module (gnu packages tls)
+  #:use-module (gnu packages video)
+  #:use-module (gnu packages webkit)
+  #:use-module (gnu packages xorg)
+  #:use-module (guix build utils)
+  #:use-module (guix build-system cargo)
+  #:use-module (guix build-system copy)
+  #:use-module (guix build-system gnu)
+  #:use-module (guix download)
+  #:use-module (guix gexp)
+  #:use-module (guix packages)
+  #:export (zen-browser-bin
+            zen-browser-twilight-bin))
+
+(define zen-browser-bin
+  (package
+    (name "brave")
+    (version "1.73.104")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+                "https://github.com/brave/brave-browser/releases/download/v"
+                version
+                "/brave-browser_"
+                "_amd64.deb"))
+        (sha256
+          (base32 "08hvxyhhp3wcn9sc611azqfj82lki2606bpf0ch798cf08qdbyha"))))
+    (build-system copy-build-system)
+    (arguments
+      (list #:install-plan
+            #~'(("." "lib/brave"))
+            #:phases
+            #~(modify-phases %standard-phases
+                (add-after 'install 'patch-elf
+                  (lambda* (#:key inputs #:allow-other-keys)
+                    (let ((ld.so (string-append #$(this-package-input "glibc")
+                                                #$(glibc-dynamic-linker)))
+                          (rpath (string-join
+                                   (cons*
+                                     (string-append #$output "/lib/brave")
+                                     (string-append #$(this-package-input "gtk+") "/share")
+                                     (map
+                                       (lambda (input)
+                                         (string-append (cdr input) "/lib"))
+                                       inputs))
+                                   ":")))
+                      ;; Got this proc from hako's Rosenthal, thanks
+                      (define (patch-elf file)
+                        (format #t "Patching ~a ..." file)
+                        (unless (string-contains file ".so")
+                          (invoke "patchelf" "--set-interpreter" ld.so file))
+                        (invoke "patchelf" "--set-rpath" rpath file)
+                        (display " done\n"))
+                      (for-each
+                        (lambda (binary)
+                          (patch-elf binary))
+                        (append
+                          (map
+                            (lambda (binary)
+                              (string-append #$output "/lib/brave/" binary))
+                            '("glxtest" "updater" "vaapitest" "brave" "brave-bin" "pingsender"))
+                          (find-files (string-append #$output "/lib/brave") ".*\\.so.*"))))))
+                (add-after 'patch-elf 'install-bin
+                  (lambda _
+                    (let* ((brave (string-append #$output "/lib/brave/brave"))
+                           (bin-brave (string-append #$output "/bin/brave")))
+                      (mkdir (string-append #$output "/bin"))
+                      (symlink brave bin-brave))))
+                (add-after 'install-bin 'install-desktop
+                  (lambda _
+                    (let* ((share-applications (string-append #$output "/share/applications"))
+                           (desktop (string-append share-applications "/brave.desktop")))
+                      (mkdir-p share-applications)
+                      (make-desktop-entry-file desktop
+                        #:name "Brave Browser"
+                        #:icon "brave"
+                        #:type "Application"
+                        #:comment #$(package-synopsis this-package)
+                        #:exec (string-append #$output "/bin/brave %u")
+                        #:keywords '("Internet" "WWW" "Browser" "Web" "Explorer")
+                        #:categories '("Network" "Browser")
+                        ; #:actions '("new-window" "new-private-window" "profilemanager")
+                        #:mime-type '("text/html"
+                                      "text/xml"
+                                      "application/xhtml+xml"
+                                      "x-scheme-handler/http"
+                                      "x-scheme-handler/https"
+                                      "application/x-xpinstall"
+                                      "application/pdf"
+                                      "application/json")
+                        #:startup-w-m-class "brave")))))))
+    (native-inputs (list patchelf))
+    (inputs (list alsa-lib
+                  at-spi2-core
+                  cairo
+                  dbus
+                  dbus
+                  eudev
+                  fontconfig
+                  freetype
+                  gcc-toolchain
+                  gdk-pixbuf
+                  glib
+                  glib
+                  glibc
+                  gtk+
+                  libnotify
+                  libva
+                  libx11
+                  libxcb
+                  libxcomposite
+                  libxcursor
+                  libxdamage
+                  libxext
+                  libxfixes
+                  libxi
+                  libxrandr
+                  libxrender
+                  nspr
+                  nss
+                  pango
+                  pulseaudio))
+    (home-page "https://zen-browser.app/")
+    (synopsis "Experience tranquillity while browsing the web without people
+tracking you!")
+    (description "Beautifully designed, privacy-focused, and packed with features.
+We care about your experience, not your data.")
+    (license (list license:mpl2.0))))
+

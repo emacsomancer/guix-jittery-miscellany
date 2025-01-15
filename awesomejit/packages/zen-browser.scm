@@ -108,7 +108,7 @@
                                       "application/x-xpinstall"
                                       "application/pdf"
                                       "application/json")
-                        #:startup-w-m-class "zen")))))))
+                        #:startup-w-m-class "zen-beta")))))))
     (native-inputs (list patchelf))
     (inputs (list alsa-lib
                   at-spi2-core
@@ -177,7 +177,7 @@ We care about your experience, not your data.")
                                      (string-append #$(this-package-input "gtk+") "/share")
                                      (map
                                        (lambda (input)
-                                         (string-append (cdr input) "/lib/zen"))
+                                         (string-append (cdr input) "/lib"))
                                        inputs))
                                    ":")))
                       ;; Got this proc from hako's Rosenthal, thanks
@@ -194,21 +194,15 @@ We care about your experience, not your data.")
                           (map
                             (lambda (binary)
                               (string-append #$output "/lib/zen/" binary))
-                            '("glxtest" "updater" "vaapitest" "zen" "zen-bin" "zen-twilight" "zen-twilight-bin" "pingsender"))
-                          (find-files (string-append #$output "/lib/zen/zen") ".*\\.so.*"))))))
+                            '("glxtest" "updater" "vaapitest" "zen" "zen-bin" "pingsender"))
+                          (find-files (string-append #$output "/lib/zen") ".*\\.so.*"))))))
                 (add-after 'patch-elf 'install-bin
                   (lambda _
                     (let* ((zen (string-append #$output "/lib/zen/zen"))
-                           (bin-zen (string-append #$output "/bin/zen")))
+                           (bin-zen (string-append #$output "/bin/zen-twilight")))
                       (mkdir (string-append #$output "/bin"))
                       (symlink zen bin-zen))))
                 (add-after 'install-bin 'install-desktop
-                  ;; (rename-file (string-append bin "/bin/zen")
-                  ;;              (string-append bin "/bin/zen-twilight"))
-                  ;; (rename-file (string-append bin "/lib/zen")
-                  ;;              (string-append bin "/lib/zen-twilight"))
-                  ;; (rename-file (string-append bin "/lib/zen-twilight/zen")
-                  ;;              (string-append bin "/lib/zen-twilight/zen-twilight"))
                   (lambda _
                     (let* ((share-applications (string-append #$output "/share/applications"))
                            (desktop (string-append share-applications "/zen-twilight.desktop")))

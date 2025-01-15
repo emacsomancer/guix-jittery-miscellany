@@ -103,19 +103,30 @@
     (synopsis "Emacs text editor with Lucid toolkit")
     (description "This Emacs build uses the Lucid toolkit.")))
 
-(define-public emacs-lucid-xwidgets
+;; (define-public emacs-lucid-xwidgets
+;;   (package
+;;     (inherit emacs-lucid)
+;;     (name "emacs-lucid-xwidgets")
+;;     (synopsis "Emacs text editor with @code{xwidgets} and Lucid toolkit.")
+;;     (arguments
+;;      (substitute-keyword-arguments (package-arguments emacs-lucid)
+;;        ((#:configure-flags flags #~'())
+;;         #~(cons "--with-xwidgets" #$flags))))
+;;     (inputs
+;;      (modify-inputs (package-inputs emacs-lucid)
+;;        (prepend gsettings-desktop-schemas webkitgtk-with-libsoup2)))))
+
+(define-public emacs-lucid-tune-cflags
   (package
     (inherit emacs-lucid)
-    (name "emacs-lucid-xwidgets")
-    (synopsis "Emacs text editor with @code{xwidgets} and Lucid toolkit.")
+    (name "emacs-lucid-tune-cflags")
+    (synopsis "Emacs text editor with Lucid toolkit and CFLAGS tuning.")
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-lucid)
        ((#:configure-flags flags #~'())
-        #~(cons "--with-xwidgets" #$flags))))
-    (inputs
-     (modify-inputs (package-inputs emacs-lucid)
-       (prepend gsettings-desktop-schemas webkitgtk-with-libsoup2)))))
-
+        #~(cons " CFLAGS='-O2 -mtune=native -march=native -fomit-frame-pointer' " #$flags))))))
 
 (define-public emacs-next-lucid (emacs->emacs-next emacs-lucid))
-(define-public emacs-next-lucid-xwidgets (emacs->emacs-next emacs-lucid-xwidgets))
+;; (define-public emacs-next-lucid-xwidgets (emacs->emacs-next emacs-lucid-xwidgets))
+(define-public emacs-next-lucid-tune-cflags (emacs->emacs-next emacs-lucid-tune-cflags))
+

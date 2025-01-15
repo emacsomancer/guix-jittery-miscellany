@@ -164,7 +164,7 @@ We care about your experience, not your data.")
     (build-system copy-build-system)
     (arguments
       (list #:install-plan
-            #~'(("." "lib/zen-twilight"))
+            #~'(("." "lib/zen"))
             #:phases
             #~(modify-phases %standard-phases
                 (add-after 'install 'patch-elf
@@ -173,11 +173,11 @@ We care about your experience, not your data.")
                                                 #$(glibc-dynamic-linker)))
                           (rpath (string-join
                                    (cons*
-                                     (string-append #$output "/lib/zen-twilight")
+                                     (string-append #$output "/lib/zen")
                                      (string-append #$(this-package-input "gtk+") "/share")
                                      (map
                                        (lambda (input)
-                                         (string-append (cdr input) "/lib/zen-twilight"))
+                                         (string-append (cdr input) "/lib/zen"))
                                        inputs))
                                    ":")))
                       ;; Got this proc from hako's Rosenthal, thanks
@@ -193,12 +193,12 @@ We care about your experience, not your data.")
                         (append
                           (map
                             (lambda (binary)
-                              (string-append #$output "/lib/zen-twilight/" binary))
+                              (string-append #$output "/lib/zen/" binary))
                             '("glxtest" "updater" "vaapitest" "zen-twilight" "zen-twilight-bin" "pingsender"))
-                          (find-files (string-append #$output "/lib/zen-twilight/zen-twilight") ".*\\.so.*"))))))
+                          (find-files (string-append #$output "/lib/zen/zen-twilight") ".*\\.so.*"))))))
                 (add-after 'patch-elf 'install-bin
                   (lambda _
-                    (let* ((zen (string-append #$output "/lib/zen-twilight/zen-twilight"))
+                    (let* ((zen (string-append #$output "/lib/zen/zen-twilight"))
                            (bin-zen (string-append #$output "/bin/zen-twilight")))
                       (mkdir (string-append #$output "/bin"))
                       (symlink zen bin-zen))))

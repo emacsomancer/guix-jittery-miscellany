@@ -97,6 +97,9 @@
      (substitute-keyword-arguments (package-arguments emacs)
        ((#:configure-flags flags #~'())
         #~(cons* "--with-x-toolkit=lucid" #$flags))))
+    (inputs
+     (modify-inputs (package-inputs emacs)
+       (prepend libxaw)))
     (synopsis "Emacs text editor with Lucid toolkit")
     (description "This Emacs build uses the Lucid toolkit.")))
 

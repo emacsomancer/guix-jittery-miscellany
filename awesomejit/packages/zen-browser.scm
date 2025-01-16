@@ -29,8 +29,8 @@
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix packages)
-  #:export (zen-browser-bin
-            zen-browser-twilight-bin))
+  #:export (zen-browser
+            zen-browser-twilight))
 
 (define zen-browser
   (package
@@ -148,9 +148,9 @@ We care about your experience, not your data.")
     (license (list license:mpl2.0))))
 
 
-(define zen-browser-twilight-bin
+(define zen-browser-twilight
   (package
-    (name "zen-browser-twilight-bin")
+    (name "zen-browser-twilight")
     (version "1.7t")
     (source
       (origin

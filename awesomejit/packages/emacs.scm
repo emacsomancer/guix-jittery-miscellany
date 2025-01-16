@@ -90,10 +90,10 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1))
 
-(define-public emacs-next-minimal
+(define-public emacs-more-next-minimal
   (package
     (inherit emacs-minimal)
-    (name "emacs-next-minimal")
+    (name "emacs-more-next-minimal")
     (version "30.0.93")
     (source
      (origin
@@ -157,7 +157,7 @@
         #~(cons "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer" #$flags))))))
 ;; remove " -fomit-frame-pointer"
 
-(define-public emacs-next-lucid (emacs->emacs-next emacs-lucid))
+(define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))
 ;; (define-public emacs-next-lucid-xwidgets (emacs->emacs-next emacs-lucid-xwidgets))
-(define-public emacs-next-lucid-tune-cflags (emacs->emacs-next emacs-lucid-tune-cflags))
+(define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))
 

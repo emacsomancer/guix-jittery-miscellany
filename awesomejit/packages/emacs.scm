@@ -177,8 +177,8 @@
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-lucid)
        ((#:configure-flags flags #~'())
-        #~(cons "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer" #$flags))))))
-;; remove " -fomit-frame-pointer"
+        #~(cons "CFLAGS=-O2 -mtune=native -march=native" #$flags))))))
+;; removed " -fomit-frame-pointer" ??
 
 (define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))
 ;; (define-public emacs-next-lucid-xwidgets (emacs->emacs-next emacs-lucid-xwidgets))

@@ -32,9 +32,9 @@
   #:export (zen-browser-bin
             zen-browser-twilight-bin))
 
-(define zen-browser-bin
+(define zen-browser
   (package
-    (name "zen-browser-bin")
+    (name "zen-browser")
     (version "1.7b")
     (source
       (origin

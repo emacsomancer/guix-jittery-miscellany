@@ -35,7 +35,7 @@
 (define zen-browser-bin
   (package
     (name "zen-browser-bin")
-    (version "1.6b")
+    (version "1.7b")
     (source
       (origin
         (method url-fetch)
@@ -108,7 +108,7 @@
                                       "application/x-xpinstall"
                                       "application/pdf"
                                       "application/json")
-                        #:startup-w-m-class "zen-beta")))))))
+                        #:startup-w-m-class "zen")))))))
     (native-inputs (list patchelf))
     (inputs (list alsa-lib
                   at-spi2-core

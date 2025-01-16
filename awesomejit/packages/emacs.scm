@@ -99,7 +99,7 @@
      (origin
        (method git-fetch)
        (uri (git-reference
-             (url "https://git.savannah.gnu.org/git/emacs.git";)
+             (url "https://git.savannah.gnu.org/git/emacs.git")
                   (commit (string-append "emacs-" version))))
             (file-name (git-file-name name version))
             (sha256
@@ -108,7 +108,7 @@
              (search-patches "emacs-next-exec-path.patch"
                              "emacs-fix-scheme-indent-function.patch"
                              "emacs-next-native-comp-driver-options.patch"
-                             "emacs-pgtk-super-key-fix.patch")))))))
+                             "emacs-pgtk-super-key-fix.patch"))))))
 
 (define-public emacs-lucid
   (package/inherit emacs

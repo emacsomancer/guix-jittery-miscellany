@@ -90,6 +90,26 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1))
 
+(define-public emacs-next-minimal
+  (package
+    (inherit emacs-minimal)
+    (name "emacs-next-minimal")
+    (version "30.0.93")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://git.savannah.gnu.org/git/emacs.git";)
+                  (commit (string-append "emacs-" version))))
+            (file-name (git-file-name name version))
+            (sha256
+             (base32 "05a587a7bnbz8ms45h4hs1c33j8268aymf3y1bpxipl3abi43jlm"))
+            (patches
+             (search-patches "emacs-next-exec-path.patch"
+                             "emacs-fix-scheme-indent-function.patch"
+                             "emacs-next-native-comp-driver-options.patch"
+                             "emacs-pgtk-super-key-fix.patch")))))))
+
 (define-public emacs-lucid
   (package/inherit emacs
     (name "emacs-lucid")

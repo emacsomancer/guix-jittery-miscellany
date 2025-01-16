@@ -88,7 +88,8 @@
   #:use-module (gnu packages xorg)
   #:use-module (guix utils)
   #:use-module (ice-9 match)
-  #:use-module (srfi srfi-1))
+  #:use-module (srfi srfi-1)
+  #:export (emacs->emacs-more-next))
 
 (define-public emacs-more-next-minimal
   (package
@@ -109,6 +110,41 @@
                              "emacs-fix-scheme-indent-function.patch"
                              "emacs-next-native-comp-driver-options.patch"
                              "emacs-pgtk-super-key-fix.patch"))))))
+
+(define* (emacs->emacs-more-next emacs #:optional name
+                            #:key (version (package-version emacs-more-next-minimal))
+                            (source (package-source emacs-more-next-minimal)))
+  (package
+    (inherit emacs)
+    (name (or name
+              (and (string-prefix? "emacs" (package-name emacs))
+                   (string-append "emacs-next"
+                                  (string-drop (package-name emacs)
+                                               (string-length "emacs"))))))
+    (version version)
+    (source source)
+    (arguments
+     (substitute-keyword-arguments (package-arguments emacs)
+       ((#:phases phases)
+        #~(modify-phases #$phases
+            (replace 'validate-comp-integrity
+              (lambda* (#:key outputs #:allow-other-keys)
+                #$(cond
+                   ((%current-target-system)
+                    #~(display
+                       "Cannot validate native compilation on cross builds.\n"))
+                   ((member (%current-system) '("armhf-linux" "i686-linux"))
+                    #~(display "Integrity test is broken on 32 bit systems.\n"))
+                   (else
+                    #~(invoke
+                       (string-append (assoc-ref outputs "out") "/bin/emacs")
+                       "--batch"
+                       "--load"
+                       #$(local-file
+                          (search-auxiliary-file
+                           "emacs/comp-integrity-next.el"))
+                       "-f" "ert-run-tests-batch-and-exit")))))))))))
+
 
 (define-public emacs-lucid
   (package/inherit emacs
@@ -132,19 +168,6 @@
        (prepend libxaw)))
     (synopsis "Emacs text editor with Lucid toolkit")
     (description "This Emacs build uses the Lucid toolkit.")))
-
-;; (define-public emacs-lucid-xwidgets
-;;   (package
-;;     (inherit emacs-lucid)
-;;     (name "emacs-lucid-xwidgets")
-;;     (synopsis "Emacs text editor with @code{xwidgets} and Lucid toolkit.")
-;;     (arguments
-;;      (substitute-keyword-arguments (package-arguments emacs-lucid)
-;;        ((#:configure-flags flags #~'())
-;;         #~(cons "--with-xwidgets" #$flags))))
-;;     (inputs
-;;      (modify-inputs (package-inputs emacs-lucid)
-;;        (prepend gsettings-desktop-schemas webkitgtk-with-libsoup2)))))
 
 (define-public emacs-lucid-tune-cflags
   (package

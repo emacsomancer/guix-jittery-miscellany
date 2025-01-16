@@ -99,6 +99,13 @@
         #~(cons* "--with-x-toolkit=lucid"
                  "--without-toolkit-scroll-bars"
                  "--with-native-compilation=yes"
+                 "--with-xft"
+                 "--with-harfbuzz"
+                 "--without-m17n-flt"
+                 "--with-libotf"
+                 "--without-gsettings"
+                 "--without-gconf"
+                 ; "--with-tree-sitter"
                  (delete "--with-native-compilation=aot" #$flags)))))
     (inputs
      (modify-inputs (package-inputs emacs)
@@ -127,7 +134,7 @@
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-lucid)
        ((#:configure-flags flags #~'())
-        #~(cons "CFLAGS=-O2 -mtune=native -march=native" #$flags))))))
+        #~(cons "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer" #$flags))))))
 ;; remove " -fomit-frame-pointer"
 
 (define-public emacs-next-lucid (emacs->emacs-next emacs-lucid))

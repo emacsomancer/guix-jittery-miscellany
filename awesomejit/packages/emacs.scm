@@ -96,7 +96,7 @@
     (arguments
      (substitute-keyword-arguments (package-arguments emacs)
        ((#:configure-flags flags #~'())
-        #~(cons* "--with-x-toolkit=lucid" #$flags))))
+        #~(cons* "--with-x-toolkit=lucid --without-toolkit-scroll-bars" #$flags))))
     (inputs
      (modify-inputs (package-inputs emacs)
        (prepend libxaw)))

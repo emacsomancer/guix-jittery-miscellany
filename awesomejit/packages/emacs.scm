@@ -165,7 +165,11 @@
                  (delete "--with-native-compilation=aot" #$flags)))))
     (inputs
      (modify-inputs (package-inputs emacs)
-       (prepend libxaw)))
+       (prepend
+        libxaw ;; for toolkit
+        cairo dbus giflib harfbuzz libjpeg-turbo libotf
+        libpng (librsvg-for-system) libtiff libx11 libxft
+        libxpm pango poppler)))
     (synopsis "Emacs text editor with Lucid toolkit")
     (description "This Emacs build uses the Lucid toolkit.")))
 
@@ -174,6 +178,12 @@
     (inherit emacs)
     (name "emacs-xwidgets-tune-cflags")
     (synopsis "Emacs text editor with xwidgets and CFLAGS tuning.")
+    (modify-inputs (package-inputs emacs)
+      (prepend
+       gtk+ ;; for toolkit
+       cairo dbus giflib harfbuzz libjpeg-turbo libotf
+       libpng (librsvg-for-system) libtiff libx11 libxft
+       libxpm pango poppler)))
     (arguments
      (substitute-keyword-arguments (package-arguments emacs)
        ((#:configure-flags flags #~'())

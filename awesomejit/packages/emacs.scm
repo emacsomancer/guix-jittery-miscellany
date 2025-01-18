@@ -161,13 +161,33 @@
                  "--with-libotf"
                  "--without-gsettings"
                  "--without-gconf"
-                 ; "--with-tree-sitter"
+                 "--with-tree-sitter"
                  (delete "--with-native-compilation=aot" #$flags)))))
     (inputs
      (modify-inputs (package-inputs emacs)
        (prepend libxaw)))
     (synopsis "Emacs text editor with Lucid toolkit")
     (description "This Emacs build uses the Lucid toolkit.")))
+
+(define-public emacs-xwidgets-tune-cflags
+  (package
+    (inherit emacs)
+    (name "emacs-xwidgets-tune-cflags")
+    (synopsis "Emacs text editor with xwidgets and CFLAGS tuning.")
+    (arguments
+     (substitute-keyword-arguments (package-arguments emacs-lucid)
+       ((#:configure-flags flags #~'())
+        #~(cons* "--with-native-compilation=yes"
+                 "--with-xft"
+                 "--with-harfbuzz"
+                 ;; "--without-m17n-flt"
+                 "--with-libotf"
+                 "--without-gsettings"
+                 "--without-gconf"
+                 "--with-xwidgets"
+                 "--with-modules"
+           "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
+           #$flags))))))
 
 (define-public emacs-lucid-tune-cflags
   (package
@@ -184,3 +204,4 @@
 ;; (define-public emacs-next-lucid-xwidgets (emacs->emacs-next emacs-lucid-xwidgets))
 (define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))
 
+(define-public emacs-next-xwidgets-tune-cflags (emacs->emacs-more-next emacs-xwidgets-tune-cflags))

@@ -90,7 +90,7 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:export (emacs->emacs-more-next)
-           (emacs->emacs-head)
+           (emacs->emacs-head))
 
 (define-public emacs-more-next-minimal
   (package
@@ -242,7 +242,7 @@
         gtk+ ;; for toolkit
         cairo dbus giflib harfbuzz libjpeg-turbo libotf
         libpng (librsvg-for-system) libtiff libx11 libxft
-        libxpm pango poppler))))
+        libxpm pango poppler)))
     (arguments
      (substitute-keyword-arguments (package-arguments emacs)
        ((#:configure-flags flags #~'())
@@ -255,8 +255,8 @@
                  "--without-gconf"
                  "--with-xwidgets"
                  "--with-modules"
-           "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
-           #$flags))))))
+                 "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
+                 #$flags))))))
 
 (define-public emacs-lucid-tune-cflags
   (package

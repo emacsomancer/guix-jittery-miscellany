@@ -89,8 +89,8 @@
   #:use-module (guix utils)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
-  #:export (emacs->emacs-more-next)
-           (emacs->emacs-head))
+  #:export (emacs->emacs-more-next
+            emacs->emacs-head))
 
 (define-public emacs-more-next-minimal
   (package

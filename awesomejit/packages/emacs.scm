@@ -175,7 +175,7 @@
     (name "emacs-xwidgets-tune-cflags")
     (synopsis "Emacs text editor with xwidgets and CFLAGS tuning.")
     (arguments
-     (substitute-keyword-arguments (package-arguments emacs-lucid)
+     (substitute-keyword-arguments (package-arguments emacs)
        ((#:configure-flags flags #~'())
         #~(cons* "--with-native-compilation=yes"
                  "--with-xft"

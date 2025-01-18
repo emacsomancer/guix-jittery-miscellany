@@ -89,7 +89,8 @@
   #:use-module (guix utils)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
-  #:export (emacs->emacs-more-next))
+  #:export (emacs->emacs-more-next)
+           (emacs->emacs-head)
 
 (define-public emacs-more-next-minimal
   (package
@@ -111,9 +112,66 @@
                              "emacs-next-native-comp-driver-options.patch"
                              "emacs-pgtk-super-key-fix.patch"))))))
 
+(define-public emacs-head-minimal
+  (let ((commit "8661f40ce4d6bce649cb2a564f7c4e766318476c")
+        (revision "0"))
+   (package
+    (inherit emacs-minimal)
+    (name "emacs-head-minimal")
+    (version (git-version "31.0.50" revision commit))
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://git.savannah.gnu.org/git/emacs.git")
+             (commit commit)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "0nj3a7wsl5piqf6a8wnmfyjbpxp2dwl0r48flv9q624jx4nxfr2p"))
+       (patches
+        (search-patches "emacs-next-exec-path.patch"
+                        "emacs-fix-scheme-indent-function.patch"
+                        "emacs-next-native-comp-driver-options.patch"
+                        "emacs-pgtk-super-key-fix.patch")))))))
+
+
 (define* (emacs->emacs-more-next emacs #:optional name
                             #:key (version (package-version emacs-more-next-minimal))
                             (source (package-source emacs-more-next-minimal)))
+  (package
+    (inherit emacs)
+    (name (or name
+              (and (string-prefix? "emacs" (package-name emacs))
+                   (string-append "emacs-next"
+                                  (string-drop (package-name emacs)
+                                               (string-length "emacs"))))))
+    (version version)
+    (source source)
+    (arguments
+     (substitute-keyword-arguments (package-arguments emacs)
+       ((#:phases phases)
+        #~(modify-phases #$phases
+            (replace 'validate-comp-integrity
+              (lambda* (#:key outputs #:allow-other-keys)
+                #$(cond
+                   ((%current-target-system)
+                    #~(display
+                       "Cannot validate native compilation on cross builds.\n"))
+                   ((member (%current-system) '("armhf-linux" "i686-linux"))
+                    #~(display "Integrity test is broken on 32 bit systems.\n"))
+                   (else
+                    #~(invoke
+                       (string-append (assoc-ref outputs "out") "/bin/emacs")
+                       "--batch"
+                       "--load"
+                       #$(local-file
+                          (search-auxiliary-file
+                           "emacs/comp-integrity-next.el"))
+                       "-f" "ert-run-tests-batch-and-exit")))))))))))
+
+(define* (emacs->emacs-head emacs #:optional name
+                            #:key (version (package-version emacs-head-minimal))
+                            (source (package-source emacs-head-minimal)))
   (package
     (inherit emacs)
     (name (or name
@@ -211,7 +269,9 @@
 ;; removed " -fomit-frame-pointer" ??
 
 (define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))
-;; (define-public emacs-next-lucid-xwidgets (emacs->emacs-next emacs-lucid-xwidgets))
 (define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))
-
 (define-public emacs-next-xwidgets-tune-cflags (emacs->emacs-more-next emacs-xwidgets-tune-cflags))
+
+(define-public emacs-head-lucid (emacs->emacs-head emacs-lucid))
+(define-public emacs-head-lucid-tune-cflags (emacs->emacs-head emacs-lucid-tune-cflags))
+(define-public emacs-head-xwidgets-tune-cflags (emacs->emacs-head emacs-xwidgets-tune-cflags))

@@ -236,12 +236,13 @@
     (inherit emacs)
     (name "emacs-xwidgets-tune-cflags")
     (synopsis "Emacs text editor with xwidgets and CFLAGS tuning.")
-    (modify-inputs (package-inputs emacs)
-      (prepend
-       gtk+ ;; for toolkit
-       cairo dbus giflib harfbuzz libjpeg-turbo libotf
-       libpng (librsvg-for-system) libtiff libx11 libxft
-       libxpm pango poppler)))
+    (inputs
+     (modify-inputs (package-inputs emacs)
+       (prepend
+        gtk+ ;; for toolkit
+        cairo dbus giflib harfbuzz libjpeg-turbo libotf
+        libpng (librsvg-for-system) libtiff libx11 libxft
+        libxpm pango poppler))))
     (arguments
      (substitute-keyword-arguments (package-arguments emacs)
        ((#:configure-flags flags #~'())

@@ -232,15 +232,15 @@
 
 (define-public emacs-xwidgets-tune-cflags
   (package
-    (inherit emacs)
+    (inherit emacs-xwidgets)
     (name "emacs-xwidgets-tune-cflags")
     (synopsis "Emacs text editor with xwidgets and CFLAGS tuning.")
     (inputs
-     (modify-inputs (package-inputs emacs)
+     (modify-inputs (package-inputs emacs-xwidgets)
        (prepend
         gtk+ ;; for toolkit
-        cairo dbus giflib harfbuzz libjpeg-turbo libotf webkitgtk-with-libsoup2 
-        libpng (librsvg-for-system) libtiff libx11 libxft libxcomposite
+        cairo dbus giflib harfbuzz libjpeg-turbo libotf 
+        libpng (librsvg-for-system) libtiff libx11 libxft 
         libxpm pango poppler)))
     (arguments
      (substitute-keyword-arguments (package-arguments emacs)

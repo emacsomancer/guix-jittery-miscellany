@@ -233,7 +233,7 @@
 (define-public emacs-tune-cflags
   (package
     (inherit emacs)
-    (name "emacs-xwidgets-tune-cflags")
+    (name "emacs-tune-cflags")
     (synopsis "Emacs text editor with xwidgets and CFLAGS tuning.")
     (inputs
      (modify-inputs (package-inputs emacs)

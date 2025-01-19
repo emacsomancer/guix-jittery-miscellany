@@ -230,6 +230,33 @@
     (synopsis "Emacs text editor with Lucid toolkit")
     (description "This Emacs build uses the Lucid toolkit.")))
 
+(define-public emacs-tune-cflags
+  (package
+    (inherit emacs)
+    (name "emacs-xwidgets-tune-cflags")
+    (synopsis "Emacs text editor with xwidgets and CFLAGS tuning.")
+    (inputs
+     (modify-inputs (package-inputs emacs)
+       (prepend
+        gtk+ ;; for toolkit
+        cairo dbus giflib harfbuzz libjpeg-turbo libotf 
+        libpng (librsvg-for-system) libtiff libx11 libxft 
+        libxpm pango poppler)))
+    (arguments
+     (substitute-keyword-arguments (package-arguments emacs)
+       ((#:configure-flags flags #~'())
+        #~(cons* "--with-native-compilation=yes"
+                 "--with-xft"
+                 "--with-harfbuzz"
+                 ;; "--without-m17n-flt"
+                 "--with-libotf"
+                 "--without-gsettings"
+                 "--without-gconf"
+                 "--with-xwidgets"
+                 "--with-modules"
+                 "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
+                 #$flags))))))
+
 (define-public emacs-xwidgets-tune-cflags
   (package
     (inherit emacs-xwidgets)
@@ -270,8 +297,10 @@
 
 (define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))
 (define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))
+(define-public emacs-next-tune-cflags (emacs->emacs-more-next emacs-tune-cflags))
 (define-public emacs-next-xwidgets-tune-cflags (emacs->emacs-more-next emacs-xwidgets-tune-cflags))
 
 (define-public emacs-head-lucid (emacs->emacs-head emacs-lucid))
 (define-public emacs-head-lucid-tune-cflags (emacs->emacs-head emacs-lucid-tune-cflags))
 (define-public emacs-head-xwidgets-tune-cflags (emacs->emacs-head emacs-xwidgets-tune-cflags))
+

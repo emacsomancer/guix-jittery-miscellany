@@ -252,7 +252,6 @@
                  "--with-libotf"
                  "--without-gsettings"
                  "--without-gconf"
-                 "--with-xwidgets"
                  "--with-modules"
                  "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
                  #$flags))))))

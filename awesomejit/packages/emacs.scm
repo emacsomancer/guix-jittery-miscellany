@@ -254,6 +254,7 @@
                  "--without-gconf"
                  "--with-modules"
                  "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
+                 "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
                  #$flags))))))
 
 (define-public emacs-xwidgets-tune-cflags

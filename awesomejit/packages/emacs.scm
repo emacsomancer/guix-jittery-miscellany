@@ -219,6 +219,7 @@
                  "--without-gsettings"
                  "--without-gconf"
                  "--with-tree-sitter"
+                 "--with-modules"
                  (delete "--with-native-compilation=aot" #$flags)))))
     (inputs
      (modify-inputs (package-inputs emacs)
@@ -293,7 +294,10 @@
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-lucid)
        ((#:configure-flags flags #~'())
-        #~(cons "CFLAGS=-O2 -mtune=native -march=native" #$flags))))))
+        #~(cons
+           "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
+           "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
+           #$flags))))))
 
 (define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))
 (define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))

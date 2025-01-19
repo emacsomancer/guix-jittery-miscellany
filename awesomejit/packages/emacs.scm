@@ -239,7 +239,7 @@
      (modify-inputs (package-inputs emacs)
        (prepend
         gtk+ ;; for toolkit
-        cairo dbus giflib harfbuzz libjpeg-turbo libotf
+        cairo dbus giflib harfbuzz libjpeg-turbo libotf webkitgtk
         libpng (librsvg-for-system) libtiff libx11 libxft
         libxpm pango poppler)))
     (arguments

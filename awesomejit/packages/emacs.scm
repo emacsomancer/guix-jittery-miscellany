@@ -89,8 +89,7 @@
   #:use-module (guix utils)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
-  #:export (emacs->emacs-more-next
-            emacs->emacs-head))
+  #:export (emacs->emacs-more-next))
 
 (define-public emacs-more-next-minimal
   (package
@@ -176,7 +175,7 @@
     (inherit emacs)
     (name (or name
               (and (string-prefix? "emacs" (package-name emacs))
-                   (string-append "emacs-next"
+                   (string-append "emacs-head"
                                   (string-drop (package-name emacs)
                                                (string-length "emacs"))))))
     (version version)

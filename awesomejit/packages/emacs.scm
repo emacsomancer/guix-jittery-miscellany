@@ -239,8 +239,8 @@
      (modify-inputs (package-inputs emacs)
        (prepend
         gtk+ ;; for toolkit
-        cairo dbus giflib harfbuzz libjpeg-turbo libotf webkitgtk
-        libpng (librsvg-for-system) libtiff libx11 libxft
+        cairo dbus giflib harfbuzz libjpeg-turbo libotf webkitgtk-with-libsoup2 
+        libpng (librsvg-for-system) libtiff libx11 libxft libxcomposite
         libxpm pango poppler)))
     (arguments
      (substitute-keyword-arguments (package-arguments emacs)

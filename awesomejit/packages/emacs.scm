@@ -293,7 +293,6 @@
      (substitute-keyword-arguments (package-arguments emacs-lucid)
        ((#:configure-flags flags #~'())
         #~(cons "CFLAGS=-O2 -mtune=native -march=native" #$flags))))))
-;; removed " -fomit-frame-pointer" ??
 
 (define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))
 (define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))

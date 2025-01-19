@@ -257,7 +257,7 @@
                  "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
                  "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
                  ;; LDFLAGS? -O2??
-                 #$flags))))))
+                 (delete "--with-native-compilation=aot" #$flags)))))))
 
 (define-public emacs-xwidgets-tune-cflags
   (package

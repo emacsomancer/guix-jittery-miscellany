@@ -1,2 +1,7 @@
 (channel
- (version 0))
+ (version 0)
+  (url "https://gitlab.com/emacsomancer/guix-awesomejit.git")
+ (dependencies
+  (channel
+   (name nonguix)
+   (url "https://gitlab.com/nonguix/nonguix"))

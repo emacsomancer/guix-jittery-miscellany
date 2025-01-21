@@ -11,7 +11,7 @@
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix packages)
-  #:use-module (guix packages libffi)
+  ;; #:use-module (guix packages libffi)
   #:use-module (nonguix build-system chromium-binary)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (ice-9 match))

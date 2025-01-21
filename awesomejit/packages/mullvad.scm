@@ -7,6 +7,7 @@
   #:use-module (gnu packages base)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages gnome)
+  #:use-module (gnu packages profiling)
   #:use-module (gnu packages networking)
   #:use-module (guix download)
   #:use-module (guix gexp)

@@ -78,7 +78,7 @@
                           (map
                             (lambda (binary)
                               (string-append #$output "/lib/zen/" binary))
-                            '("glxtest" "updater" "vaapitest" "zen" "zen-bin" "zen-browser" "pingsender"))
+                            '("glxtest" "updater" "vaapitest" "zen" "zen-bin" "pingsender"))
                           (find-files (string-append #$output "/lib/zen") ".*\\.so.*"))))))
                 (add-after 'patch-elf 'install-bin
                   (lambda _

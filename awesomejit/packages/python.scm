@@ -86,7 +86,7 @@ This tool takes care of these circumstances.")
              (uri (pypi-uri "icalendar" version))
              (sha256
               (base32
-               "1bbbg6dhgnignzq8qj5dvp6z4svh3q9ydxj89r7n77cm6a3dphj3"))))
+               "0w9l9xy8isrrjy3yhz30n7k0samy3hm04gzsffpfav80ixd3ai1c"))))
     (build-system pyproject-build-system)
     (arguments
      (list

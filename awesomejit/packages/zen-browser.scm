@@ -1,3 +1,8 @@
+;;; SPDX-License-Identifier: GPL-3.0-or-later
+;;; Copyright © 2025 Benjamin Slade <slade@lambda-y.net>
+;;; based on zen-browser-bin definition from https://codeberg.org/look/saayix/src/branch/main/saayix/packages/binaries.scm
+
+
 (define-module (awesomejit packages zen-browser)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages base)
@@ -35,7 +40,7 @@
 (define zen-browser
   (package
     (name "zen-browser")
-    (version "1.7b")
+    (version "1.7.2b")
     (source
       (origin
         (method url-fetch)

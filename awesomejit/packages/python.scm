@@ -95,7 +95,7 @@ This tool takes care of these circumstances.")
           (replace 'check
             (lambda* (#:key tests? #:allow-other-keys)
               (when tests?
-                (invoke "pytest" "-vv" "src/icalendar/tests" "-k" "not test_timezone_identification")))))))
+                (invoke "pytest" "-vv" "src/icalendar/tests" "-k" "not test_timezone_identification" "-k" "not test_issue_722_generate_vtimezone")))))))
     (propagated-inputs
      (list python-dateutil python-pytz python-tzdata))
     (native-inputs

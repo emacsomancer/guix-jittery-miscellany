@@ -49,7 +49,7 @@
                 version
                 "/zen.linux-x86_64.tar.bz2"))
         (sha256
-          (base32 "1vvzf7vy0927zm9hds7720drrwi4qfny99h65vn8x39m8zx6w9xp"))))
+          (base32 "6b499a74999fc05e19e349e2c8ca8e7f417147f5"))))
     (build-system copy-build-system)
     (arguments
       (list #:install-plan

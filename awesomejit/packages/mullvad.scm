@@ -22,7 +22,7 @@
 
 (define %mullvad-vpn-desktop-version
   ;; "2023.4"
-  "2025.2"
+  "2025.3"
   )
 
 (define (mullvad-vpn-desktop-origin-url system)

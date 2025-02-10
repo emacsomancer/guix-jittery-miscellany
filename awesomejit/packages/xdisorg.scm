@@ -199,18 +199,21 @@ service with @code{xsecurelock}.  Instead, add a helper binary to your
 @code{operating-system}'s @code{privileged-programs} field:
 
 @example
- (privileged-programs
-  (append (list
-           (privileged-program
-            (program (file-append xsecurelock \"/libexec/xsecurelock/authproto_pam\")))
-           (privileged-program
-            (program (file-append xsecurelock \"/libexec/xsecurelock/saver_xscreensaver\")))
-           (privileged-program
-            (program (file-append xscreensaver \"/bin/xscreensaver\")))
-           (privileged-program
-            (program (file-append xscreensaver \"/libexec/xscreensaver/xscreensaver-auth\")))
-           )
-          %default-privileged-programs))
+(privileged-programs
+ (append (list
+          (privileged-program
+           (program (file-append xsecurelock \"/libexec/xsecurelock/authproto_pam\")
+                    (setuid? #t)))
+          (privileged-program
+           (program (file-append xsecurelock \"/libexec/xsecurelock/saver_xscreensaver\")
+                    (setuid? #t)))
+          (privileged-program
+           (program (file-append xscreensaver \"/bin/xscreensaver\")
+                    (setuid? #t)))
+          (privileged-program
+           (program (file-append xscreensaver \"/libexec/xscreensaver/xscreensaver-auth\")
+                    (setuid? #t))))
+         %default-privileged-programs))
 @end example")
     (license license:asl2.0)))
 

@@ -40,7 +40,7 @@
 (define zen-browser
   (package
     (name "zen-browser")
-    (version "1.7.4b")
+    (version "1.7.6b")
     (source
       (origin
         (method url-fetch)

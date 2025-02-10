@@ -47,7 +47,7 @@
         (uri (string-append
                 "https://github.com/zen-browser/desktop/releases/download/"
                 version
-                "/zen.linux-x86_64.tar.bz2"))
+                "/zen.linux-x86_64.tar.xz"))
         (sha256
           (base32 "0vk4sas4gsplxdrqi15wpbs58hs5fq0nm0nk1ybij2rb7a66ay12"))))
     (build-system copy-build-system)

@@ -40,7 +40,7 @@
 (define-public mullvad-vpn-desktop
   (define-values (url hash)
     (mullvad-vpn-desktop-origin-values
-     #:amd64-hash "0nilaac2mgi23ri4bn9j5s1ndcyj7ak5vw4z6sj1xmfsr4v3mqcc"
+     #:amd64-hash "1kp80mmn3p3qlgb87qgavja43973nqgcsgyinrwgdwqs39sc6hn8"
      ;; #:aarch64-hash "0r27z9ak21bjfx19syb7bf8q5dq0gjlvwky20mc6nlj15bwnjjbv" ;; ??
      ))
   (package

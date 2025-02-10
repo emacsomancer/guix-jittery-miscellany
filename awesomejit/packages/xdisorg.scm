@@ -194,15 +194,23 @@
     (description "@code{xsecurelock} is an X11 screen locker which uses
 a modular design to avoid the usual pitfalls of screen locking utility design.
 
-As a consequence of the modular design, the usual screen locker service
-shouldn't be used with @code{xsecurelock}.  Instead, you need to add a helper
-binary to setuid-binaries:
+As a consequence of this design, you shouldn't use the usual screen locker
+service with @code{xsecurelock}.  Instead, add a helper binary to your
+@code{operating-system}'s @code{privileged-programs} field:
+
 @example
-(setuid-programs
- (cons*
-  (setuid-program
-   (program (file-append xsecurelock \"/libexec/xsecurelock/authproto_pam\")))
-  %setuid-programs))
+ (privileged-programs
+  (append (list
+           (privileged-program
+            (program (file-append xsecurelock \"/libexec/xsecurelock/authproto_pam\")))
+           (privileged-program
+            (program (file-append xsecurelock \"/libexec/xsecurelock/saver_xscreensaver\")))
+           (privileged-program
+            (program (file-append xscreensaver \"/bin/xscreensaver\")))
+           (privileged-program
+            (program (file-append xscreensaver \"/libexec/xscreensaver/xscreensaver-auth\")))
+           )
+          %default-privileged-programs))
 @end example")
     (license license:asl2.0)))
 

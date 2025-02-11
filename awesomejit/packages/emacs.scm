@@ -214,7 +214,7 @@
                  "--with-native-compilation=yes"
                  "--with-xft"
                  "--with-harfbuzz"
-                 "--without-m17n-flt"
+                 ;; "--without-m17n-flt"
                  "--with-libotf"
                  "--without-gsettings"
                  "--without-gconf"

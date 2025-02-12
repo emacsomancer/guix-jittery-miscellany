@@ -162,7 +162,8 @@ We care about your experience, not your data. Beta release.")
         (method url-fetch)
         (uri (string-append
                 "https://github.com/zen-browser/desktop/releases/download/"
-                version
+                ;; version
+                "twilight"
                 "/zen.linux-x86_64.tar.xz"))
         (sha256
          (base32 "0mwjhhkxpzyagbgpiy40hflg68w7v3f5cs7bpark540s5kl3a4qn"))

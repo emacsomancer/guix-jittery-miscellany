@@ -165,9 +165,72 @@ We care about your experience, not your data. Beta release.")
                 version
                 "/zen.linux-x86_64.tar.xz"))
         (sha256
-          (base32 "0mwjhhkxpzyagbgpiy40hflg68w7v3f5cs7bpark540s5kl3a4qn"))))
+         (base32 "0mwjhhkxpzyagbgpiy40hflg68w7v3f5cs7bpark540s5kl3a4qn"))
+        (file-name "zen-twilight")))
     (build-system copy-build-system)
-    (arguments (package-arguments zen-browser))
+    (arguments
+      (list #:install-plan
+            #~'(("." "lib/zen"))
+            #:phases
+            #~(modify-phases %standard-phases
+                (add-after 'install 'patch-elf
+                  (lambda* (#:key inputs #:allow-other-keys)
+                    (let ((ld.so (string-append #$(this-package-input "glibc")
+                                                #$(glibc-dynamic-linker)))
+                          (rpath (string-join
+                                   (cons*
+                                     (string-append #$output "/lib/zen")
+                                     (string-append #$(this-package-input "gtk+") "/share")
+                                     (map
+                                       (lambda (input)
+                                         (string-append (cdr input) "/lib"))
+                                       inputs))
+                                   ":")))
+                      ;; Got this proc from hako's Rosenthal, thanks
+                      (define (patch-elf file)
+                        (format #t "Patching ~a ..." file)
+                        (unless (string-contains file ".so")
+                          (invoke "patchelf" "--set-interpreter" ld.so file))
+                        (invoke "patchelf" "--set-rpath" rpath file)
+                        (display " done\n"))
+                      (for-each
+                        (lambda (binary)
+                          (patch-elf binary))
+                        (append
+                          (map
+                            (lambda (binary)
+                              (string-append #$output "/lib/zen/" binary))
+                            '("glxtest" "updater" "vaapitest" "zen" "zen-bin" "pingsender"))
+                          (find-files (string-append #$output "/lib/zen") ".*\\.so.*"))))))
+                (add-after 'patch-elf 'install-bin
+                  (lambda _
+                    (let* ((zen (string-append #$output "/lib/zen/zen"))
+                           (bin-zen (string-append #$output "/bin/zen")))
+                      (mkdir (string-append #$output "/bin"))
+                      (symlink zen bin-zen))))
+                (add-after 'install-bin 'install-desktop
+                  (lambda _
+                    (let* ((share-applications (string-append #$output "/share/applications"))
+                           (desktop (string-append share-applications "/zen-twilight.desktop")))
+                      (mkdir-p share-applications)
+                      (make-desktop-entry-file desktop
+                        #:name "Zen Browser twilight"
+                        #:icon "zen"
+                        #:type "Application"
+                        #:comment #$(package-synopsis this-package)
+                        #:exec (string-append #$output "/bin/zen %u")
+                        #:keywords '("Internet" "WWW" "Browser" "Web" "Explorer")
+                        #:categories '("Network" "Browser")
+                        ; #:actions '("new-window" "new-private-window" "profilemanager")
+                        #:mime-type '("text/html"
+                                      "text/xml"
+                                      "application/xhtml+xml"
+                                      "x-scheme-handler/http"
+                                      "x-scheme-handler/https"
+                                      "application/x-xpinstall"
+                                      "application/pdf"
+                                      "application/json")
+                        #:startup-w-m-class "zen-twilight")))))))
     (inputs (package-inputs zen-browser))
     (native-inputs (package-native-inputs zen-browser))
     (home-page "https://zen-browser.app/")

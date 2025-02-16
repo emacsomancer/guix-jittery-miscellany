@@ -1,29 +1,20 @@
 ;;; SPDX-License-Identifier: GPL-3.0-or-later
 ;;; Copyright © 2023 Giacomo Leidi <goodoldpaul@autistici.org>
 ;;; Copyright © 2025 Benjamin Slade <slade@lambda-y.net>
-;;; based on https://codeberg.org/fishinthecalculator/small-guix/src/branch/master/small-guix/packages/mullvad.scm
 
 (define-module (awesomejit packages mullvad)
   #:use-module (gnu packages base)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages gnome)
-  ;; #:use-module (gnu packages profiling)
   #:use-module (gnu packages networking)
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix packages)
-  ;; #:use-module (guix packages libffi)
-  ;; #:use-module (nonguix build-system)
-  ;; #:use-module (nonguix build-system binary)
-  ;; #:use-module (nonguix utils)
   #:use-module (nonguix build-system chromium-binary)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (ice-9 match))
 
-(define %mullvad-vpn-desktop-version
-  ;; "2023.4"
-  "2025.3"
-  )
+(define %mullvad-vpn-desktop-version "2025.3")
 
 (define (mullvad-vpn-desktop-origin-url system)
   (string-append "https://github.com/mullvad/mullvadvpn-app/releases/"

@@ -96,7 +96,7 @@
   (package
     (inherit emacs-minimal)
     (name "emacs-more-next-minimal")
-    (version "30.0.93")
+    (version "30.1")
     (source
      (origin
        (method git-fetch)
@@ -105,7 +105,7 @@
                   (commit (string-append "emacs-" version))))
             (file-name (git-file-name name version))
             (sha256
-             (base32 "05a587a7bnbz8ms45h4hs1c33j8268aymf3y1bpxipl3abi43jlm"))
+             (base32 "1r32kydhqf9ijc7dq57gfbsr7pyp3qp564k0h7ka5d6vdf8lwk71"))
             (patches
              (search-patches "emacs-next-exec-path.patch"
                              "emacs-fix-scheme-indent-function.patch"

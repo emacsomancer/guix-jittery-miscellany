@@ -107,8 +107,9 @@
        (patches
         (search-patches "emacs-next-exec-path.patch"
                         "emacs-fix-scheme-indent-function.patch"
-                        "emacs-next-native-comp-driver-options.patch"
-                        "emacs-pgtk-super-key-fix.patch"))))))
+                        ;; "emacs-next-native-comp-driver-options.patch"
+                        ;; "emacs-pgtk-super-key-fix.patch"
+                        ))))))
 
 (define-public emacs-head-minimal
   (let ((commit "8661f40ce4d6bce649cb2a564f7c4e766318476c")

@@ -235,7 +235,7 @@
   (package
     (inherit emacs)
     (name "emacs-tune-cflags")
-    (synopsis "Emacs text editor with xwidgets and CFLAGS tuning.")
+    (synopsis "Emacs text editor with CFLAGS tuning.")
     (inputs
      (modify-inputs (package-inputs emacs)
        (prepend
@@ -275,10 +275,10 @@
 (define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))
 (define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))
 (define-public emacs-next-tune-cflags (emacs->emacs-more-next emacs-tune-cflags))
-(define-public emacs-next-xwidgets-tune-cflags (emacs->emacs-more-next emacs-xwidgets-tune-cflags))
+;; (define-public emacs-next-xwidgets-tune-cflags (emacs->emacs-more-next emacs-xwidgets-tune-cflags))
 
 (define-public emacs-head-lucid (emacs->emacs-head emacs-lucid))
 (define-public emacs-head-lucid-tune-cflags (emacs->emacs-head emacs-lucid-tune-cflags))
 
-(define-public emacs-head-xwidgets-tune-cflags (emacs->emacs-head emacs-xwidgets-tune-cflags))
+;; (define-public emacs-head-xwidgets-tune-cflags (emacs->emacs-head emacs-xwidgets-tune-cflags))
 

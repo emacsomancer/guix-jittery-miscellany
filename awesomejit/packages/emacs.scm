@@ -103,7 +103,7 @@
        (uri (string-append "mirror://gnu/emacs/emacs-"
                                   version ".tar.xz"))
        (sha256
-        (base32 "1r32kydhqf9ijc7dq57gfbsr7pyp3qp564k0h7ka5d6vdf8lwk71"))
+        (base32 "13qkdx515qv7m8b2mpd37p16frs0xgl7bw8xvv397bz6fspc3jkc"))
        (patches
         (search-patches "emacs-next-exec-path.patch"
                         "emacs-fix-scheme-indent-function.patch"

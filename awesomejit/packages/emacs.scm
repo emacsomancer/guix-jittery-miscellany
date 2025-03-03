@@ -99,18 +99,17 @@
     (version "30.1")
     (source
      (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://git.savannah.gnu.org/git/emacs.git")
-                  (commit (string-append "emacs-" version))))
-            (file-name (git-file-name name version))
-            (sha256
-             (base32 "1r32kydhqf9ijc7dq57gfbsr7pyp3qp564k0h7ka5d6vdf8lwk71"))
-            (patches
-             (search-patches "emacs-next-exec-path.patch"
-                             "emacs-fix-scheme-indent-function.patch"
-                             "emacs-next-native-comp-driver-options.patch"
-                             "emacs-pgtk-super-key-fix.patch"))))))
+       (method url-fetch)
+       (uri (string-append "mirror://gnu/emacs/emacs-"
+                                  version ".tar.xz"))
+       (sha256
+        (base32 "1r32kydhqf9ijc7dq57gfbsr7pyp3qp564k0h7ka5d6vdf8lwk71"))
+       (patches
+        (search-patches "emacs-next-exec-path.patch"
+                        "emacs-fix-scheme-indent-function.patch"
+                        "emacs-next-native-comp-driver-options.patch"
+                        "emacs-next-native-comp-fix-filenames.patch"
+                        "emacs-pgtk-super-key-fix.patch"))))))
 
 (define-public emacs-head-minimal
   (let ((commit "8661f40ce4d6bce649cb2a564f7c4e766318476c")

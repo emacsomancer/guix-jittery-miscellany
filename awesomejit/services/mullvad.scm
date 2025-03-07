@@ -1,8 +1,8 @@
 ;;; SPDX-License-Identifier: GPL-3.0-or-later
 ;;; Copyright © 2023, 2025 Giacomo Leidi <goodoldpaul@autistici.org>
 
-(define-module (small-guix services mullvad)
-  #:use-module (small-guix packages mullvad)
+(define-module (awesomejit services mullvad)
+  #:use-module (awesomejit packages mullvad)
   #:use-module (gnu)
   #:use-module (gnu services configuration)
   #:use-module (gnu services shepherd)

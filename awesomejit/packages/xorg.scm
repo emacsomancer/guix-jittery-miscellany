@@ -124,61 +124,61 @@
   #:use-module (gnu packages xorg))
 
 
-(define-public xterm
-  (package
-    (name "xterm")
-    (version "397")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (list
-             (string-append "https://invisible-mirror.net/archives/xterm/"
-                            "xterm-" version ".tgz")
-             (string-append "ftp://ftp.invisible-island.net/xterm/"
-                            "xterm-" version ".tgz")))
-       (sha256
-        (base32 "0ql6mvs2amjfdarpqwzi4dcnvkgn6wr52kh7b3nfqi5skhmp96rf"))
-       (patches
-         (search-patches "xterm-370-explicit-xcursor.patch"))))
-    (build-system gnu-build-system)
-    (arguments
-     '(#:configure-flags '("--enable-wide-chars" "--enable-load-vt-fonts"
-                           "--enable-i18n" "--enable-doublechars"
-                           "--enable-luit" "--enable-mini-luit"
-                           "X_EXTRA_LIBS=-lXcursor")
-       #:tests? #f                      ; no test suite
-       #:phases
-       (modify-phases %standard-phases
-         (add-after 'build 'patch-file-names
-           (lambda* (#:key outputs #:allow-other-keys)
-             (let ((out (assoc-ref outputs "out")))
-               (substitute* "uxterm"
-                 (("([ `\\|])(sh|sed|awk|xmessage) " _ prefix command)
-                  (string-append prefix (which command) " "))
-                 (("(`|\"|LANG=C )(locale) " _ prefix command)
-                  (string-append prefix (which command) " "))
-                 (("=xterm")
-                  (string-append "=" out "/bin/xterm")))))))))
-    (native-inputs
-     (list pkg-config))
-    (inputs
-     `(("luit" ,luit)
-       ("libXft" ,libxft)
-       ("fontconfig" ,fontconfig)
-       ("freetype" ,freetype)
-       ("ncurses" ,ncurses)
-       ("libICE" ,libice)
-       ("libSM" ,libsm)
-       ("libX11" ,libx11)
-       ("libXcursor" ,libxcursor)
-       ("libXext" ,libxext)
-       ("libXt" ,libxt)
-       ("xorgproto" ,xorgproto)
-       ("libXaw" ,libxaw)))
-    (home-page "https://invisible-island.net/xterm/")
-    (synopsis "Terminal emulator for the X Window System")
-    (description
-     "The xterm program is a terminal emulator for the X Window System.  It
-provides DEC VT102/VT220 (VTxxx) and Tektronix 4014 compatible terminals for
-programs that cannot use the window system directly.")
-    (license license:x11)))
+;; (define-public xterm
+;;   (package
+;;     (name "xterm")
+;;     (version "397")
+;;     (source
+;;      (origin
+;;        (method url-fetch)
+;;        (uri (list
+;;              (string-append "https://invisible-mirror.net/archives/xterm/"
+;;                             "xterm-" version ".tgz")
+;;              (string-append "ftp://ftp.invisible-island.net/xterm/"
+;;                             "xterm-" version ".tgz")))
+;;        (sha256
+;;         (base32 "0ql6mvs2amjfdarpqwzi4dcnvkgn6wr52kh7b3nfqi5skhmp96rf"))
+;;        (patches
+;;          (search-patches "xterm-370-explicit-xcursor.patch"))))
+;;     (build-system gnu-build-system)
+;;     (arguments
+;;      '(#:configure-flags '("--enable-wide-chars" "--enable-load-vt-fonts"
+;;                            "--enable-i18n" "--enable-doublechars"
+;;                            "--enable-luit" "--enable-mini-luit"
+;;                            "X_EXTRA_LIBS=-lXcursor")
+;;        #:tests? #f                      ; no test suite
+;;        #:phases
+;;        (modify-phases %standard-phases
+;;          (add-after 'build 'patch-file-names
+;;            (lambda* (#:key outputs #:allow-other-keys)
+;;              (let ((out (assoc-ref outputs "out")))
+;;                (substitute* "uxterm"
+;;                  (("([ `\\|])(sh|sed|awk|xmessage) " _ prefix command)
+;;                   (string-append prefix (which command) " "))
+;;                  (("(`|\"|LANG=C )(locale) " _ prefix command)
+;;                   (string-append prefix (which command) " "))
+;;                  (("=xterm")
+;;                   (string-append "=" out "/bin/xterm")))))))))
+;;     (native-inputs
+;;      (list pkg-config))
+;;     (inputs
+;;      `(("luit" ,luit)
+;;        ("libXft" ,libxft)
+;;        ("fontconfig" ,fontconfig)
+;;        ("freetype" ,freetype)
+;;        ("ncurses" ,ncurses)
+;;        ("libICE" ,libice)
+;;        ("libSM" ,libsm)
+;;        ("libX11" ,libx11)
+;;        ("libXcursor" ,libxcursor)
+;;        ("libXext" ,libxext)
+;;        ("libXt" ,libxt)
+;;        ("xorgproto" ,xorgproto)
+;;        ("libXaw" ,libxaw)))
+;;     (home-page "https://invisible-island.net/xterm/")
+;;     (synopsis "Terminal emulator for the X Window System")
+;;     (description
+;;      "The xterm program is a terminal emulator for the X Window System.  It
+;; provides DEC VT102/VT220 (VTxxx) and Tektronix 4014 compatible terminals for
+;; programs that cannot use the window system directly.")
+;;     (license license:x11)))

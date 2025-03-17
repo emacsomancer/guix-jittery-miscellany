@@ -218,6 +218,86 @@ service with @code{xsecurelock}.  Instead, add a helper binary to your
 @end example")
     (license license:asl2.0)))
 
+(define-public xscreensaver
+  (package
+    (name "xscreensaver")
+    (version "6.09")
+    (source
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append "https://www.jwz.org/xscreensaver/xscreensaver-"
+                       version ".tar.gz"))
+       (sha256
+        (base32 "018b69bjy7r23sr97zha34h6zcal3f5ahwrr5zyl7k5qml2pfrpl"))
+       (modules '((guix build utils)))
+       (snippet
+        ;; 'configure.ac' checks for $ac_unrecognized_opts and exits if it's
+        ;; non-empty.  Since the default 'configure' phases passes options
+        ;; that may or may not be recognized, such as '--enable-fast-install',
+        ;; these need to be tolerated, hence this snippet.
+        '(substitute* "configure"
+           (("exit 2") "true")))))
+    (build-system gnu-build-system)
+    (arguments
+     `(#:tests? #f                      ; no check target
+       #:phases
+       (modify-phases %standard-phases
+         (add-before 'configure 'adjust-gtk-resource-paths
+           (lambda _
+             (substitute* '("driver/Makefile.in" "po/Makefile.in.in")
+               (("@GTK_DATADIR@") "@datadir@")
+               (("@PO_DATADIR@") "@datadir@"))
+             #t)))
+       #:configure-flags '("--with-pam"
+
+                           ;; Don't check /proc/interrupts in the build
+                           ;; environment to avoid non-deterministic failures
+                           ;; of the 'configure' script.
+                           "--without-proc-interrupts"
+
+                           "--without-readdisplay")
+       #:make-flags (list (string-append "AD_DIR="
+                                         (assoc-ref %outputs "out")
+                                         "/lib/X11/app-defaults"))))
+    (native-inputs
+     (list pkg-config intltool))
+    (inputs
+     (list libx11
+           libxcrypt
+           libxext
+           libxi
+           libxt
+           libxft
+           libxmu
+           libxpm
+           libglade
+           libxml2
+           libsm
+           libjpeg-turbo
+           linux-pam
+           pango
+           gtk+
+           perl
+           cairo
+           bc
+           libxrandr
+           glu
+           `(,glib "bin")))
+    (home-page "https://www.jwz.org/xscreensaver/")
+    (synopsis "Classic screen saver suite supporting screen locking")
+    (description
+     "xscreensaver is a popular screen saver collection with many entertaining
+demos.  It also acts as a nice screen locker.")
+    ;; xscreensaver doesn't have a single copyright file and instead relies on
+    ;; source comment headers, though most files have the same lax
+    ;; permissions.  To reduce complexity, we're pointing at Debian's
+    ;; breakdown of the copyright information.
+    (license (license:non-copyleft
+              (string-append
+               "http://metadata.ftp-master.debian.org/changelogs/"
+               "/main/x/xscreensaver/xscreensaver_5.36-1_copyright")))))
+
 ;; (define-public xsecurelock-xscreensaver
 ;;   (let ((branch "master")
 ;;         (commit "28d1c68708b1081ce0e315297e7423f9ea246cfa"))

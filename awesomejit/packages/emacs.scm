@@ -270,7 +270,7 @@
      ;;             (lambda _
      ;;               (setenv "CFLAGS"
      ;;                       "-O2 -mtune=native -march=native -fomit-frame-pointer")))))
-     ))
+     )))
 
 (define-public emacs-lucid-tune-cflags
   (package

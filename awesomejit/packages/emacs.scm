@@ -256,10 +256,20 @@
                  "--without-gsettings"
                  "--without-gconf"
                  "--with-modules"
-                 "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
-                 "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
+                 ;; "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
+                 ;; "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
                  ;; LDFLAGS? -O2??
-                 (delete "--with-native-compilation=aot" #$flags)))))))
+                 (delete "--with-native-compilation=aot" #$flags))))
+     #:phases
+     #~(modify-phases %standard-phases
+         (add-before 'configure 'override-LDFLAGS
+           (lambda _
+             (setenv "LDFLAGS"
+                     "-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto")))
+         (add-before 'configure 'override-CFLAGS
+           (lambda _
+             (setenv "CFLAGS"
+                     "-O2 -mtune=native -march=native -fomit-frame-pointer"))))))
 
 (define-public emacs-lucid-tune-cflags
   (package

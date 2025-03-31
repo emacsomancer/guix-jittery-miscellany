@@ -24,4 +24,4 @@
                (method git-fetch)
                (git-reference
                 (url "https://github.com/aartaka/surf.git")
-                (commit commit))))))
+                (commit commit)))))))

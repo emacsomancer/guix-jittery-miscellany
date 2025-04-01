@@ -15,15 +15,15 @@
   #:use-module (guix utils)
   #:use-module (guix packages))
 
-(define-public aartaka-surf
-  (let ((commit "11d9703d0437a5e67bf83b5291e69f2580e38ca9")
-        (revision "0"))
-    (package
-      (name "aartaka-surf")
-      (inherit surf)
-      (source (origin
-                (method git-fetch)
-                (uri
-                 (git-reference
-                  (url "https://github.com/aartaka/surf.git")
-                  (commit commit))))))))
+;; (define-public aartaka-surf
+;;   (let ((commit "11d9703d0437a5e67bf83b5291e69f2580e38ca9")
+;;         (revision "0"))
+;;     (package
+;;       (name "aartaka-surf")
+;;       (inherit surf)
+;;       (source (origin
+;;                 (method git-fetch)
+;;                 (uri
+;;                  (git-reference
+;;                   (url "https://github.com/aartaka/surf.git")
+;;                   (commit commit))))))))

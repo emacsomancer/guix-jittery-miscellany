@@ -19,10 +19,11 @@
   (let ((commit "11d9703d0437a5e67bf83b5291e69f2580e38ca9")
         (revision "0"))
     (package
-     (inherit surf)
-     (source (origin
-               (method git-fetch)
-               (uri
-                (git-reference
-                 (url "https://github.com/aartaka/surf.git")
-                 (commit commit))))))))
+      (name "aartaka-surf")
+      (inherit surf)
+      (source (origin
+                (method git-fetch)
+                (uri
+                 (git-reference
+                  (url "https://github.com/aartaka/surf.git")
+                  (commit commit))))))))

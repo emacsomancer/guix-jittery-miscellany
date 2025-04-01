@@ -64,8 +64,8 @@
        (method git-fetch)
        (uri
         (git-reference
-         (url  (url "https://github.com/aartaka/surf.git")
-           (commit commit))))
+         (url "https://github.com/aartaka/surf.git")
+           (commit commit)))
        (sha256
         (base32 "063a4fnvsjbc61alnbfdpxy0nwhh9ql9j6s9hkdv12713kv932ds"))))
     (build-system glib-or-gtk-build-system)

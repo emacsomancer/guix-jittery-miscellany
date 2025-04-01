@@ -22,6 +22,7 @@
      (inherit surf)
      (source (origin
                (method git-fetch)
-               (git-reference
-                (url "https://github.com/aartaka/surf.git")
-                (commit commit)))))))
+               (uri
+                (git-reference
+                 (url "https://github.com/aartaka/surf.git")
+                 (commit commit))))))))

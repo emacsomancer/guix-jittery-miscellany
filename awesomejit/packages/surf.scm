@@ -53,52 +53,52 @@
   #:use-module (guix utils)
   #:use-module (guix packages))
 
-(define-public surf
-  (let ((commit "11d9703d0437a5e67bf83b5291e69f2580e38ca9")
-        (revision "0"))
-  (package
-    (name "surf")
-    (version (git-version "0" revision commit))
-    (source
-     (origin
-       (method git-fetch)
-       (uri
-        (git-reference
-         (url "https://github.com/aartaka/surf.git")
-           (commit commit)))
-       (sha256
-        (base32 "063a4fnvsjbc61alnbfdpxy0nwhh9ql9j6s9hkdv12713kv932ds"))))
-    (build-system glib-or-gtk-build-system)
-    (arguments
-     `(#:tests? #f                      ; no tests
-       #:make-flags
-       (list (string-append "CC=" ,(cc-for-target))
-             (string-append "PREFIX=" %output))
-       #:phases
-       (modify-phases %standard-phases
-         (delete 'configure)
-         ;; Use the right file name for dmenu and xprop.
-         (add-before 'build 'set-dmenu-and-xprop-file-name
-           (lambda* (#:key inputs #:allow-other-keys)
-             (substitute* "config.def.h"
-               (("dmenu") (search-input-file inputs "/bin/dmenu"))
-               (("xprop") (search-input-file inputs "/bin/xprop")))
-             #t)))))
-    (inputs
-     `(("dmenu" ,dmenu)
-       ("gcr" ,gcr-3)
-       ("glib-networking" ,glib-networking)
-       ("gsettings-desktop-schemas" ,gsettings-desktop-schemas)
-       ("webkitgtk" ,webkitgtk-with-libsoup2)
-       ("xprop" ,xprop)))
-    (native-inputs
-     (list pkg-config))
-    (home-page "https://surf.suckless.org/")
-    (synopsis "Simple web browser")
-    (description
-     "Surf is a simple web browser based on WebKit/GTK+.  It is able to
-display websites and follow links.  It supports the XEmbed protocol which
-makes it possible to embed it in another application.  Furthermore, one can
-point surf to another URI by setting its XProperties.")
-    (license (list license:expat
-                   license:x11)))))
+;; (define-public surf
+;;   (let ((commit "11d9703d0437a5e67bf83b5291e69f2580e38ca9")
+;;         (revision "0"))
+;;   (package
+;;     (name "surf")
+;;     (version (git-version "0" revision commit))
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri
+;;         (git-reference
+;;          (url "https://github.com/aartaka/surf.git")
+;;            (commit commit)))
+;;        (sha256
+;;         (base32 "063a4fnvsjbc61alnbfdpxy0nwhh9ql9j6s9hkdv12713kv932ds"))))
+;;     (build-system glib-or-gtk-build-system)
+;;     (arguments
+;;      `(#:tests? #f                      ; no tests
+;;        #:make-flags
+;;        (list (string-append "CC=" ,(cc-for-target))
+;;              (string-append "PREFIX=" %output))
+;;        #:phases
+;;        (modify-phases %standard-phases
+;;          (delete 'configure)
+;;          ;; Use the right file name for dmenu and xprop.
+;;          (add-before 'build 'set-dmenu-and-xprop-file-name
+;;            (lambda* (#:key inputs #:allow-other-keys)
+;;              (substitute* "config.def.h"
+;;                (("dmenu") (search-input-file inputs "/bin/dmenu"))
+;;                (("xprop") (search-input-file inputs "/bin/xprop")))
+;;              #t)))))
+;;     (inputs
+;;      `(("dmenu" ,dmenu)
+;;        ("gcr" ,gcr-3)
+;;        ("glib-networking" ,glib-networking)
+;;        ("gsettings-desktop-schemas" ,gsettings-desktop-schemas)
+;;        ("webkitgtk" ,webkitgtk-with-libsoup2)
+;;        ("xprop" ,xprop)))
+;;     (native-inputs
+;;      (list pkg-config))
+;;     (home-page "https://surf.suckless.org/")
+;;     (synopsis "Simple web browser")
+;;     (description
+;;      "Surf is a simple web browser based on WebKit/GTK+.  It is able to
+;; display websites and follow links.  It supports the XEmbed protocol which
+;; makes it possible to embed it in another application.  Furthermore, one can
+;; point surf to another URI by setting its XProperties.")
+;;     (license (list license:expat
+;;                    license:x11)))))

@@ -58,7 +58,7 @@
         (revision "0"))
   (package
     (name "surf")
-    ;; (version "2.1")
+    (version (git-version "0" revision commit))
     (source
      (origin
        (method git-fetch)

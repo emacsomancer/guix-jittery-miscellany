@@ -51,7 +51,8 @@
   #:use-module (guix git-download)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix utils)
-  #:use-module (guix packages))
+  #:use-module (guix packages)
+  #:use-module (gnu packages suckless))
 
 (define-public surf-stumpish
   (let ((commit "11d9703d0437a5e67bf83b5291e69f2580e38ca9")

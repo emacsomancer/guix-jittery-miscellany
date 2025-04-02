@@ -53,11 +53,11 @@
   #:use-module (guix utils)
   #:use-module (guix packages))
 
-(define-public surf
+(define-public surf-stumpish
   (let ((commit "11d9703d0437a5e67bf83b5291e69f2580e38ca9")
         (revision "0"))
   (package
-    (name "surf")
+    (name "surf-stumpish")
     (version (git-version "0" revision commit))
     (source
      (origin
@@ -65,7 +65,8 @@
        (uri
         (git-reference
          (url "https://github.com/aartaka/surf")
-           (commit commit)))
+         (commit commit)))
+       (file-name (git-file-name name version))
        (sha256
         (base32 "063a4fnvsjbc61alnbfdpxy0nwhh9ql9j6s9hkdv12713kv932ds"))))
     (build-system glib-or-gtk-build-system)

@@ -65,7 +65,7 @@
        (method git-fetch)
        (uri
         (git-reference
-         (url "https://github.com/aartaka/surf")
+         (url "https://github.com/aartaka/surf.git")
          (commit commit)))
        (file-name (git-file-name name version))
        (sha256
@@ -92,15 +92,16 @@
        ("glib-networking" ,glib-networking)
        ("gsettings-desktop-schemas" ,gsettings-desktop-schemas)
        ("webkitgtk" ,webkitgtk-with-libsoup2)
-       ("xprop" ,xprop)))
+       ("xprop" ,xprop)
+       ("tabbed" ,tabbed)))
     (native-inputs
      (list pkg-config))
-    (home-page "https://surf.suckless.org/")
+    (home-page "https://aartaka.me/nyxt-to-surf.html")
     (synopsis "Simple web browser")
     (description
-     "Surf is a simple web browser based on WebKit/GTK+.  It is able to
-display websites and follow links.  It supports the XEmbed protocol which
-makes it possible to embed it in another application.  Furthermore, one can
-point surf to another URI by setting its XProperties.")
+     "Surf [https://surf.suckless.org/ ] is a simple web browser based on WebKit/GTK+.
+It is able to display websites and follow links.  It supports the XEmbed
+protocol which makes it possible to embed it in another application.
+Furthermore, one can point surf to another URI by setting its XProperties.")
     (license (list license:expat
                    license:x11)))))

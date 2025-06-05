@@ -40,7 +40,7 @@
 (define zen-browser
   (package
     (name "zen-browser")
-    (version "1.12.8b")
+    (version "1.12.10b")
     (source
       (origin
         (method url-fetch)
@@ -49,7 +49,7 @@
                 version
                 "/zen.linux-x86_64.tar.xz"))
         (sha256
-          (base32 "1isplgd38zk5k2zs68j4ig4n4csmss8xg5g1gkyjcc6yg6qcbshw"))))
+          (base32 "1wj8ramw4rvff5mdal3gdhgcpll664vw0lbh6gnng1k2468kyldk"))))
     (build-system copy-build-system)
     (arguments
       (list #:install-plan

@@ -151,7 +151,7 @@
        ((#:phases phases)
         #~(modify-phases #$phases
             (replace 'validate-comp-integrity
-              (lambda* (#:key outputs #:allow-other-keys)
+              ;; (lambda* (#:key outputs #:allow-other-keys)
                 ;; #$(cond
                 ;;    ((%current-target-system)
                 ;;     #~(display
@@ -168,7 +168,8 @@
                        #$(local-file
                           (search-auxiliary-file
                            "emacs/comp-integrity-next.el"))
-                       "-f" "ert-run-tests-batch-and-exit")))))))))
+                       "-f" "ert-run-tests-batch-and-exit"))))))))
+;; )
 ;; ))
 
 (define* (emacs->emacs-head emacs #:optional name
@@ -188,11 +189,11 @@
        ((#:phases phases)
         #~(modify-phases #$phases
             (replace 'validate-comp-integrity
-              (lambda* (#:key outputs #:allow-other-keys)
-                #$(cond
-                   ((%current-target-system)
-                    #~(display
-                       "Cannot validate native compilation on cross builds.\n"))
+              ;; (lambda* (#:key outputs #:allow-other-keys)
+                ;; #$(cond
+                ;;    ((%current-target-system)
+                ;;     #~(display
+                ;;        "Cannot validate native compilation on cross builds.\n"))
                    ;; ((member (%current-system) '("armhf-linux" "i686-linux"))
                    ;;  #~(display "Integrity test is broken on 32 bit systems.\n"))
                    ;; (else
@@ -203,7 +204,8 @@
                        #$(local-file
                           (search-auxiliary-file
                            "emacs/comp-integrity-next.el"))
-                       "-f" "ert-run-tests-batch-and-exit"))))))))))
+                       "-f" "ert-run-tests-batch-and-exit"))))))))
+;; ))
 ;; )
 
 

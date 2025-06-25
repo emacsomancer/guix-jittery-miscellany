@@ -151,7 +151,7 @@
        ((#:phases phases)
         #~(modify-phases #$phases
             (replace 'validate-comp-integrity
-              ;; (lambda* (#:key outputs #:allow-other-keys)
+              (lambda* (#:key outputs #:allow-other-keys)
                 ;; #$(cond
                 ;;    ((%current-target-system)
                 ;;     #~(display
@@ -168,7 +168,7 @@
                        #$(local-file
                           (search-auxiliary-file
                            "emacs/comp-integrity-next.el"))
-                       "-f" "ert-run-tests-batch-and-exit"))))))))
+                       "-f" "ert-run-tests-batch-and-exit")))))))))
 ;; )
 ;; ))
 
@@ -189,7 +189,7 @@
        ((#:phases phases)
         #~(modify-phases #$phases
             (replace 'validate-comp-integrity
-              ;; (lambda* (#:key outputs #:allow-other-keys)
+              (lambda* (#:key outputs #:allow-other-keys)
                 ;; #$(cond
                 ;;    ((%current-target-system)
                 ;;     #~(display
@@ -204,7 +204,7 @@
                        #$(local-file
                           (search-auxiliary-file
                            "emacs/comp-integrity-next.el"))
-                       "-f" "ert-run-tests-batch-and-exit"))))))))
+                       "-f" "ert-run-tests-batch-and-exit")))))))))
 ;; ))
 ;; )
 

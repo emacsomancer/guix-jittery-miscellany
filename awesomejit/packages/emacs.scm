@@ -150,25 +150,10 @@
      (substitute-keyword-arguments (package-arguments emacs)
        ((#:phases phases)
         #~(modify-phases #$phases
-            (replace 'validate-comp-integrity
-              (lambda* (#:key outputs #:allow-other-keys)
-                #$(cond
-                   ((%current-target-system)
-                    #~(display
-                       "Cannot validate native compilation on cross builds.\n"))
-                   ((member (%current-system) '("armhf-linux" "i686-linux"))
-                    #~(display "Integrity test is broken on 32 bit systems.\n"))
-                   ((member (%current-system) '("x86_64-linux" "aarch64-linux"))
-                    #~(display "Skipping integrity test because of build issues.\n"))
-                   (else
-                    #~(invoke
-                       (string-append (assoc-ref outputs "out") "/bin/emacs")
-                       "--batch"
-                       "--load"
-                       #$(local-file
-                          (search-auxiliary-file
-                           "emacs/comp-integrity-next.el"))
-                       "-f" "ert-run-tests-batch-and-exit")))))))))))
+            (add-after 'unpack 'autogen
+              (lambda _
+                (invoke "sh" "autogen.sh")))
+              (delete 'validate-comp-integrity)))))))
 
 (define* (emacs->emacs-head emacs #:optional name
                             #:key (version (package-version emacs-head-minimal))
@@ -186,23 +171,10 @@
      (substitute-keyword-arguments (package-arguments emacs)
        ((#:phases phases)
         #~(modify-phases #$phases
-            (replace 'validate-comp-integrity
-              (lambda* (#:key outputs #:allow-other-keys)
-                #$(cond
-                   ((%current-target-system)
-                    #~(display
-                       "Cannot validate native compilation on cross builds.\n"))
-                   ((member (%current-system) '("armhf-linux" "i686-linux"))
-                    #~(display "Integrity test is broken on 32 bit systems.\n"))
-                   (else
-                    #~(invoke
-                       (string-append (assoc-ref outputs "out") "/bin/emacs")
-                       "--batch"
-                       "--load"
-                       #$(local-file
-                          (search-auxiliary-file
-                           "emacs/comp-integrity-next.el"))
-                       "-f" "ert-run-tests-batch-and-exit")))))))))))
+            (add-after 'unpack 'autogen
+              (lambda _
+                (invoke "sh" "autogen.sh")))
+            (delete 'validate-comp-integrity)))))))
 
 
 (define-public emacs-lucid

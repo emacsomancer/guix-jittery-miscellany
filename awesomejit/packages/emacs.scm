@@ -107,7 +107,7 @@
        (patches
         (search-patches "emacs-next-exec-path.patch"
                         "emacs-fix-scheme-indent-function.patch"
-                        "emacs-next-native-comp-driver-options.patch"
+                        "emacs-native-comp-driver-options.patch"
                         "emacs-pgtk-super-key-fix.patch"
                         ))))))
 
@@ -130,7 +130,7 @@
        (patches
         (search-patches "emacs-next-exec-path.patch"
                         "emacs-fix-scheme-indent-function.patch"
-                        "emacs-next-native-comp-driver-options.patch"
+                        "emacs-native-comp-driver-options.patch"
                         "emacs-pgtk-super-key-fix.patch")))))))
 
 

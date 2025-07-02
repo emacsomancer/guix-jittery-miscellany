@@ -101,7 +101,7 @@
      (origin
        (method url-fetch)
        (uri (string-append "mirror://gnu/emacs/emacs-"
-                                  version ".tar.xz"))
+                           version ".tar.xz"))
        (sha256
         (base32 "13qkdx515qv7m8b2mpd37p16frs0xgl7bw8xvv397bz6fspc3jkc"))
        (patches
@@ -114,29 +114,29 @@
 (define-public emacs-head-minimal
   (let ((commit "8661f40ce4d6bce649cb2a564f7c4e766318476c")
         (revision "0"))
-   (package
-    (inherit emacs-minimal)
-    (name "emacs-head-minimal")
-    (version (git-version "31.0.50" revision commit))
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://git.savannah.gnu.org/git/emacs.git")
-             (commit commit)))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "0nj3a7wsl5piqf6a8wnmfyjbpxp2dwl0r48flv9q624jx4nxfr2p"))
-       (patches
-        (search-patches "emacs-exec-path.patch"
-                        "emacs-fix-scheme-indent-function.patch"
-                        "emacs-native-comp-driver-options.patch"
-                        "emacs-pgtk-super-key-fix.patch")))))))
+    (package
+      (inherit emacs-minimal)
+      (name "emacs-head-minimal")
+      (version (git-version "31.0.50" revision commit))
+      (source
+       (origin
+	 (method git-fetch)
+	 (uri (git-reference
+		(url "https://git.savannah.gnu.org/git/emacs.git")
+		(commit commit)))
+	 (file-name (git-file-name name version))
+	 (sha256
+          (base32 "0nj3a7wsl5piqf6a8wnmfyjbpxp2dwl0r48flv9q624jx4nxfr2p"))
+	 (patches
+          (search-patches "emacs-exec-path.patch"
+                          "emacs-fix-scheme-indent-function.patch"
+                          "emacs-native-comp-driver-options.patch"
+                          "emacs-pgtk-super-key-fix.patch")))))))
 
 
 (define* (emacs->emacs-more-next emacs #:optional name
-                            #:key (version (package-version emacs-more-next-minimal))
-                            (source (package-source emacs-more-next-minimal)))
+				 #:key (version (package-version emacs-more-next-minimal))
+				 (source (package-source emacs-more-next-minimal)))
   (package
     (inherit emacs)
     (name (or name
@@ -153,166 +153,165 @@
             (add-after 'unpack 'autogen
               (lambda _
                 (invoke "sh" "autogen.sh")))
-	          #~(modify-phases %standard-phases
-          (add-after 'unpack 'enable-elogind
-            (lambda _
-              (substitute* "configure.ac"
-                (("libsystemd") "libelogind"))
-              (when (file-exists? "configure")
-                (delete-file "configure"))))
-          (add-after 'unpack 'patch-program-file-names
-            (lambda* (#:key inputs #:allow-other-keys)
-              ;; Substitute "sh" command.
-              (substitute* '("src/callproc.c"
-                             "lisp/term.el"
-                             "lisp/htmlfontify.el"
-                             "lisp/mail/feedmail.el"
-                             "lisp/obsolete/pgg-pgp.el"
-                             "lisp/obsolete/pgg-pgp5.el"
-                             "lisp/org/ob-eval.el"
-                             "lisp/textmodes/artist.el"
-                             "lisp/progmodes/sh-script.el"
-                             "lisp/textmodes/artist.el"
-                             "lisp/htmlfontify.el"
-                             "lisp/term.el")
-                (("\"/bin/sh\"")
-                 (format #f "~s" (search-input-file inputs "bin/sh"))))
-              (substitute* '("lisp/gnus/mm-uu.el"
-                             "lisp/gnus/nnrss.el"
-                             "lisp/mail/blessmail.el")
-                (("\"#!/bin/sh\\\n\"")
-                 (format #f "\"#!~a~%\"" (search-input-file inputs "bin/sh"))))
-              (substitute* '("lisp/jka-compr.el"
-                             "lisp/man.el")
-                (("\"sh\"")
-                 (format #f "~s" (search-input-file inputs "bin/sh"))))
+            (add-after 'unpack 'enable-elogind
+              (lambda _
+		(substitute* "configure.ac"
+                  (("libsystemd") "libelogind"))
+		(when (file-exists? "configure")
+                  (delete-file "configure"))))
+            (add-after 'unpack 'patch-program-file-names
+              (lambda* (#:key inputs #:allow-other-keys)
+		;; Substitute "sh" command.
+		(substitute* '("src/callproc.c"
+                               "lisp/term.el"
+                               "lisp/htmlfontify.el"
+                               "lisp/mail/feedmail.el"
+                               "lisp/obsolete/pgg-pgp.el"
+                               "lisp/obsolete/pgg-pgp5.el"
+                               "lisp/org/ob-eval.el"
+                               "lisp/textmodes/artist.el"
+                               "lisp/progmodes/sh-script.el"
+                               "lisp/textmodes/artist.el"
+                               "lisp/htmlfontify.el"
+                               "lisp/term.el")
+                  (("\"/bin/sh\"")
+                   (format #f "~s" (search-input-file inputs "bin/sh"))))
+		(substitute* '("lisp/gnus/mm-uu.el"
+                               "lisp/gnus/nnrss.el"
+                               "lisp/mail/blessmail.el")
+                  (("\"#!/bin/sh\\\n\"")
+                   (format #f "\"#!~a~%\"" (search-input-file inputs "bin/sh"))))
+		(substitute* '("lisp/jka-compr.el"
+                               "lisp/man.el")
+                  (("\"sh\"")
+                   (format #f "~s" (search-input-file inputs "bin/sh"))))
 
-              ;; Substitute "awk" command.
-              (substitute* '("lisp/gnus/nnspool.el"
-                             "lisp/org/ob-awk.el"
-                             "lisp/man.el")
-                (("\"awk\"")
-                 (format #f "~s" (search-input-file inputs "bin/awk"))))
+		;; Substitute "awk" command.
+		(substitute* '("lisp/gnus/nnspool.el"
+                               "lisp/org/ob-awk.el"
+                               "lisp/man.el")
+                  (("\"awk\"")
+                   (format #f "~s" (search-input-file inputs "bin/awk"))))
 
-              ;; Substitute "find" command.
-              (substitute* '("lisp/gnus/gnus-search.el"
-                             "lisp/obsolete/nnir.el"
-                             "lisp/progmodes/executable.el"
-                             "lisp/progmodes/grep.el"
-                             "lisp/filecache.el"
-                             "lisp/ldefs-boot.el"
-                             "lisp/mpc.el")
-                (("\"find\"")
-                 (format #f "~s" (search-input-file inputs "bin/find"))))
+		;; Substitute "find" command.
+		(substitute* '("lisp/gnus/gnus-search.el"
+                               "lisp/obsolete/nnir.el"
+                               "lisp/progmodes/executable.el"
+                               "lisp/progmodes/grep.el"
+                               "lisp/filecache.el"
+                               "lisp/ldefs-boot.el"
+                               "lisp/mpc.el")
+                  (("\"find\"")
+                   (format #f "~s" (search-input-file inputs "bin/find"))))
 
-              ;; Substitute "sed" command.
-              (substitute* "lisp/org/ob-sed.el"
-                (("org-babel-sed-command \"sed\"")
-                 (format #f "org-babel-sed-command ~s"
-                         (search-input-file inputs "bin/sed"))))
-              (substitute* "lisp/man.el"
-                (("Man-sed-command \"sed\"")
-                 (format #f "Man-sed-command ~s"
-                         (search-input-file inputs "bin/sed"))))
+		;; Substitute "sed" command.
+		(substitute* "lisp/org/ob-sed.el"
+                  (("org-babel-sed-command \"sed\"")
+                   (format #f "org-babel-sed-command ~s"
+                           (search-input-file inputs "bin/sed"))))
+		(substitute* "lisp/man.el"
+                  (("Man-sed-command \"sed\"")
+                   (format #f "Man-sed-command ~s"
+                           (search-input-file inputs "bin/sed"))))
 
-              (substitute* "lisp/doc-view.el"
-                (("\"(gs|dvipdf|ps2pdf|pdftotext)\"" all what)
-                 (let ((replacement (false-if-exception
-                                     (search-input-file
-                                      inputs
-                                      (string-append "/bin/" what)))))
-                   (if replacement
-                       (string-append "\"" replacement "\"")
-                       all))))
-              ;; match ".gvfs-fuse-daemon-real" and ".gvfsd-fuse-real"
-              ;; respectively when looking for GVFS processes.
-              (substitute* "lisp/net/tramp-gvfs.el"
-                (("\\(tramp-compat-process-running-p \"(.*)\"\\)" all process)
-                 (format #f "(or ~a (tramp-compat-process-running-p ~s))"
-                         all (string-append "." process "-real"))))))
-          (add-before 'configure 'fix-/bin/pwd
-            (lambda _
-              ;; Use `pwd', not `/bin/pwd'.
-              (substitute* (find-files "." "^Makefile\\.in$")
-                (("/bin/pwd")
-                 "pwd"))))
-          (add-after 'unpack 'fix-tests
-            (lambda* (#:key tests? inputs #:allow-other-keys)
-              (when tests?
-                (substitute* "test/src/process-tests.el"
-                  (("/bin//sh") (search-input-file inputs "bin/sh")))
-                (substitute* "test/lisp/eshell/em-script-tests.el"
-                  (("/usr/bin/env") (search-input-file inputs "bin/env"))))))
-          (add-after 'install 'install-site-start
-            ;; Use 'guix-emacs' in "site-start.el", which is used autoload the
-            ;; Elisp packages found in EMACSLOADPATH.
-            (lambda* (#:key inputs outputs #:allow-other-keys)
-              (let* ((out      (assoc-ref outputs "out"))
-                     (lisp-dir (string-append out "/share/emacs/site-lisp"))
-                     (emacs    (string-append out "/bin/emacs")))
+		(substitute* "lisp/doc-view.el"
+                  (("\"(gs|dvipdf|ps2pdf|pdftotext)\"" all what)
+                   (let ((replacement (false-if-exception
+                                       (search-input-file
+					inputs
+					(string-append "/bin/" what)))))
+                     (if replacement
+			 (string-append "\"" replacement "\"")
+			 all))))
+		;; match ".gvfs-fuse-daemon-real" and ".gvfsd-fuse-real"
+		;; respectively when looking for GVFS processes.
+		(substitute* "lisp/net/tramp-gvfs.el"
+                  (("\\(tramp-compat-process-running-p \"(.*)\"\\)" all process)
+                   (format #f "(or ~a (tramp-compat-process-running-p ~s))"
+                           all (string-append "." process "-real"))))))
+            (add-before 'configure 'fix-/bin/pwd
+              (lambda _
+		;; Use `pwd', not `/bin/pwd'.
+		(substitute* (find-files "." "^Makefile\\.in$")
+                  (("/bin/pwd")
+                   "pwd"))))
+            (add-after 'unpack 'fix-tests
+              (lambda* (#:key tests? inputs #:allow-other-keys)
+		(when tests?
+                  (substitute* "test/src/process-tests.el"
+                    (("/bin//sh") (search-input-file inputs "bin/sh")))
+                  (substitute* "test/lisp/eshell/em-script-tests.el"
+                    (("/usr/bin/env") (search-input-file inputs "bin/env"))))))
+            (add-after 'install 'install-site-start
+              ;; Use 'guix-emacs' in "site-start.el", which is used autoload the
+              ;; Elisp packages found in EMACSLOADPATH.
+              (lambda* (#:key inputs outputs #:allow-other-keys)
+		(let* ((out      (assoc-ref outputs "out"))
+                       (lisp-dir (string-append out "/share/emacs/site-lisp"))
+                       (emacs    (string-append out "/bin/emacs")))
 
-                ;; This is duplicated from emacs-utils to prevent coupling.
-                (define* (emacs-byte-compile-directory dir)
-                  (let ((expr `(progn
-                                (setq byte-compile-debug t)
-                                (byte-recompile-directory
-                                 (file-name-as-directory ,dir) 0 1))))
-                    (invoke emacs "--quick" "--batch"
-                            (format #f "--eval=~s" expr))))
+                  ;; This is duplicated from emacs-utils to prevent coupling.
+                  (define* (emacs-byte-compile-directory dir)
+                    (let ((expr `(progn
+                                  (setq byte-compile-debug t)
+                                  (byte-recompile-directory
+                                   (file-name-as-directory ,dir) 0 1))))
+                      (invoke emacs "--quick" "--batch"
+                              (format #f "--eval=~s" expr))))
 
-                (copy-file #$(local-file
-                              (search-auxiliary-file "emacs/guix-emacs.el"))
-                           (string-append lisp-dir "/guix-emacs.el"))
-                (with-output-to-file (string-append lisp-dir "/site-start.el")
-                  (lambda ()
-                    (display
-                     (string-append
-                      "(when (require 'guix-emacs nil t)\n"
-                      "  (guix-emacs-autoload-packages 'no-reload)\n"
-                      "  (advice-add 'package-load-all-descriptors"
-                      " :after #'guix-emacs-load-package-descriptors))"))))
-                ;; Remove the extraneous subdirs.el file, as it causes Emacs to
-                ;; add recursively all the the sub-directories of a profile's
-                ;; share/emacs/site-lisp union when added to EMACSLOADPATH,
-                ;; which leads to conflicts.
-                (delete-file (string-append lisp-dir "/subdirs.el"))
-                ;; Byte compile the site-start files.
-                (emacs-byte-compile-directory lisp-dir))))
-          (add-after 'install 'wrap-emacs-paths
-            (lambda* (#:key inputs outputs #:allow-other-keys)
-              (let* ((out (assoc-ref outputs "out"))
-                     (lisp-dirs (find-files (string-append out "/share/emacs")
-                                            "^lisp$"
-                                            #:directories? #t)))
-                (for-each
-                 (lambda (prog)
-                   (wrap-program prog
-                     ;; Some variants rely on uname being in PATH for Tramp.
-                     ;; Tramp paths can't be hardcoded, because they need to
-                     ;; be portable.
-                     `("PATH" suffix
-                       ,(map dirname
-                             (list (search-input-file inputs "/bin/gzip")
-                                   ;; for coreutils
-                                   (search-input-file inputs "/bin/yes"))))
-                     `("EMACSLOADPATH" suffix ,lisp-dirs)))
-                 (find-files (string-append out "/bin")
-                             ;; Matches versioned and unversioned emacs binaries.
-                             ;; We don't patch emacsclient, because it takes its
-                             ;; environment variables from emacs.
-                             ;; Likewise, we don't need to patch helper binaries
-                             ;; like etags, ctags or ebrowse.
-                             "^emacs(-[0-9]+(\\.[0-9]+)*)?$")))))
-          (add-after 'wrap-emacs-paths 'undo-double-wrap
-            (lambda* (#:key outputs #:allow-other-keys)
-              ;; Directly copy emacs-X.Y to emacs, so that it is not wrapped
-              ;; twice.  This also fixes a minor issue, where WMs would not be
-              ;; able to track emacs back to emacs.desktop.
-              (with-directory-excursion (assoc-ref outputs "out")
-                (copy-file
-                 (car (find-files "bin" "^emacs-([0-9]+\\.)+[0-9]+$"))
-                 "bin/emacs"))))
-              (delete 'validate-comp-integrity)))))))
+                  (copy-file #$(local-file
+				(search-auxiliary-file "emacs/guix-emacs.el"))
+                             (string-append lisp-dir "/guix-emacs.el"))
+                  (with-output-to-file (string-append lisp-dir "/site-start.el")
+                    (lambda ()
+                      (display
+                       (string-append
+			"(when (require 'guix-emacs nil t)\n"
+			"  (guix-emacs-autoload-packages 'no-reload)\n"
+			"  (advice-add 'package-load-all-descriptors"
+			" :after #'guix-emacs-load-package-descriptors))"))))
+                  ;; Remove the extraneous subdirs.el file, as it causes Emacs to
+                  ;; add recursively all the the sub-directories of a profile's
+                  ;; share/emacs/site-lisp union when added to EMACSLOADPATH,
+                  ;; which leads to conflicts.
+                  (delete-file (string-append lisp-dir "/subdirs.el"))
+                  ;; Byte compile the site-start files.
+                  (emacs-byte-compile-directory lisp-dir))))
+            (add-after 'install 'wrap-emacs-paths
+              (lambda* (#:key inputs outputs #:allow-other-keys)
+		(let* ((out (assoc-ref outputs "out"))
+                       (lisp-dirs (find-files (string-append out "/share/emacs")
+                                              "^lisp$"
+                                              #:directories? #t)))
+                  (for-each
+                   (lambda (prog)
+                     (wrap-program prog
+                       ;; Some variants rely on uname being in PATH for Tramp.
+                       ;; Tramp paths can't be hardcoded, because they need to
+                       ;; be portable.
+                       `("PATH" suffix
+			 ,(map dirname
+                               (list (search-input-file inputs "/bin/gzip")
+                                     ;; for coreutils
+                                     (search-input-file inputs "/bin/yes"))))
+                       `("EMACSLOADPATH" suffix ,lisp-dirs)))
+                   (find-files (string-append out "/bin")
+                               ;; Matches versioned and unversioned emacs binaries.
+                               ;; We don't patch emacsclient, because it takes its
+                               ;; environment variables from emacs.
+                               ;; Likewise, we don't need to patch helper binaries
+                               ;; like etags, ctags or ebrowse.
+                               "^emacs(-[0-9]+(\\.[0-9]+)*)?$")))))
+            (add-after 'wrap-emacs-paths 'undo-double-wrap
+              (lambda* (#:key outputs #:allow-other-keys)
+		;; Directly copy emacs-X.Y to emacs, so that it is not wrapped
+		;; twice.  This also fixes a minor issue, where WMs would not be
+		;; able to track emacs back to emacs.desktop.
+		(with-directory-excursion (assoc-ref outputs "out")
+                  (copy-file
+                   (car (find-files "bin" "^emacs-([0-9]+\\.)+[0-9]+$"))
+                   "bin/emacs"))))
+            (delete 'validate-comp-integrity)))))))
 
 (define* (emacs->emacs-head emacs #:optional name
                             #:key (version (package-version emacs-head-minimal))
@@ -333,166 +332,165 @@
             (add-after 'unpack 'autogen
               (lambda _
                 (invoke "sh" "autogen.sh")))
-	          #~(modify-phases %standard-phases
-          (add-after 'unpack 'enable-elogind
-            (lambda _
-              (substitute* "configure.ac"
-                (("libsystemd") "libelogind"))
-              (when (file-exists? "configure")
-                (delete-file "configure"))))
-          (add-after 'unpack 'patch-program-file-names
-            (lambda* (#:key inputs #:allow-other-keys)
-              ;; Substitute "sh" command.
-              (substitute* '("src/callproc.c"
-                             "lisp/term.el"
-                             "lisp/htmlfontify.el"
-                             "lisp/mail/feedmail.el"
-                             "lisp/obsolete/pgg-pgp.el"
-                             "lisp/obsolete/pgg-pgp5.el"
-                             "lisp/org/ob-eval.el"
-                             "lisp/textmodes/artist.el"
-                             "lisp/progmodes/sh-script.el"
-                             "lisp/textmodes/artist.el"
-                             "lisp/htmlfontify.el"
-                             "lisp/term.el")
-                (("\"/bin/sh\"")
-                 (format #f "~s" (search-input-file inputs "bin/sh"))))
-              (substitute* '("lisp/gnus/mm-uu.el"
-                             "lisp/gnus/nnrss.el"
-                             "lisp/mail/blessmail.el")
-                (("\"#!/bin/sh\\\n\"")
-                 (format #f "\"#!~a~%\"" (search-input-file inputs "bin/sh"))))
-              (substitute* '("lisp/jka-compr.el"
-                             "lisp/man.el")
-                (("\"sh\"")
-                 (format #f "~s" (search-input-file inputs "bin/sh"))))
+	    (add-after 'unpack 'enable-elogind
+	      (lambda _
+		(substitute* "configure.ac"
+                  (("libsystemd") "libelogind"))
+		(when (file-exists? "configure")
+                  (delete-file "configure"))))
+	    (add-after 'unpack 'patch-program-file-names
+	      (lambda* (#:key inputs #:allow-other-keys)
+		;; Substitute "sh" command.
+		(substitute* '("src/callproc.c"
+			       "lisp/term.el"
+			       "lisp/htmlfontify.el"
+			       "lisp/mail/feedmail.el"
+			       "lisp/obsolete/pgg-pgp.el"
+			       "lisp/obsolete/pgg-pgp5.el"
+			       "lisp/org/ob-eval.el"
+			       "lisp/textmodes/artist.el"
+			       "lisp/progmodes/sh-script.el"
+			       "lisp/textmodes/artist.el"
+			       "lisp/htmlfontify.el"
+			       "lisp/term.el")
+                  (("\"/bin/sh\"")
+                   (format #f "~s" (search-input-file inputs "bin/sh"))))
+		(substitute* '("lisp/gnus/mm-uu.el"
+			       "lisp/gnus/nnrss.el"
+			       "lisp/mail/blessmail.el")
+                  (("\"#!/bin/sh\\\n\"")
+                   (format #f "\"#!~a~%\"" (search-input-file inputs "bin/sh"))))
+		(substitute* '("lisp/jka-compr.el"
+			       "lisp/man.el")
+                  (("\"sh\"")
+                   (format #f "~s" (search-input-file inputs "bin/sh"))))
 
-              ;; Substitute "awk" command.
-              (substitute* '("lisp/gnus/nnspool.el"
-                             "lisp/org/ob-awk.el"
-                             "lisp/man.el")
-                (("\"awk\"")
-                 (format #f "~s" (search-input-file inputs "bin/awk"))))
+		;; Substitute "awk" command.
+		(substitute* '("lisp/gnus/nnspool.el"
+			       "lisp/org/ob-awk.el"
+			       "lisp/man.el")
+                  (("\"awk\"")
+                   (format #f "~s" (search-input-file inputs "bin/awk"))))
 
-              ;; Substitute "find" command.
-              (substitute* '("lisp/gnus/gnus-search.el"
-                             "lisp/obsolete/nnir.el"
-                             "lisp/progmodes/executable.el"
-                             "lisp/progmodes/grep.el"
-                             "lisp/filecache.el"
-                             "lisp/ldefs-boot.el"
-                             "lisp/mpc.el")
-                (("\"find\"")
-                 (format #f "~s" (search-input-file inputs "bin/find"))))
+		;; Substitute "find" command.
+		(substitute* '("lisp/gnus/gnus-search.el"
+			       "lisp/obsolete/nnir.el"
+			       "lisp/progmodes/executable.el"
+			       "lisp/progmodes/grep.el"
+			       "lisp/filecache.el"
+			       "lisp/ldefs-boot.el"
+			       "lisp/mpc.el")
+                  (("\"find\"")
+                   (format #f "~s" (search-input-file inputs "bin/find"))))
 
-              ;; Substitute "sed" command.
-              (substitute* "lisp/org/ob-sed.el"
-                (("org-babel-sed-command \"sed\"")
-                 (format #f "org-babel-sed-command ~s"
-                         (search-input-file inputs "bin/sed"))))
-              (substitute* "lisp/man.el"
-                (("Man-sed-command \"sed\"")
-                 (format #f "Man-sed-command ~s"
-                         (search-input-file inputs "bin/sed"))))
+		;; Substitute "sed" command.
+		(substitute* "lisp/org/ob-sed.el"
+                  (("org-babel-sed-command \"sed\"")
+                   (format #f "org-babel-sed-command ~s"
+                           (search-input-file inputs "bin/sed"))))
+		(substitute* "lisp/man.el"
+                  (("Man-sed-command \"sed\"")
+                   (format #f "Man-sed-command ~s"
+                           (search-input-file inputs "bin/sed"))))
 
-              (substitute* "lisp/doc-view.el"
-                (("\"(gs|dvipdf|ps2pdf|pdftotext)\"" all what)
-                 (let ((replacement (false-if-exception
-                                     (search-input-file
-                                      inputs
-                                      (string-append "/bin/" what)))))
-                   (if replacement
-                       (string-append "\"" replacement "\"")
-                       all))))
-              ;; match ".gvfs-fuse-daemon-real" and ".gvfsd-fuse-real"
-              ;; respectively when looking for GVFS processes.
-              (substitute* "lisp/net/tramp-gvfs.el"
-                (("\\(tramp-compat-process-running-p \"(.*)\"\\)" all process)
-                 (format #f "(or ~a (tramp-compat-process-running-p ~s))"
-                         all (string-append "." process "-real"))))))
-          (add-before 'configure 'fix-/bin/pwd
-            (lambda _
-              ;; Use `pwd', not `/bin/pwd'.
-              (substitute* (find-files "." "^Makefile\\.in$")
-                (("/bin/pwd")
-                 "pwd"))))
-          (add-after 'unpack 'fix-tests
-            (lambda* (#:key tests? inputs #:allow-other-keys)
-              (when tests?
-                (substitute* "test/src/process-tests.el"
-                  (("/bin//sh") (search-input-file inputs "bin/sh")))
-                (substitute* "test/lisp/eshell/em-script-tests.el"
-                  (("/usr/bin/env") (search-input-file inputs "bin/env"))))))
-          (add-after 'install 'install-site-start
-            ;; Use 'guix-emacs' in "site-start.el", which is used autoload the
-            ;; Elisp packages found in EMACSLOADPATH.
-            (lambda* (#:key inputs outputs #:allow-other-keys)
-              (let* ((out      (assoc-ref outputs "out"))
-                     (lisp-dir (string-append out "/share/emacs/site-lisp"))
-                     (emacs    (string-append out "/bin/emacs")))
+		(substitute* "lisp/doc-view.el"
+                  (("\"(gs|dvipdf|ps2pdf|pdftotext)\"" all what)
+                   (let ((replacement (false-if-exception
+				       (search-input-file
+					inputs
+					(string-append "/bin/" what)))))
+		     (if replacement
+			 (string-append "\"" replacement "\"")
+			 all))))
+		;; match ".gvfs-fuse-daemon-real" and ".gvfsd-fuse-real"
+		;; respectively when looking for GVFS processes.
+		(substitute* "lisp/net/tramp-gvfs.el"
+                  (("\\(tramp-compat-process-running-p \"(.*)\"\\)" all process)
+                   (format #f "(or ~a (tramp-compat-process-running-p ~s))"
+                           all (string-append "." process "-real"))))))
+	    (add-before 'configure 'fix-/bin/pwd
+	      (lambda _
+		;; Use `pwd', not `/bin/pwd'.
+		(substitute* (find-files "." "^Makefile\\.in$")
+                  (("/bin/pwd")
+                   "pwd"))))
+	    (add-after 'unpack 'fix-tests
+	      (lambda* (#:key tests? inputs #:allow-other-keys)
+		(when tests?
+                  (substitute* "test/src/process-tests.el"
+		    (("/bin//sh") (search-input-file inputs "bin/sh")))
+                  (substitute* "test/lisp/eshell/em-script-tests.el"
+		    (("/usr/bin/env") (search-input-file inputs "bin/env"))))))
+	    (add-after 'install 'install-site-start
+	      ;; Use 'guix-emacs' in "site-start.el", which is used autoload the
+	      ;; Elisp packages found in EMACSLOADPATH.
+	      (lambda* (#:key inputs outputs #:allow-other-keys)
+		(let* ((out      (assoc-ref outputs "out"))
+		       (lisp-dir (string-append out "/share/emacs/site-lisp"))
+		       (emacs    (string-append out "/bin/emacs")))
 
-                ;; This is duplicated from emacs-utils to prevent coupling.
-                (define* (emacs-byte-compile-directory dir)
-                  (let ((expr `(progn
-                                (setq byte-compile-debug t)
-                                (byte-recompile-directory
-                                 (file-name-as-directory ,dir) 0 1))))
-                    (invoke emacs "--quick" "--batch"
-                            (format #f "--eval=~s" expr))))
+                  ;; This is duplicated from emacs-utils to prevent coupling.
+                  (define* (emacs-byte-compile-directory dir)
+		    (let ((expr `(progn
+                                  (setq byte-compile-debug t)
+                                  (byte-recompile-directory
+                                   (file-name-as-directory ,dir) 0 1))))
+		      (invoke emacs "--quick" "--batch"
+			      (format #f "--eval=~s" expr))))
 
-                (copy-file #$(local-file
-                              (search-auxiliary-file "emacs/guix-emacs.el"))
-                           (string-append lisp-dir "/guix-emacs.el"))
-                (with-output-to-file (string-append lisp-dir "/site-start.el")
-                  (lambda ()
-                    (display
-                     (string-append
-                      "(when (require 'guix-emacs nil t)\n"
-                      "  (guix-emacs-autoload-packages 'no-reload)\n"
-                      "  (advice-add 'package-load-all-descriptors"
-                      " :after #'guix-emacs-load-package-descriptors))"))))
-                ;; Remove the extraneous subdirs.el file, as it causes Emacs to
-                ;; add recursively all the the sub-directories of a profile's
-                ;; share/emacs/site-lisp union when added to EMACSLOADPATH,
-                ;; which leads to conflicts.
-                (delete-file (string-append lisp-dir "/subdirs.el"))
-                ;; Byte compile the site-start files.
-                (emacs-byte-compile-directory lisp-dir))))
-          (add-after 'install 'wrap-emacs-paths
-            (lambda* (#:key inputs outputs #:allow-other-keys)
-              (let* ((out (assoc-ref outputs "out"))
-                     (lisp-dirs (find-files (string-append out "/share/emacs")
-                                            "^lisp$"
-                                            #:directories? #t)))
-                (for-each
-                 (lambda (prog)
-                   (wrap-program prog
-                     ;; Some variants rely on uname being in PATH for Tramp.
-                     ;; Tramp paths can't be hardcoded, because they need to
-                     ;; be portable.
-                     `("PATH" suffix
-                       ,(map dirname
-                             (list (search-input-file inputs "/bin/gzip")
-                                   ;; for coreutils
-                                   (search-input-file inputs "/bin/yes"))))
-                     `("EMACSLOADPATH" suffix ,lisp-dirs)))
-                 (find-files (string-append out "/bin")
-                             ;; Matches versioned and unversioned emacs binaries.
-                             ;; We don't patch emacsclient, because it takes its
-                             ;; environment variables from emacs.
-                             ;; Likewise, we don't need to patch helper binaries
-                             ;; like etags, ctags or ebrowse.
-                             "^emacs(-[0-9]+(\\.[0-9]+)*)?$")))))
-          (add-after 'wrap-emacs-paths 'undo-double-wrap
-            (lambda* (#:key outputs #:allow-other-keys)
-              ;; Directly copy emacs-X.Y to emacs, so that it is not wrapped
-              ;; twice.  This also fixes a minor issue, where WMs would not be
-              ;; able to track emacs back to emacs.desktop.
-              (with-directory-excursion (assoc-ref outputs "out")
-                (copy-file
-                 (car (find-files "bin" "^emacs-([0-9]+\\.)+[0-9]+$"))
-                 "bin/emacs"))))
-            (delete 'validate-comp-integrity)))))))
+                  (copy-file #$(local-file
+				(search-auxiliary-file "emacs/guix-emacs.el"))
+			     (string-append lisp-dir "/guix-emacs.el"))
+                  (with-output-to-file (string-append lisp-dir "/site-start.el")
+		    (lambda ()
+		      (display
+		       (string-append
+			"(when (require 'guix-emacs nil t)\n"
+			"  (guix-emacs-autoload-packages 'no-reload)\n"
+			"  (advice-add 'package-load-all-descriptors"
+			" :after #'guix-emacs-load-package-descriptors))"))))
+                  ;; Remove the extraneous subdirs.el file, as it causes Emacs to
+                  ;; add recursively all the the sub-directories of a profile's
+                  ;; share/emacs/site-lisp union when added to EMACSLOADPATH,
+                  ;; which leads to conflicts.
+                  (delete-file (string-append lisp-dir "/subdirs.el"))
+                  ;; Byte compile the site-start files.
+                  (emacs-byte-compile-directory lisp-dir))))
+	    (add-after 'install 'wrap-emacs-paths
+	      (lambda* (#:key inputs outputs #:allow-other-keys)
+		(let* ((out (assoc-ref outputs "out"))
+		       (lisp-dirs (find-files (string-append out "/share/emacs")
+					      "^lisp$"
+					      #:directories? #t)))
+                  (for-each
+                   (lambda (prog)
+		     (wrap-program prog
+		       ;; Some variants rely on uname being in PATH for Tramp.
+		       ;; Tramp paths can't be hardcoded, because they need to
+		       ;; be portable.
+		       `("PATH" suffix
+			 ,(map dirname
+			       (list (search-input-file inputs "/bin/gzip")
+				     ;; for coreutils
+				     (search-input-file inputs "/bin/yes"))))
+		       `("EMACSLOADPATH" suffix ,lisp-dirs)))
+                   (find-files (string-append out "/bin")
+			       ;; Matches versioned and unversioned emacs binaries.
+			       ;; We don't patch emacsclient, because it takes its
+			       ;; environment variables from emacs.
+			       ;; Likewise, we don't need to patch helper binaries
+			       ;; like etags, ctags or ebrowse.
+			       "^emacs(-[0-9]+(\\.[0-9]+)*)?$")))))
+	    (add-after 'wrap-emacs-paths 'undo-double-wrap
+	      (lambda* (#:key outputs #:allow-other-keys)
+		;; Directly copy emacs-X.Y to emacs, so that it is not wrapped
+		;; twice.  This also fixes a minor issue, where WMs would not be
+		;; able to track emacs back to emacs.desktop.
+		(with-directory-excursion (assoc-ref outputs "out")
+                  (copy-file
+                   (car (find-files "bin" "^emacs-([0-9]+\\.)+[0-9]+$"))
+                   "bin/emacs"))))
+	    (delete 'validate-comp-integrity)))))))
 
 
 (define-public emacs-lucid

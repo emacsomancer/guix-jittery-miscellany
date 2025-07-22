@@ -29,7 +29,7 @@
   #:use-module (guix git-download)
   #:use-module (guix packages)
   #:use-module (guix utils)
-  ;; #:use-module (guix packages gtk)
+  #:use-module (awesomejit packages gtk)
   #:export (ghostty))
 
 (define ghostty

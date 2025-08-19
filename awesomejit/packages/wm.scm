@@ -96,7 +96,7 @@
 
 
 (define-public awesome-next
-  (let ((commit "0f950cbb625175134b45ea65acdf29b2cbe8c456")
+  (let ((commit "f009815cb75139acf4d8ba3c1090bf2844d13f4c")
         (revision "0"))
     (package (inherit awesome)
              (name "awesome-next")

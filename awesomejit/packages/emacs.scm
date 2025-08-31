@@ -96,14 +96,14 @@
   (package
     (inherit emacs-minimal)
     (name "emacs-more-next-minimal")
-    (version "30.1")
+    (version "30.2")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "mirror://gnu/emacs/emacs-"
                                   version ".tar.xz"))
        (sha256
-        (base32 "13qkdx515qv7m8b2mpd37p16frs0xgl7bw8xvv397bz6fspc3jkc"))
+        (base32 "1nggbgnns7lvxn68gzlcsgwh3bigvrbn45kh6dqia9yxlqc6zwxk"))
        (patches
         (search-patches "emacs-exec-path.patch"
                         "emacs-fix-scheme-indent-function.patch"

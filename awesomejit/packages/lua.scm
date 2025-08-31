@@ -86,12 +86,12 @@ language.")
     (source (origin
               (method git-fetch)
               (uri (git-reference
-                    (url "https://github.com/bakpakin/Fennel.git")
+                    (url "https://git.sr.ht/~technomancy/fennel")
                     (commit version)))
               (file-name (git-file-name name version))
               (sha256
                (base32
-                "09m7v62qw058llfrfqja14yx8ngjzrfx10hf2h1cc5zz0nbw89bj"))))
+                "1zrnhpwrddd1k5xvjcw8bjjqznlvzxwx2qz7988lw8wzj6s31lha"))))
     (build-system gnu-build-system)
     (arguments
      (list #:make-flags #~(list (string-append "PREFIX="

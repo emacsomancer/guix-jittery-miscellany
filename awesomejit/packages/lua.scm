@@ -91,7 +91,7 @@ language.")
               (file-name (git-file-name name version))
               (sha256
                (base32
-                "1zrnhpwrddd1k5xvjcw8bjjqznlvzxwx2qz7988lw8wzj6s31lha"))))
+                "0rmx3qi6a1w46aqcyfy7rcgz43q5jflb1bgrgikkrnip3mbvlfpd"))))
     (build-system gnu-build-system)
     (arguments
      (list #:make-flags #~(list (string-append "PREFIX="

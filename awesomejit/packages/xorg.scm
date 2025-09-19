@@ -127,7 +127,7 @@
 (define-public xterm
   (package
     (name "xterm")
-    (version "401")
+    (version "402")
     (source
      (origin
        (method url-fetch)
@@ -137,7 +137,7 @@
              (string-append "ftp://ftp.invisible-island.net/xterm/"
                             "xterm-" version ".tgz")))
        (sha256
-        (base32 "06nawv9irl9qsc09qwa4qzvn8bhz5vk8az852fm076xl9kkbb8ix"))
+        (base32 "0ymvf3zgmy3yzcvj3l22ggk6l1mg02654vzgafgccr6m7iwwaq2j"))
        (patches
          (search-patches "xterm-370-explicit-xcursor.patch"))))
     (build-system gnu-build-system)

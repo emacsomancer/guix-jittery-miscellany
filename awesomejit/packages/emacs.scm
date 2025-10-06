@@ -109,6 +109,9 @@
                         "emacs-fix-scheme-indent-function.patch"
                         "emacs-native-comp-driver-options.patch"
                         "emacs-pgtk-super-key-fix.patch"
+                        ;; XXX This commit should already be on 31.0 but
+                        ;; without this emacs-next will fail a test.
+                        "emacs-zoom-image-test-fix.patch"
                         ))))))
 
 (define-public emacs-head-minimal
@@ -131,7 +134,10 @@
         (search-patches "emacs-exec-path.patch"
                         "emacs-fix-scheme-indent-function.patch"
                         "emacs-native-comp-driver-options.patch"
-                        "emacs-pgtk-super-key-fix.patch")))))))
+                        "emacs-pgtk-super-key-fix.patch"
+                        ;; XXX This commit should already be on 31.0 but
+                        ;; without this emacs-next will fail a test.
+                        "emacs-zoom-image-test-fix.patch")))))))
 
 
 (define* (emacs->emacs-more-next emacs #:optional name

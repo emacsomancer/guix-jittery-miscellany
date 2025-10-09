@@ -1,6 +1,6 @@
 (channel
  (version 0)
-  (url "https://gitlab.com/emacsomancer/guix-awesomejit.git")
+  (url "https://github.com/emacsomancer/guix-jittery-miscellany")
  (dependencies
   (channel
    (name nonguix)

@@ -79,7 +79,8 @@
            (add-after 'unpack 'unpack-deb
              (lambda* (#:key inputs #:allow-other-keys)
                 (invoke "ar" "x" #$source)
-                (invoke "rm" "-v" "control.tar.gz"
+                (invoke "rm" "-v"
+                        ;; "control.tar.gz"
                                   "debian-binary"
                                   (string-append #$name "-" #$version "-" #$(%current-system) ".deb"))
                 (invoke "tar" "xvf" "data.tar.xz")

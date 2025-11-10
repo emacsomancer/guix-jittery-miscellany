@@ -14,7 +14,7 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (ice-9 match))
 
-(define %mullvad-vpn-desktop-version "2025.10")
+(define %mullvad-vpn-desktop-version "2025.13")
 
 (define (mullvad-vpn-desktop-origin-url system)
   (string-append "https://github.com/mullvad/mullvadvpn-app/releases/"
@@ -31,8 +31,8 @@
 (define-public mullvad-vpn-desktop
   (define-values (url hash)
     (mullvad-vpn-desktop-origin-values
-     #:amd64-hash "04dz2y72698dpyp4slmszngf2vnavf2gi1vbfizgndscirdr7z9s"
-     ;; #:aarch64-hash "0r27z9ak21bjfx19syb7bf8q5dq0gjlvwky20mc6nlj15bwnjjbv" ;; ??
+     #:amd64-hash "0slw6h3mya8aaxh0ssaxvr16wcs8ajm04mzg1ihp02d33fj3l1ff"
+     #:aarch64-hash "0mrk8sl3rmz8sbfkppj69hjba41bvyqm4l7zzf4nbl32v7vwffh4" 
      ))
   (package
    (name "mullvad-vpn-desktop")

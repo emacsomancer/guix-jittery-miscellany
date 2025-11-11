@@ -51,9 +51,13 @@
     (source
      (origin
        (method url-fetch)
+       ;; https://updater.grayjay.app/Apps/Grayjay.Desktop/Grayjay.Desktop-linux-x64.zip
        (uri (string-append "https://updater.grayjay.app/Apps/Grayjay.Desktop/"
-                           version "/Grayjay.Desktop-linux-x64-v"
-                           version ".zip"))
+                           ;; version
+                           "/Grayjay.Desktop-linux-x64"
+                           ;; "-v"
+                           ;; version
+                           ".zip"))
        (file-name (string-append name "-" version "-x86_64.zip"))
        (sha256
         (base32 "0m0sq3qwg21wgyplsgq421wryl22gg9c64jnpanzgzsm68aql05s"))))

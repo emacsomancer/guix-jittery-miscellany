@@ -108,7 +108,7 @@
                 (uri (git-reference
                        (url "https://github.com/stumpwm/stumpwm")
                        (commit commit)))
-                (file-name (git-file-name "stumpwm" version))
+                (file-name (git-file-name "stumpwm" "24.11"))
 
                 (sha256
                  (base32 "1l4rxcva947ijxsfnzyy35ql7a8pjsxaag51pq2bib3qfy7wg5ld")))))))

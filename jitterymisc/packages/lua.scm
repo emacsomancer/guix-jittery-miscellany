@@ -36,7 +36,7 @@
 
 (define-public luajit-tip
   (let ((branch "2.1")
-        (commit "871db2c84ecefd70a850e03a6c340214a81739f0"))
+        (commit "e17ee83326f73d2bbfce5750ae8dc592a3b63c27"))
     (package
       (name "luajit-tip")
       (version (git-version branch "0" commit))

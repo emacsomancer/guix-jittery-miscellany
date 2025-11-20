@@ -100,7 +100,7 @@
     (package (inherit stumpwm)
              (name "stumpwm")             
              (version "git"
-              (git-version "24.11" revision commit)
+              ;; (git-version "24.11" revision commit)
                       )
              (source
               (origin

@@ -109,7 +109,7 @@
                 (file-name (git-file-name "stumpwm" version))
 
                 (sha256
-                 (base32 "0j28ghk9qyzc7lc066bg2zv84iycc03615ra7ja39i00jwkiwrvl")))))))
+                 (base32 "1l4rxcva947ijxsfnzyy35ql7a8pjsxaag51pq2bib3qfy7wg5ld")))))))
 
 (define-public awesome-next
   (let ((commit "41473c05ed9e85de66ffb805d872f2737c0458b6")

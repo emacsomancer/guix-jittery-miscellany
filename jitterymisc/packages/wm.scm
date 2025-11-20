@@ -99,7 +99,9 @@
         (revision "0"))
     (package (inherit stumpwm)
              (name "stumpwm")             
-             (version (git-version "24.11" revision commit))
+             (version "git"
+              (git-version "24.11" revision commit)
+                      )
              (source
               (origin
                 (method git-fetch)

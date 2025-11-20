@@ -98,7 +98,7 @@
   (let ((commit "a774bfec147be098be1df98db19e16e79cd3fefd")
         (revision "0"))
     (package (inherit stumpwm)
-             (name "stumpwm-next")             
+             (name "stumpwm")             
              (version (git-version "24.11" revision commit))
              (source
               (origin

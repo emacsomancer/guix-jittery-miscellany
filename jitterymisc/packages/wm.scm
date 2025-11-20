@@ -105,11 +105,11 @@
                 (method git-fetch)
                 (uri (git-reference
                        (url "https://github.com/stumpwm/stumpwm")
-                       (commit version)))
+                       (commit commit)))
                 (file-name (git-file-name "stumpwm" version))
 
                 (sha256
-                 (base32 "0j28ghk9qyzc7lc066bv2zv84iycc03615ra7ja39i00jwkiwrvl")))))))
+                 (base32 "0j28ghk9qyzc7lc066bg2zv84iycc03615ra7ja39i00jwkiwrvl")))))))
 
 (define-public awesome-next
   (let ((commit "41473c05ed9e85de66ffb805d872f2737c0458b6")

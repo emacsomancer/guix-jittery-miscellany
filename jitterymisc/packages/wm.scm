@@ -94,6 +94,22 @@
 ;;     (license license:gpl2+)
 ;;     (properties `((cl-source-variant . ,(delay cl-stumpwm))))))
 
+(define-public stumpwm-next
+  (let ((commit "a774bfec147be098be1df98db19e16e79cd3fefd")
+        (revision "0"))
+    (package (inherit stumpwm)
+             (name "stumpwm-next")             
+             (version (git-version "24.11" revision commit))
+             (source
+              (origin
+                (method git-fetch)
+                (uri (git-reference
+                       (url "https://github.com/stumpwm/stumpwm")
+                       (commit version)))
+                (file-name (git-file-name "stumpwm" version))
+
+                (sha256
+                 (base32 "0j28ghk9qyzc7lc066bv2zv84iycc03615ra7ja39i00jwkiwrvl")))))))
 
 (define-public awesome-next
   (let ((commit "41473c05ed9e85de66ffb805d872f2737c0458b6")

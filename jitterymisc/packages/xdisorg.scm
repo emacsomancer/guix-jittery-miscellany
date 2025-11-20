@@ -155,147 +155,148 @@
   #:use-module (ice-9 match))
 
 
-(define-public xsecurelock
-  (package
-    (name "xsecurelock")
-    (version "1.9.0")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append
-                    "https://github.com/google/xsecurelock/releases"
-                    "/download/v" version "/xsecurelock-" version ".tar.gz"))
-              (sha256
-               (base32 "09c0br8vwx9q728i4iv1pcp4s0sm0cd1c5ligag4k2730kcg93bf"))))
-    (build-system gnu-build-system)
-    (arguments
-     '(#:configure-flags
-       '("--with-pam-service-name=login"
-         "--with-xkb"
-         "--with-default-authproto-module=/run/setuid-programs/authproto_pam"
-         "--with-xscreensaver=/run/current-system/profile/libexec/xscreensaver"
-         ;; "--with-xscreensaver=/run/current-system/profile/bin/xscreensaver"
-         )))
-    (native-inputs
-     (list pandoc pkg-config))
-    (inputs
-     (list fontconfig
-           libx11
-           libxcomposite
-           libxext
-           libxfixes
-           libxft
-           libxmu
-           libxrandr
-           libxscrnsaver
-           linux-pam))
-    (propagated-inputs
-     (list xscreensaver xrdb))
-    (home-page "https://github.com/google/xsecurelock")
-    (synopsis "X11 screen lock utility with the primary goal of security")
-    (description "@code{xsecurelock} is an X11 screen locker which uses
-a modular design to avoid the usual pitfalls of screen locking utility design.
+;; upstream guix seems to handle now
+;; (define-public xsecurelock
+;;   (package
+;;     (name "xsecurelock")
+;;     (version "1.9.0")
+;;     (source (origin
+;;               (method url-fetch)
+;;               (uri (string-append
+;;                     "https://github.com/google/xsecurelock/releases"
+;;                     "/download/v" version "/xsecurelock-" version ".tar.gz"))
+;;               (sha256
+;;                (base32 "09c0br8vwx9q728i4iv1pcp4s0sm0cd1c5ligag4k2730kcg93bf"))))
+;;     (build-system gnu-build-system)
+;;     (arguments
+;;      '(#:configure-flags
+;;        '("--with-pam-service-name=login"
+;;          "--with-xkb"
+;;          "--with-default-authproto-module=/run/setuid-programs/authproto_pam"
+;;          "--with-xscreensaver=/run/current-system/profile/libexec/xscreensaver"
+;;          ;; "--with-xscreensaver=/run/current-system/profile/bin/xscreensaver"
+;;          )))
+;;     (native-inputs
+;;      (list pandoc pkg-config))
+;;     (inputs
+;;      (list fontconfig
+;;            libx11
+;;            libxcomposite
+;;            libxext
+;;            libxfixes
+;;            libxft
+;;            libxmu
+;;            libxrandr
+;;            libxscrnsaver
+;;            linux-pam))
+;;     (propagated-inputs
+;;      (list xscreensaver xrdb))
+;;     (home-page "https://github.com/google/xsecurelock")
+;;     (synopsis "X11 screen lock utility with the primary goal of security")
+;;     (description "@code{xsecurelock} is an X11 screen locker which uses
+;; a modular design to avoid the usual pitfalls of screen locking utility design.
 
-As a consequence of this design, you shouldn't use the usual screen locker
-service with @code{xsecurelock}.  Instead, add a helper binary to your
-@code{operating-system}'s @code{privileged-programs} field:
+;; As a consequence of this design, you shouldn't use the usual screen locker
+;; service with @code{xsecurelock}.  Instead, add a helper binary to your
+;; @code{operating-system}'s @code{privileged-programs} field:
 
-@example
- (privileged-programs
-  (append (list
-           (privileged-program
-            (program (file-append xsecurelock \"/libexec/xsecurelock/authproto_pam\"))
-            (setuid? #t))
-           (privileged-program
-            (program (file-append xsecurelock \"/libexec/xsecurelock/saver_xscreensaver\"))
-            (setuid? #t))
-           (privileged-program
-            (program (file-append xscreensaver \"/bin/xscreensaver\"))
-            (setuid? #t))
-           (privileged-program
-            (program (file-append xscreensaver \"/libexec/xscreensaver/xscreensaver-auth\"))
-            (setuid? #t)))
-          %default-privileged-programs))
+;; @example
+;;  (privileged-programs
+;;   (append (list
+;;            (privileged-program
+;;             (program (file-append xsecurelock \"/libexec/xsecurelock/authproto_pam\"))
+;;             (setuid? #t))
+;;            (privileged-program
+;;             (program (file-append xsecurelock \"/libexec/xsecurelock/saver_xscreensaver\"))
+;;             (setuid? #t))
+;;            (privileged-program
+;;             (program (file-append xscreensaver \"/bin/xscreensaver\"))
+;;             (setuid? #t))
+;;            (privileged-program
+;;             (program (file-append xscreensaver \"/libexec/xscreensaver/xscreensaver-auth\"))
+;;             (setuid? #t)))
+;;           %default-privileged-programs))
 
-@end example")
-    (license license:asl2.0)))
+;; @end example")
+;;     (license license:asl2.0)))
 
-(define-public xscreensaver
-  (package
-    (name "xscreensaver")
-    (version "6.09")
-    (source
-     (origin
-       (method url-fetch)
-       (uri
-        (string-append "https://www.jwz.org/xscreensaver/xscreensaver-"
-                       version ".tar.gz"))
-       (sha256
-        (base32 "018b69bjy7r23sr97zha34h6zcal3f5ahwrr5zyl7k5qml2pfrpl"))
-       (modules '((guix build utils)))
-       (snippet
-        ;; 'configure.ac' checks for $ac_unrecognized_opts and exits if it's
-        ;; non-empty.  Since the default 'configure' phases passes options
-        ;; that may or may not be recognized, such as '--enable-fast-install',
-        ;; these need to be tolerated, hence this snippet.
-        '(substitute* "configure"
-           (("exit 2") "true")))))
-    (build-system gnu-build-system)
-    (arguments
-     `(#:tests? #f                      ; no check target
-       #:phases
-       (modify-phases %standard-phases
-         (add-before 'configure 'adjust-gtk-resource-paths
-           (lambda _
-             (substitute* '("driver/Makefile.in" "po/Makefile.in.in")
-               (("@GTK_DATADIR@") "@datadir@")
-               (("@PO_DATADIR@") "@datadir@"))
-             #t)))
-       #:configure-flags '("--with-pam"
+;; (define-public xscreensaver
+;;   (package
+;;     (name "xscreensaver")
+;;     (version "6.09")
+;;     (source
+;;      (origin
+;;        (method url-fetch)
+;;        (uri
+;;         (string-append "https://www.jwz.org/xscreensaver/xscreensaver-"
+;;                        version ".tar.gz"))
+;;        (sha256
+;;         (base32 "018b69bjy7r23sr97zha34h6zcal3f5ahwrr5zyl7k5qml2pfrpl"))
+;;        (modules '((guix build utils)))
+;;        (snippet
+;;         ;; 'configure.ac' checks for $ac_unrecognized_opts and exits if it's
+;;         ;; non-empty.  Since the default 'configure' phases passes options
+;;         ;; that may or may not be recognized, such as '--enable-fast-install',
+;;         ;; these need to be tolerated, hence this snippet.
+;;         '(substitute* "configure"
+;;            (("exit 2") "true")))))
+;;     (build-system gnu-build-system)
+;;     (arguments
+;;      `(#:tests? #f                      ; no check target
+;;        #:phases
+;;        (modify-phases %standard-phases
+;;          (add-before 'configure 'adjust-gtk-resource-paths
+;;            (lambda _
+;;              (substitute* '("driver/Makefile.in" "po/Makefile.in.in")
+;;                (("@GTK_DATADIR@") "@datadir@")
+;;                (("@PO_DATADIR@") "@datadir@"))
+;;              #t)))
+;;        #:configure-flags '("--with-pam"
 
-                           ;; Don't check /proc/interrupts in the build
-                           ;; environment to avoid non-deterministic failures
-                           ;; of the 'configure' script.
-                           "--without-proc-interrupts"
+;;                            ;; Don't check /proc/interrupts in the build
+;;                            ;; environment to avoid non-deterministic failures
+;;                            ;; of the 'configure' script.
+;;                            "--without-proc-interrupts"
 
-                           "--without-readdisplay")
-       #:make-flags (list (string-append "AD_DIR="
-                                         (assoc-ref %outputs "out")
-                                         "/lib/X11/app-defaults"))))
-    (native-inputs
-     (list pkg-config intltool))
-    (inputs
-     (list libx11
-           libxcrypt
-           libxext
-           libxi
-           libxt
-           libxft
-           libxmu
-           libxpm
-           libglade
-           libxml2
-           libsm
-           libjpeg-turbo
-           linux-pam
-           pango
-           gtk+
-           perl
-           cairo
-           bc
-           libxrandr
-           glu
-           `(,glib "bin")))
-    (home-page "https://www.jwz.org/xscreensaver/")
-    (synopsis "Classic screen saver suite supporting screen locking")
-    (description
-     "xscreensaver is a popular screen saver collection with many entertaining
-demos.  It also acts as a nice screen locker.")
-    ;; xscreensaver doesn't have a single copyright file and instead relies on
-    ;; source comment headers, though most files have the same lax
-    ;; permissions.  To reduce complexity, we're pointing at Debian's
-    ;; breakdown of the copyright information.
-    (license (license:non-copyleft
-              (string-append
-               "http://metadata.ftp-master.debian.org/changelogs/"
-               "/main/x/xscreensaver/xscreensaver_5.36-1_copyright")))))
+;;                            "--without-readdisplay")
+;;        #:make-flags (list (string-append "AD_DIR="
+;;                                          (assoc-ref %outputs "out")
+;;                                          "/lib/X11/app-defaults"))))
+;;     (native-inputs
+;;      (list pkg-config intltool))
+;;     (inputs
+;;      (list libx11
+;;            libxcrypt
+;;            libxext
+;;            libxi
+;;            libxt
+;;            libxft
+;;            libxmu
+;;            libxpm
+;;            libglade
+;;            libxml2
+;;            libsm
+;;            libjpeg-turbo
+;;            linux-pam
+;;            pango
+;;            gtk+
+;;            perl
+;;            cairo
+;;            bc
+;;            libxrandr
+;;            glu
+;;            `(,glib "bin")))
+;;     (home-page "https://www.jwz.org/xscreensaver/")
+;;     (synopsis "Classic screen saver suite supporting screen locking")
+;;     (description
+;;      "xscreensaver is a popular screen saver collection with many entertaining
+;; demos.  It also acts as a nice screen locker.")
+;;     ;; xscreensaver doesn't have a single copyright file and instead relies on
+;;     ;; source comment headers, though most files have the same lax
+;;     ;; permissions.  To reduce complexity, we're pointing at Debian's
+;;     ;; breakdown of the copyright information.
+;;     (license (license:non-copyleft
+;;               (string-append
+;;                "http://metadata.ftp-master.debian.org/changelogs/"
+;;                "/main/x/xscreensaver/xscreensaver_5.36-1_copyright")))))
 

@@ -263,10 +263,44 @@
            "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
            #$flags))))))
 
+(define-public emacs-pgtk-tune-cflags
+  (package
+    (inherit emacs-pgtk)
+    (name "emacs-pgtk-tune-cflags")
+    (synopsis "Emacs text editor built with CFLAGS tuning and graphical UI purely in terms
+of GTK (for use under Wayland).")
+    (arguments
+     (substitute-keyword-arguments (package-arguments emacs)
+       ((#:configure-flags flags #~'())
+        #~(cons* "--with-native-compilation=yes"
+                 ;; "--with-xft"
+                 ;; "--with-harfbuzz"
+                 ;; "--without-m17n-flt"
+                 ;; "--with-libotf"
+                 ;; "--without-gsettings"
+                 ;; "--without-gconf"
+                 ;; "--with-modules"
+                 "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
+                 "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
+                 ;; LDFLAGS? -O2??
+                 (delete "--with-native-compilation=aot" #$flags))))
+     ;; (list #:phases
+     ;;       #~(modify-phases %standard-phases
+     ;;           (add-before 'configure 'override-LDFLAGS
+     ;;             (lambda _
+     ;;               (setenv "LDFLAGS"
+     ;;                       "-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto")))
+     ;;           (add-before 'configure 'override-CFLAGS
+     ;;             (lambda _
+     ;;               (setenv "CFLAGS"
+     ;;                       "-O2 -mtune=native -march=native -fomit-frame-pointer")))))
+     )))
+
+
 (define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))
 (define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))
 (define-public emacs-next-tune-cflags (emacs->emacs-more-next emacs-tune-cflags))
-(define-public emacs-pgtk-tune-cflags (emacs-pgtk emacs-tune-cflags ))
+
 ;; (define-public emacs-next-xwidgets-tune-cflags (emacs->emacs-more-next emacs-xwidgets-tune-cflags))
 
 ;; (define-public emacs-head-lucid (emacs->emacs-head emacs-lucid))

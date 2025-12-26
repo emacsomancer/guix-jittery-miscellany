@@ -107,7 +107,7 @@ This tool takes care of these circumstances.")
 ;;     (license license:bsd-2)))
 
 
-(define-public nipython-ical2orgpy
+(define-public python-ical2orgpy
   (package
     (name "python-ical2orgpy")
     (version "0.5")

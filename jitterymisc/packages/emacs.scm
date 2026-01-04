@@ -183,33 +183,34 @@
             (delete 'validate-comp-integrity)))))))
 
 
-(define-public emacs-lucid
-  (package/inherit emacs
-    (name "emacs-lucid")
-    (arguments
-     (substitute-keyword-arguments (package-arguments emacs)
-       ((#:configure-flags flags #~'())
-        #~(cons* "--with-x-toolkit=lucid"
-                 "--without-toolkit-scroll-bars"
-                 "--with-native-compilation=yes"
-                 "--with-xft"
-                 "--with-harfbuzz"
-                 ;; "--without-m17n-flt"
-                 "--with-libotf"
-                 "--without-gsettings"
-                 "--without-gconf"
-                 "--with-tree-sitter"
-                 "--with-modules"
-                 (delete "--with-native-compilation=aot" #$flags)))))
-    (inputs
-     (modify-inputs (package-inputs emacs)
-       (prepend
-        libxaw3d ;; for toolkit
-        cairo dbus giflib harfbuzz libjpeg-turbo libotf
-        libpng (librsvg-for-system) libtiff libx11 libxft
-        libxpm pango poppler)))
-    (synopsis "Emacs text editor with Lucid toolkit")
-    (description "This Emacs build uses the Lucid toolkit.")))
+;; (define-public emacs-lucid
+;;   (package/inherit emacs
+;;     (name "emacs-lucid")
+;;     (arguments
+;;      (substitute-keyword-arguments (package-arguments emacs)
+;;        ((#:configure-flags flags #~'())
+;;         #~(cons* "--with-x-toolkit=lucid"
+;;                  "--without-toolkit-scroll-bars"
+;;                  "--with-native-compilation=yes"
+;;                  "--with-xft"
+;;                  "--with-harfbuzz"
+;;                  ;; "--without-m17n-flt"
+;;                  "--with-libotf"
+;;                  "--without-gsettings"
+;;                  "--without-gconf"
+;;                  "--with-tree-sitter"
+;;                  "--with-modules"
+;;                  (delete "--with-native-compilation=aot" #$flags)))))
+;;     (inputs
+;;      (modify-inputs (package-inputs emacs)
+;;        (prepend
+;;         libxaw3d ;; for toolkit
+;;         cairo dbus giflib harfbuzz libjpeg-turbo libotf
+;;         libpng (librsvg-for-system) libtiff libx11 libxft
+;;         libxpm pango poppler)))
+;;     (native-inputs (list autoconf libfaketime pkg-config texinfo))
+;;     (synopsis "Emacs text editor with Lucid toolkit")
+;;     (description "This Emacs build uses the Lucid toolkit.")))
 
 (define-public emacs-tune-cflags
   (package

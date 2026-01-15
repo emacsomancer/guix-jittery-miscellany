@@ -147,14 +147,14 @@
 (define-public sbcl
   (package
     (name "sbcl")
-    (version "2.5.11")
+    (version "2.6.0")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "mirror://sourceforge/sbcl/sbcl/" version "/sbcl-"
                            version "-source.tar.bz2"))
        (sha256
-        (base32 "013llba5d252gfis1bkj9knizdaj0v69h5mnnd31jagb9w6nmv7a"))
+        (base32 "1ilissi5pfvs59ifmci9cmx3gfcafb90b5h55xfb9rl83jqdajqa"))
        ;; TODO: Remove this patch when upgrading to SBCL > 2.5.8.
        ;; (patches (search-patches "sbcl-fix-arm64-shared-lib.patch"))
        (modules '((guix build utils)))

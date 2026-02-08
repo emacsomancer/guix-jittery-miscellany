@@ -150,8 +150,8 @@
   #:use-module (srfi srfi-1)
   ;; #:use-module (jitterymisc packages gtk)
   ;; #:use-module (nil packages rust-crates)
-  #:export (zutty )
-                                                       )
+  ;; #:export (zutty )
+  )
 
 ;; (include "rust-crates.scm")
 
@@ -381,7 +381,7 @@ It provides efficient rendering, VTxxx support, and a minimal, maintainable code
 The wrapper ensures Zutty finds its default font and falls back gracefully to X core fonts if needed.")
     (home-page "https://tomscii.sig7.se/zutty/")
     (license license:gpl3)))
-
+ 
 ;; (define-public zutty
 ;;   (package
 ;;     (name "zutty")

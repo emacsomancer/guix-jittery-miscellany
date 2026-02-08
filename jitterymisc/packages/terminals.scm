@@ -60,7 +60,7 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 ;; (add-to-load-path ".")
-(add-to-load-path "/home/slade/.config/guix/")
+;; (add-to-load-path "/home/slade/.config/guix/")
 
 (define-module (jitterymisc packages terminals)
   #:use-module ((guix licenses) #:prefix license:)
@@ -149,8 +149,8 @@
   #:use-module (guix utils)
   #:use-module (srfi srfi-1)
   ;; #:use-module (jitterymisc packages gtk)
-  #:use-module (nil packages rust-crates)
-  #:export (zutty alacritty-graphics)
+  ;; #:use-module (nil packages rust-crates)
+  #:export (zutty )
                                                        )
 
 ;; (include "rust-crates.scm")

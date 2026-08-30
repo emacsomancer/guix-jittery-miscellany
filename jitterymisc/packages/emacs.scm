@@ -96,7 +96,7 @@
   (package
     (inherit emacs-minimal)
     (name "emacs-more-next-minimal")
-    (version "30.2")
+    (version "31.1")
     (source
      (origin
        (method url-fetch)

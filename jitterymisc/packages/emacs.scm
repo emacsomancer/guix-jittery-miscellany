@@ -81,7 +81,7 @@
   #:use-module (gnu packages selinux)
   #:use-module (gnu packages sqlite)
   #:use-module (gnu packages texinfo)
-  ;; #:use-module (gnu packages time)
+  #:use-module (gnu packages time)
   #:use-module (gnu packages check)  
   #:use-module (gnu packages tls)
   #:use-module (gnu packages tree-sitter)

@@ -1,4 +1,9 @@
-(define-module (ivpn)
+;;;           © 2026 B Slade <slade@lambda-y.net>
+;;
+;; SPDX-License-Identifier: GPL-3.0
+
+(define-module (jitterymisc packages ivpn)
+  #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix licenses)
   #:use-module (guix packages)
   #:use-module (guix download)

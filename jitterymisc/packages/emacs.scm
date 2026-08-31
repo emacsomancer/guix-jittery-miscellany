@@ -175,7 +175,7 @@
     (version version)
     (source source)
     (arguments
-     (substitute-keyword-arguments (package-arguments emacs)
+     (substitute-keyword-arguments (package-arguments emacs-31)
        ((#:phases phases)
         #~(modify-phases #$phases
             (add-after 'unpack 'autogen
@@ -219,7 +219,7 @@
     (name "emacs-tune-cflags")
     (synopsis "Emacs text editor with CFLAGS tuning.")
     (inputs
-     (modify-inputs (package-inputs emacs)
+     (modify-inputs (package-inputs emacs-31)
        (prepend
         gtk+ ;; for toolkit
         cairo dbus giflib harfbuzz libjpeg-turbo libotf 
@@ -707,7 +707,7 @@ editor (console only)")
               (prepend libxaw)))
     (arguments
      (substitute-keyword-arguments
-         (package-arguments emacs-no-x)
+         (package-arguments emacs-no-x-31)
        ((#:configure-flags flags #~'())
         #~(cons "--with-x-toolkit=lucid"
                 "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"

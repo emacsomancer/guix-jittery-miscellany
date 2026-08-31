@@ -27,14 +27,22 @@
         (base32 "0p21m91ym6973m2qiz65x8cgdixndvsz35dfy8n0kkhjclsh169g")))) 
     (build-system go-build-system)
     (arguments
-     '(#:import-path "github.com/ivpn/desktop-app"
-       #:unpack-path "github.com/ivpn/desktop-app"
+     `(#:tests? #f
        #:phases
        (modify-phases %standard-phases
-         (add-after 'unpack 'patch-paths
-           (lambda* (#:key outputs #:allow-other-keys)
-             (let ((out (assoc-ref outputs "out")))
-               #t))))))
+         (replace 'build
+           (lambda* (#:key inputs outputs #:allow-other-keys)
+             (setenv "GOTOOLCHAIN" "local")
+             (setenv "GOPROXY" "off")
+
+             (with-directory-excursion "cli"
+               (invoke "go" "build" "-v" "./..."))
+
+             (with-directory-excursion "daemon"
+               (invoke "go" "build" "-v" "./...")))))))
+
+    (native-inputs
+     `(("go" ,go-1.26)))
     (inputs
      `(("wireguard-tools" ,wireguard-tools)
        ("openvpn" ,openvpn)))

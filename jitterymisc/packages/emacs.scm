@@ -649,12 +649,60 @@ editor (console only)")
                 tree-sitter
                 zlib)))))
 
+(define-public emacs-31
+  (package/inherit emacs-no-x-31
+    (name "emacs-31")
+    (synopsis "The extensible, customizable, self-documenting text editor")
+    (build-system glib-or-gtk-build-system)
+    (arguments
+     (substitute-keyword-arguments arguments
+       ((#:modules _) (%emacs-modules build-system))
+       ((#:configure-flags flags #~'())
+        #~(cons* "--with-cairo" #$flags))
+       ((#:phases phases)
+        #~(modify-phases #$phases
+            ;; Note: due to the changed #:modules, %standard-phases in #$phases
+            ;; refers to glib-or-gtk:%standard-phases, so we don't need to add
+            ;; them ourselves.
+            (add-after 'glib-or-gtk-wrap 'restore-emacs-pdmp
+              ;; Restore the dump file that Emacs installs somewhere in
+              ;; libexec/ to its original state.
+              (lambda* (#:key outputs target #:allow-other-keys)
+                (let* ((libexec (string-append (assoc-ref outputs "out")
+                                               "/libexec"))
+                       ;; each of these ought to only match a single file,
+                       ;; but even if not (find-files) sorts by string<,
+                       ;; so the Nth element in one maps to the Nth element of
+                       ;; the other
+                       (pdmp (find-files libexec "\\.pdmp$"))
+                       (pdmp-real (find-files libexec "\\.pdmp-real$")))
+                  (for-each rename-file pdmp-real pdmp))))))))
+    (inputs (modify-inputs inputs
+              (prepend
+               cairo
+               dbus
+               gtk+
+               giflib
+               harfbuzz
+               libjpeg-turbo
+               libotf
+               libpng
+               (librsvg-for-system)
+               libtiff
+               libx11
+               libxft
+               libxpm
+               libwebp
+               pango
+               poppler)))))
+
+
 (define-public emacs-31release-lucid-tune-cflags
   (package/inherit emacs-no-x-31
     (name "emacs-31release-lucid-tune-cflags")
     (synopsis
      "The extensible, customizable, self-documenting text editor (with Lucid/Athena toolkit) [and CFLAG tuning]")
-    (inputs (modify-inputs (package-inputs emacs)
+    (inputs (modify-inputs (package-inputs emacs-31)
               (delete "gtk+")
               (prepend libxaw)))
     (arguments
@@ -697,7 +745,7 @@ editor (console only)")
     (synopsis "Emacs text editor built with CFLAGS tuning and graphical UI purely in terms
 of GTK (for use under Wayland).")
     (arguments
-     (substitute-keyword-arguments (package-arguments emacs)
+     (substitute-keyword-arguments (package-arguments emacs-31)
        ((#:configure-flags flags #~'())
         #~(cons* "--with-native-compilation=yes"
                  ;; "--with-xft"
@@ -723,7 +771,7 @@ of GTK (for use under Wayland).")
      ;;                       "-O2 -mtune=native -march=native -fomit-frame-pointer")))))
      )))
 
-ö
+
 
 
 (define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))

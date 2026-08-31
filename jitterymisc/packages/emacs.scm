@@ -103,7 +103,8 @@
        (uri (string-append "mirror://gnu/emacs/emacs-"
                                   version ".tar.xz"))
        (sha256
-        (base32 "1nggbgnns7lvxn68gzlcsgwh3bigvrbn45kh6dqia9yxlqc6zwxk"))
+        (base32 "11j59ybvzbkxfsm9zmhj6ixxls2424rhcw5znlr1kj40jl6pk98x"))
+        ;; (base32 "1nggbgnns7lvxn68gzlcsgwh3bigvrbn45kh6dqia9yxlqc6zwxk"))
        (patches
         (search-patches "emacs-exec-path.patch"
                         "emacs-fix-scheme-indent-function.patch"
@@ -255,11 +256,50 @@
   (package
     (inherit emacs-lucid)
     (name "emacs-lucid-tune-cflags")
+    (version "31.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "mirror://gnu/emacs/emacs-"
+                                  version ".tar.xz"))
+              (sha256
+               (base32
+                "1nggbgnns7lvxn68gzlcsgwh3bigvrbn45kh6dqia9yxlqc6zwxk"))
+              (patches (search-patches "emacs-disable-jit-compilation.patch"
+                                       "emacs-exec-path.patch"
+                                       "emacs-fix-scheme-indent-function.patch"
+                                       "emacs-native-comp-driver-options.patch"
+                                       "emacs-native-comp-fix-filenames.patch"
+                                       "emacs-native-comp-pin-packages.patch"
+                                       "emacs-zoom-image-test-fix.patch"))
+              (modules '((guix build utils)))
+              (snippet
+               '(with-directory-excursion "lisp"
+                  ;; Delete the bundled byte-compiled elisp files and generated
+                  ;; autoloads.
+                  (for-each delete-file
+                            (append (find-files "." "\\.elc$")
+                                    (find-files "." "loaddefs\\.el$")
+                                    (find-files "eshell" "^esh-groups\\.el$")))))))
+    (synopsis "Emacs text editor with Lucid/Athena toolkit and CFLAGS tuning.")
+    (arguments
+     (substitute-keyword-arguments (package-arguments emacs-lucid)
+       ((#:configure-flags flags #~'())
+        #~(cons*
+           "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
+           "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
+           #$flags))))))
+
+(define-public emacs-31release-lucid-tune-cflags
+  (package
+    (inherit emacs-lucid)
+    (name "emacs-lucid-tune-cflags")
+    
     (synopsis "Emacs text editor with Lucid toolkit and CFLAGS tuning.")
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-lucid)
        ((#:configure-flags flags #~'())
         #~(cons*
+           "--with-x-toolkit=lucid"
            "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
            "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
            #$flags))))))

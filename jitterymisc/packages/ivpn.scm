@@ -2,15 +2,15 @@
 ;;
 ;; SPDX-License-Identifier: GPL-3.0
 
-(define-module (jitterymisc packages ivpn)
-  #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (guix licenses)
-  #:use-module (guix packages)
-  #:use-module (guix download)
-  #:use-module (guix git-download)
-  #:use-module (guix build-system go)
-  #:use-module (gnu packages golang)
-  #:use-module (gnu packages vpn)) ; For wireguard-tools / openvpn if needed
+;; (define-module (jitterymisc packages ivpn)
+;;   #:use-module ((guix licenses) #:prefix license:)
+;;   #:use-module (guix licenses)
+;;   #:use-module (guix packages)
+;;   #:use-module (guix download)
+;;   #:use-module (guix git-download)
+;;   #:use-module (guix build-system go)
+;;   #:use-module (gnu packages golang)
+;;   #:use-module (gnu packages vpn)) ; For wireguard-tools / openvpn if needed
 
 ;; (define-public ivpn-cli
 ;;   (package

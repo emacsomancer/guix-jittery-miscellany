@@ -12,46 +12,46 @@
   #:use-module (gnu packages golang)
   #:use-module (gnu packages vpn)) ; For wireguard-tools / openvpn if needed
 
-(define-public ivpn-cli
-  (package
-    (name "ivpn-cli")
-    (version "3.15.13") 
-    (source
-     (origin
-       (method url-fetch)
-       ;; Added the missing unquote comma right before string-append
-       (uri (,string-append "https://github.com/ivpn/desktop-app/" 
-                            version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32 "0p21m91ym6973m2qiz65x8cgdixndvsz35dfy8n0kkhjclsh169g")))) 
-    (build-system go-build-system)
-    (arguments
-     `(#:tests? #f
-       #:phases
-       (modify-phases %standard-phases
-         (replace 'build
-           (lambda* (#:key inputs outputs #:allow-other-keys)
-             (setenv "GOTOOLCHAIN" "local")
-             (setenv "GOPROXY" "off")
-
-             (with-directory-excursion "cli"
-               (invoke "go" "build" "-v" "./..."))
-
-             (with-directory-excursion "daemon"
-               (invoke "go" "build" "-v" "./...")))))))
-
-    (native-inputs
-     `(("go" ,go-1.26)))
-    (inputs
-     `(("wireguard-tools" ,wireguard-tools)
-       ("openvpn" ,openvpn)))
-    (home-page "https://github.com/ivpn/desktop-app")
-    (synopsis "Official Command Line Interface and Daemon for IVPN")
-    (description "Builds the Go-based background daemon and CLI control interface for IVPN.")
-    (license license:gpl3)))
-
 ;; (define-public ivpn-cli
+;;   (package
+;;     (name "ivpn-cli")
+;;     (version "3.15.13") 
+;;     (source
+;;      (origin
+;;        (method url-fetch)
+;;        ;; Added the missing unquote comma right before string-append
+;;        (uri (string-append "https://github.com/ivpn/desktop-app/" 
+;;                             version ".tar.gz"))
+;;        (file-name (string-append name "-" version ".tar.gz"))
+;;        (sha256
+;;         (base32 "0p21m91ym6973m2qiz65x8cgdixndvsz35dfy8n0kkhjclsh169g")))) 
+;;     (build-system go-build-system)
+;;     (arguments
+;;      `(#:tests? #f
+;;        #:phases
+;;        (modify-phases %standard-phases
+;;          (replace 'build
+;;            (lambda* (#:key inputs outputs #:allow-other-keys)
+;;              (setenv "GOTOOLCHAIN" "local")
+;;              (setenv "GOPROXY" "off")
+
+;;              (with-directory-excursion "cli"
+;;                (invoke "go" "build" "-v" "./..."))
+
+;;              (with-directory-excursion "daemon"
+;;                (invoke "go" "build" "-v" "./...")))))))
+
+;;     (native-inputs
+;;      `(("go" ,go-1.26)))
+;;     (inputs
+;;      `(("wireguard-tools" ,wireguard-tools)
+;;        ("openvpn" ,openvpn)))
+;;     (home-page "https://github.com/ivpn/desktop-app")
+;;     (synopsis "Official Command Line Interface and Daemon for IVPN")
+;;     (description "Builds the Go-based background daemon and CLI control interface for IVPN.")
+;;     (license license:gpl3)))
+
+;; ;; (define-public ivpn-cli
 ;;   (package
 ;;     (name "ivpn-cli")
 ;;     (version "3.15.13") 

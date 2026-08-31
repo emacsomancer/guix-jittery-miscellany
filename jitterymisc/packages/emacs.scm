@@ -286,7 +286,7 @@
 (define-public emacs-31release-lucid-tune-cflags
   (package
     (inherit emacs-lucid)
-    (name "emacs-lucid-tune-cflags")
+    (name "emacs-31release-lucid-tune-cflags")
     (version "31.1")
     (source (origin
               (method url-fetch)
@@ -343,7 +343,7 @@ of GTK (for use under Wayland).")
 (define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))
 (define-public emacs-next-tune-cflags (emacs->emacs-more-next emacs-tune-cflags))
 
-(define-public emacs-lucid-athena-31 emacs-31release-lucid-tune-cflags)
+;; (define-public emacs-lucid-athena-31 emacs-31release-lucid-tune-cflags)
 
 ;; (define-public emacs-next-xwidgets-tune-cflags (emacs->emacs-more-next emacs-xwidgets-tune-cflags))
 

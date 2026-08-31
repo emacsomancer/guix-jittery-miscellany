@@ -256,24 +256,6 @@
   (package
     (inherit emacs-lucid)
     (name "emacs-lucid-tune-cflags")
-    (version "31.1")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "mirror://gnu/emacs/emacs-"
-                                  version ".tar.xz"))
-              (sha256
-               (base32
-                "11j59ybvzbkxfsm9zmhj6ixxls2424rhcw5znlr1kj40jl6pk98x"))
-
-              (modules '((guix build utils)))
-              (snippet
-               '(with-directory-excursion "lisp"
-                  ;; Delete the bundled byte-compiled elisp files and generated
-                  ;; autoloads.
-                  (for-each delete-file
-                            (append (find-files "." "\\.elc$")
-                                    (find-files "." "loaddefs\\.el$")
-                                    (find-files "eshell" "^esh-groups\\.el$")))))))
     (synopsis "Emacs text editor with Lucid/Athena toolkit and CFLAGS tuning.")
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-lucid)
@@ -297,7 +279,7 @@
                                   version ".tar.xz"))
               (sha256
                (base32
-                "11j59ybvzbkxfsm9zmhj6ixxls2424rhcw5znlr1kj40jl6pk98x"))
+                "11j59ybvzbkxfsm9zmhj6ixxls2424rhcw5znlr1kj40jl6pk98x"))
               (patches (search-patches "emacs-disable-jit-compilation.patch"
                                        "emacs-exec-path.patch"
                                        "emacs-fix-scheme-indent-function.patch"

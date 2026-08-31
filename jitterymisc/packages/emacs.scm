@@ -94,6 +94,114 @@
   #:use-module (srfi srfi-1)
   #:export (emacs->emacs-more-next))
 
+(define (%emacs-modules build-system)
+  (let ((which (build-system-name build-system)))
+    `((guix build ,(symbol-append which '-build-system))
+      (guix build utils)
+      (srfi srfi-1)
+      (ice-9 ftw))))
+
+(define* (emacs-ert-selector excluded-tests #:key run-nativecomp run-expensive run-unstable)
+  "Create an ERT selector that excludes tests."
+  (string-append
+   "(not (or "
+   (if run-nativecomp
+       ""
+       "(tag :nativecomp) ")
+   (if run-expensive
+       ""
+       "(tag :expensive-test) ")
+   (if run-unstable
+       ""
+       "(tag :unstable) ")
+   (string-join
+    (map
+     (lambda (test)
+       ;; This is a regex
+       (string-append "\\\"^" test "\\$\\\""))
+     (sort excluded-tests string<?)))
+   "))"))
+
+(define %emacs-selector
+  (emacs-ert-selector
+   '("benchmark-tests"
+     "esh-util-test/path/get-remote"
+     "esh-var-test/path-var/preserve-across-hosts"
+     "grep-tests--rgrep-abbreviate-properties-darwin"
+     "grep-tests--rgrep-abbreviate-properties-gnu-linux"
+     "grep-tests--rgrep-abbreviate-properties-windows-nt-dos-semantics"
+     "grep-tests--rgrep-abbreviate-properties-windows-nt-sh-semantics"
+     "info-xref-test-makeinfo"
+     "tramp-test48-remote-load-path")))
+
+(define %emacs-next-selector
+  (emacs-ert-selector
+   '("benchmark-tests"
+     "esh-util-test/path/get-remote"
+     "esh-var-test/path-var/preserve-across-hosts"
+     "grep-tests--rgrep-abbreviate-properties-darwin"
+     "grep-tests--rgrep-abbreviate-properties-gnu-linux"
+     "grep-tests--rgrep-abbreviate-properties-windows-nt-dos-semantics"
+     "grep-tests--rgrep-abbreviate-properties-windows-nt-sh-semantics"
+     "info-xref-test-makeinfo"
+     "tramp-test50-remote-load-path"
+
+     ;; These two tests look for header files.  We patch them to check
+     ;; "/run/current-system/profile/include" but that doesn't help us in the
+     ;; test suite
+     "man-tests-find-header-file"
+     "ffap-tests--c-path"
+
+     "diary-icalendar-test-import-bug-22092"
+     "diary-icalendar-test-import-bug-33277"
+     "diary-icalendar-test-import-with-timezone"
+
+     ;; The following can be removed once upstream closes this bug report:
+     ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=80421
+     "python-shell--convert-file-name-to-send-1"
+     "package-vc-tests-install-post-conditions/test-package-eight"
+     "package-vc-tests-install-post-conditions/test-package-five"
+     "package-vc-tests-install-post-conditions/test-package-four"
+     "package-vc-tests-install-post-conditions/test-package-nine"
+     "package-vc-tests-install-post-conditions/test-package-one"
+     "package-vc-tests-install-post-conditions/test-package-seven"
+     "package-vc-tests-install-post-conditions/test-package-six"
+     "package-vc-tests-install-post-conditions/test-package-three"
+     "package-vc-tests-install-post-conditions/test-package-two"
+     "package-vc-tests-pkg-spec-make-shell-command/test-package-five"
+     "package-vc-tests-pkg-spec-make-shell-command/test-package-nine"
+     "package-vc-tests-pkg-spec-make-shell-command/test-package-one"
+     "package-vc-tests-pkg-spec-make-shell-command/test-package-seven"
+     "package-vc-tests-pkg-spec-make-shell-command/test-package-two"
+     "package-vc-tests-rebuild-after-require/test-package-eight"
+     "package-vc-tests-rebuild-after-require/test-package-five"
+     "package-vc-tests-rebuild-after-require/test-package-four"
+     "package-vc-tests-rebuild-after-require/test-package-nine"
+     "package-vc-tests-rebuild-after-require/test-package-one"
+     "package-vc-tests-rebuild-after-require/test-package-seven"
+     "package-vc-tests-rebuild-after-require/test-package-six"
+     "package-vc-tests-rebuild-after-require/test-package-three"
+     "package-vc-tests-rebuild-after-require/test-package-two"
+     "package-vc-tests-require/test-package-eight"
+     "package-vc-tests-require/test-package-five"
+     "package-vc-tests-require/test-package-four"
+     "package-vc-tests-require/test-package-nine"
+     "package-vc-tests-require/test-package-one"
+     "package-vc-tests-require/test-package-seven"
+     "package-vc-tests-require/test-package-six"
+     "package-vc-tests-require/test-package-three"
+     "package-vc-tests-require/test-package-two"
+     "package-vc-tests-upgrade-after-require/test-package-eight"
+     "package-vc-tests-upgrade-after-require/test-package-five"
+     "package-vc-tests-upgrade-after-require/test-package-four"
+     "package-vc-tests-upgrade-after-require/test-package-nine"
+     "package-vc-tests-upgrade-after-require/test-package-one"
+     "package-vc-tests-upgrade-after-require/test-package-seven"
+     "package-vc-tests-upgrade-after-require/test-package-six"
+     "package-vc-tests-upgrade-after-require/test-package-three"
+     "package-vc-tests-upgrade-after-require/test-package-two")))
+
+
 (define-public emacs-minimal-31
   (package
     (name "emacs-minimal-31")

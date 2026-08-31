@@ -270,7 +270,7 @@
     (name "emacs-minimal-31")
     (version "31.1")
     ;; Note: When using (replacement …), ensure that comp-native-version-dir
-    ;; stays the same across grafts.
+    ;; stays the same across grafts.""
     ;; Run `make check-system TESTS=emacs-native-comp' to ensure that grafts
     ;; can meaningfully be applied.
     (source (origin

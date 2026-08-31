@@ -294,7 +294,7 @@
                                   version ".tar.xz"))
               (sha256
                (base32
-                "1nggbgnns7lvxn68gzlcsgwh3bigvrbn45kh6dqia9yxlqc6zwxk"))))
+                "11j59ybvzbkxfsm9zmhj6ixxls2424rhcw5znlr1kj40jl6pk98x"))))
     (synopsis "Emacs text editor with Lucid/Athena toolkit with CFLAGS tuning.")
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-lucid)

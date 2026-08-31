@@ -264,20 +264,7 @@
               (sha256
                (base32
                 "1nggbgnns7lvxn68gzlcsgwh3bigvrbn45kh6dqia9yxlqc6zwxk"))
-              (patches (search-patches "emacs-disable-jit-compilation.patch"
-                                       "emacs-exec-path.patch"
-                                       "emacs-fix-scheme-indent-function.patch"
-                                       "emacs-native-comp-driver-options.patch"
-                                       "emacs-native-comp-fix-filenames.patch"
-                                       "emacs-native-comp-pin-packages.patch"
-                                       "emacs-zoom-image-test-fix.patch"))
-              (patches (search-patches "emacs-disable-jit-compilation.patch"
-                                       "emacs-exec-path.patch"
-                                       "emacs-fix-scheme-indent-function.patch"
-                                       "emacs-native-comp-driver-options.patch"
-                                       "emacs-native-comp-fix-filenames.patch"
-                                       "emacs-native-comp-pin-packages.patch"
-                                       "emacs-zoom-image-test-fix.patch"))
+
               (modules '((guix build utils)))
               (snippet
                '(with-directory-excursion "lisp"

@@ -25,7 +25,7 @@
 ;;; Copyright © 2022 Zhu Zihao <all_but_last@163.com>
 ;;; Copyright © 2023 Declan Tsien <declantsien@riseup.net>
 ;;; Copyright © 2023, 2024 Zheng Junjie <873216071@qq.com>
-;;; Copyright © 2024, 2025 Benjamin Slade <slade@lambda-y.net>
+;;; Copyright © 2024-2026 Benjamin Slade <slade@lambda-y.net>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -72,6 +72,7 @@
   #:use-module (gnu packages guile)
   #:use-module (gnu packages image)
   #:use-module (gnu packages lesstif)   ; motif
+  #:use-module (gnu packages language)  ; m17n-db, m17n-lib
   #:use-module (gnu packages linux)     ; alsa-lib, gpm
   #:use-module (gnu packages mail)      ; for mailutils
   #:use-module (gnu packages multiprecision)
@@ -652,4 +653,10 @@ editor (console only)")
                 #$flags))))))
 
 
+;; INFO: Deprecated on 2026-07-24.
+(define-deprecated/public-alias m17n-db
+  (@ (gnu packages language) m17n-db))
+;; INFO: Deprecated on 2026-07-24.
+(define-deprecated/public-alias m17n-lib
+  (@ (gnu packages language) m17n-lib))
 

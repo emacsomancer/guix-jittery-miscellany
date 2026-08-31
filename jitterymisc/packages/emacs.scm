@@ -343,6 +343,8 @@ of GTK (for use under Wayland).")
 (define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))
 (define-public emacs-next-tune-cflags (emacs->emacs-more-next emacs-tune-cflags))
 
+(define-public emacs-lucid-athena-31 emacs-31release-lucid-tune-cflags)
+
 ;; (define-public emacs-next-xwidgets-tune-cflags (emacs->emacs-more-next emacs-xwidgets-tune-cflags))
 
 ;; (define-public emacs-head-lucid (emacs->emacs-head emacs-lucid))

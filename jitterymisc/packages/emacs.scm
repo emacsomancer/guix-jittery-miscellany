@@ -44,6 +44,7 @@
 
 (define-module (jitterymisc packages emacs)
   #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (guix deprecation)  
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix download)

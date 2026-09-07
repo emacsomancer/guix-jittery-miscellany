@@ -92,234 +92,127 @@
   #:use-module (srfi srfi-1)
   #:export (emacs->emacs-more-next))
 
-(define-public emacs-more-next-minimal
-  (package
-    (inherit emacs-minimal)
-    (name "emacs-more-next-minimal")
-    (version "30.2")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "mirror://gnu/emacs/emacs-"
-                                  version ".tar.xz"))
-       (sha256
-        (base32 "1nggbgnns7lvxn68gzlcsgwh3bigvrbn45kh6dqia9yxlqc6zwxk"))
-       (patches
-        (search-patches "emacs-exec-path.patch"
-                        "emacs-fix-scheme-indent-function.patch"
-                        "emacs-native-comp-driver-options.patch"
-                        "emacs-pgtk-super-key-fix.patch"
-                        ;; XXX This commit should already be on 31.0 but
-                        ;; without this emacs-next will fail a test.
-                        "emacs-zoom-image-test-fix.patch"
-                        ))))))
 
-(define-public emacs-head-minimal
-  (let ((commit "8661f40ce4d6bce649cb2a564f7c4e766318476c")
-        (revision "0"))
-   (package
-    (inherit emacs-minimal)
-    (name "emacs-head-minimal")
-    (version (git-version "31.0.50" revision commit))
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://git.savannah.gnu.org/git/emacs.git")
-             (commit commit)))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "0nj3a7wsl5piqf6a8wnmfyjbpxp2dwl0r48flv9q624jx4nxfr2p"))
-       (patches
-        (search-patches "emacs-exec-path.patch"
-                        "emacs-fix-scheme-indent-function.patch"
-                        "emacs-native-comp-driver-options.patch"
-                        "emacs-pgtk-super-key-fix.patch"
-                        ;; XXX This commit should already be on 31.0 but
-                        ;; without this emacs-next will fail a test.
-                        "emacs-zoom-image-test-fix.patch")))))))
-
-
-(define* (emacs->emacs-more-next emacs #:optional name
-                            #:key (version (package-version emacs-more-next-minimal))
-                            (source (package-source emacs-more-next-minimal)))
-  (package
-    (inherit emacs)
-    (name (or name
-              (and (string-prefix? "emacs" (package-name emacs))
-                   (string-append "emacs-next"
-                                  (string-drop (package-name emacs)
-                                               (string-length "emacs"))))))
-    (version version)
-    (source source)
-    (arguments
-     (substitute-keyword-arguments (package-arguments emacs)
-       ((#:phases phases)
-        #~(modify-phases #$phases
-            (add-after 'unpack 'autogen
-              (lambda _
-                (invoke "sh" "autogen.sh")))
-              (delete 'validate-comp-integrity)))))))
-
-(define* (emacs->emacs-head emacs #:optional name
-                            #:key (version (package-version emacs-head-minimal))
-                            (source (package-source emacs-head-minimal)))
-  (package
-    (inherit emacs)
-    (name (or name
-              (and (string-prefix? "emacs" (package-name emacs))
-                   (string-append "emacs-head"
-                                  (string-drop (package-name emacs)
-                                               (string-length "emacs"))))))
-    (version version)
-    (source source)
-    (arguments
-     (substitute-keyword-arguments (package-arguments emacs)
-       ((#:phases phases)
-        #~(modify-phases #$phases
-            (add-after 'unpack 'autogen
-              (lambda _
-                (invoke "sh" "autogen.sh")))
-            (delete 'validate-comp-integrity)))))))
-
-
-(define-public emacs-tune-cflags
-  (package
-    (inherit emacs)
-    (name "emacs-tune-cflags")
-    (source
-     (origin
-       (inherit (package-source emacs))
-       ;; Force Guix to ignore the broken JIT compilation patch entirely
-       (patches (delete (search-patch "emacs-disable-jit-compilation.patch")
-                        (origin-patches (package-source emacs))))))
-    (synopsis "Emacs text editor with CFLAGS tuning.")
-    ;; ... keep the rest of your inputs and arguments exactly the same ...
 
 (define-public emacs31-lucid
   (package
    (inherit emacs31)
    (name "emacs31-lucid")
-       (arguments
-     (substitute-keyword-arguments (package-arguments emacs)
-       ((#:configure-flags flags #~'())
-        #~(cons* "--with-x-toolkit=lucid"
-                 "--without-toolkit-scroll-bars"
-                 "--with-native-compilation=yes"
-                 "--with-xft"
-                 "--with-harfbuzz"
-                 ;; "--without-m17n-flt"
-                 "--with-libotf"
-                 "--without-gsettings"
-                 "--without-gconf"
-                 "--with-tree-sitter"
-                 "--with-modules"
-                 (delete "--with-native-compilation=aot" #$flags)))))
-    (inputs
-     (modify-inputs (package-inputs emacs)
-       (prepend
-        libxaw3d ;; for toolkit
-        cairo dbus giflib harfbuzz libjpeg-turbo libotf
-        libpng (librsvg-for-system) libtiff libx11 libxft
-        libxpm pango poppler)))
-    (native-inputs (list autoconf libfaketime pkg-config texinfo))
-    (synopsis "Emacs text editor with Lucid toolkit")
-    (description "This Emacs build uses the Lucid toolkit.")))
+   (source
+    (origin
+     (inherit (package-source emacs))
+     ;; Force Guix to ignore the broken JIT compilation patch entirely
+     (patches (delete (search-patch "emacs-disable-jit-compilation.patch")
+                      (origin-patches (package-source emacs))))))
+   (arguments
+    (substitute-keyword-arguments
+     (package-arguments emacs)
+     ((#:configure-flags flags #~'())
+      #~(cons* "--with-x-toolkit=lucid"
+	       "--without-toolkit-scroll-bars"
+	       "--with-native-compilation=yes"
+	       "--with-xft"
+	       "--with-harfbuzz"
+	       ;; "--without-m17n-flt"
+	       "--with-libotf"
+	       "--without-gsettings"
+	       "--without-gconf"
+	       "--with-tree-sitter"
+	       "--with-modules"
+	       (delete "--with-native-compilation=aot" #$flags)))))
+   (inputs
+    (modify-inputs (package-inputs emacs)
+		   (prepend
+		    libxaw3d ;; for toolkit
+		    cairo dbus giflib harfbuzz libjpeg-turbo libotf
+		    libpng (librsvg-for-system) libtiff libx11 libxft
+		    libxpm pango poppler)))
+   (native-inputs (list autoconf libfaketime pkg-config texinfo))
+   (synopsis "Emacs text editor with Lucid toolkit")
+   (description "This Emacs build uses the Lucid toolkit.")))
 
 (define-public emacs31-tune-cflags
   (package
-    (inherit emacs31)
-    (name "emacs-tune-cflags")
-    (synopsis "Emacs text editor with CFLAGS tuning.")
-    (inputs
-     (modify-inputs (package-inputs emacs)
-       (prepend
-        gtk+ ;; for toolkit
-        cairo dbus giflib harfbuzz libjpeg-turbo libotf 
-        libpng (librsvg-for-system) libtiff libx11 libxft 
-        libxpm pango poppler)))
-    (arguments
-     (substitute-keyword-arguments (package-arguments emacs)
-       ((#:configure-flags flags #~'())
-        #~(cons* "--with-native-compilation=yes"
-                 "--with-xft"
-                 "--with-harfbuzz"
-                 ;; "--without-m17n-flt"
-                 "--with-libotf"
-                 "--without-gsettings"
-                 "--without-gconf"
-                 "--with-modules"
-                 "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
-                 "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
-                 ;; LDFLAGS? -O2??
-                 (delete "--with-native-compilation=aot" #$flags))))
-     ;; (list #:phases
-     ;;       #~(modify-phases %standard-phases
-     ;;           (add-before 'configure 'override-LDFLAGS
-     ;;             (lambda _
-     ;;               (setenv "LDFLAGS"
-     ;;                       "-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto")))
-     ;;           (add-before 'configure 'override-CFLAGS
-     ;;             (lambda _
-     ;;               (setenv "CFLAGS"
-     ;;                       "-O2 -mtune=native -march=native -fomit-frame-pointer")))))
-     )))
-
-(define-public emacs31-lucid-tune-cflags
-  (package
-    (inherit emacs-lucid)
-    (name "emacs-lucid-tune-cflags")
-    (synopsis "Emacs text editor with Lucid toolkit and CFLAGS tuning.")
-    (arguments
-     (substitute-keyword-arguments (package-arguments emacs-lucid)
-       ((#:configure-flags flags #~'())
-        #~(cons*
-           "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
-           "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
-           #$flags))))))
-
-(define-public emacs-pgtk-tune-cflags
-  (package
-    (inherit emacs-pgtk)
-    (name "emacs-pgtk-tune-cflags")
-    (synopsis "Emacs text editor built with CFLAGS tuning and graphical UI purely in terms
-of GTK (for use under Wayland).")
-    (arguments
-     (substitute-keyword-arguments (package-arguments emacs)
-       ((#:configure-flags flags #~'())
-        #~(cons* "--with-native-compilation=yes"
-                 ;; "--with-xft"
-                 ;; "--with-harfbuzz"
-                 ;; "--without-m17n-flt"
-                 ;; "--with-libotf"
-                 ;; "--without-gsettings"
-                 ;; "--without-gconf"
-                 ;; "--with-modules"
-                 "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
-                 "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
-                 ;; LDFLAGS? -O2??
-                 (delete "--with-native-compilation=aot" #$flags))))
-     ;; (list #:phases
-     ;;       #~(modify-phases %standard-phases
-     ;;           (add-before 'configure 'override-LDFLAGS
-     ;;             (lambda _
-     ;;               (setenv "LDFLAGS"
-     ;;                       "-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto")))
-     ;;           (add-before 'configure 'override-CFLAGS
-     ;;             (lambda _
-     ;;               (setenv "CFLAGS"
-     ;;                       "-O2 -mtune=native -march=native -fomit-frame-pointer")))))
-     )))
+   (inherit emacs31-lucid)
+   (name "emacs-tune-cflags")
+   (synopsis "Emacs text editor with CFLAGS tuning.")
+   (inputs
+    (modify-inputs (package-inputs emacs)
+		   (prepend
+		    gtk+ ;; for toolkit
+		    cairo dbus giflib harfbuzz libjpeg-turbo libotf 
+		    libpng (librsvg-for-system) libtiff libx11 libxft 
+		    libxpm pango poppler)))
+   (arguments
+    (substitute-keyword-arguments (package-arguments emacs)
+				  ((#:configure-flags flags #~'())
+				   #~(cons* "--with-native-compilation=yes"
+					    "--with-xft"
+					    "--with-harfbuzz"
+					    ;; "--without-m17n-flt"
+					       "--with-libotf"
+					       "--without-gsettings"
+					       "--without-gconf"
+					       "--with-modules"
+					       "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
+					       "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
+					       ;; LDFLAGS? -O2??
+					       (delete "--with-native-compilation=aot" #$flags))))
+       ;; (list #:phases
+       ;;       #~(modify-phases %standard-phases
+       ;;           (add-before 'configure 'override-LDFLAGS
+       ;;             (lambda _
+       ;;               (setenv "LDFLAGS"
+       ;;                       "-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto")))
+       ;;           (add-before 'configure 'override-CFLAGS
+       ;;             (lambda _
+       ;;               (setenv "CFLAGS"
+       ;;                       "-O2 -mtune=native -march=native -fomit-frame-pointer")))))
+    )))
 
 
-(define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))
-(define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))
-(define-public emacs-next-tune-cflags (emacs->emacs-more-next emacs-tune-cflags))
+;; (define-public emacs-pgtk-tune-cflags
+;;   (package
+;;    (inherit emacs-pgtk)
+;;    (name "emacs-pgtk-tune-cflags")
+;;    (synopsis "Emacs text editor built with CFLAGS tuning and graphical UI purely in terms
+;; of GTK (for use under Wayland).")
+;;       (arguments
+;;        (substitute-keyword-arguments (package-arguments emacs)
+;; 				     ((#:configure-flags flags #~'())
+;; 				      #~(cons* "--with-native-compilation=yes"
+;; 					       ;; "--with-xft"
+;; 					       ;; "--with-harfbuzz"
+;; 					       ;; "--without-m17n-flt"
+;; 					       ;; "--with-libotf"
+;; 					       ;; "--without-gsettings"
+;; 					       ;; "--without-gconf"
+;; 					       ;; "--with-modules"
+;; 					       "CFLAGS=-O2 -mtune=native -march=native -fomit-frame-pointer"
+;; 					       "LDFLAGS=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto"
+;; 					       ;; LDFLAGS? -O2??
+;; 					       (delete "--with-native-compilation=aot" #$flags))))
+;;        ;; (list #:phases
+;;        ;;       #~(modify-phases %standard-phases
+;;        ;;           (add-before 'configure 'override-LDFLAGS
+;;        ;;             (lambda _
+;;        ;;               (setenv "LDFLAGS"
+;;        ;;                       "-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto")))
+;;        ;;           (add-before 'configure 'override-CFLAGS
+;;        ;;             (lambda _
+;;        ;;               (setenv "CFLAGS"
+;;        ;;                       "-O2 -mtune=native -march=native -fomit-frame-pointer")))))
+;;        )))
 
-;; (define-public emacs-next-xwidgets-tune-cflags (emacs->emacs-more-next emacs-xwidgets-tune-cflags))
 
-;; (define-public emacs-head-lucid (emacs->emacs-head emacs-lucid))
-;; (define-public emacs-head-lucid-tune-cflags (emacs->emacs-head emacs-lucid-tune-cflags))
+;;    (define-public emacs-next-lucid (emacs->emacs-more-next emacs-lucid))
+;;    (define-public emacs-next-lucid-tune-cflags (emacs->emacs-more-next emacs-lucid-tune-cflags))
+;;    (define-public emacs-next-tune-cflags (emacs->emacs-more-next emacs-tune-cflags))
 
-;; (define-public emacs-head-xwidgets-tune-cflags (emacs->emacs-head emacs-xwidgets-tune-cflags))
+   ;; (define-public emacs-next-xwidgets-tune-cflags (emacs->emacs-more-next emacs-xwidgets-tune-cflags))
+
+   ;; (define-public emacs-head-lucid (emacs->emacs-head emacs-lucid))
+   ;; (define-public emacs-head-lucid-tune-cflags (emacs->emacs-head emacs-lucid-tune-cflags))
+
+   ;; (define-public emacs-head-xwidgets-tune-cflags (emacs->emacs-head emacs-xwidgets-tune-cflags))
 

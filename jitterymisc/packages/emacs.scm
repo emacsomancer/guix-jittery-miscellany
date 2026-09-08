@@ -208,7 +208,7 @@
               (sha256
                (base32
                 "11j59ybvzbkxfsm9zmhj6ixxls2424rhcw5znlr1kj40jl6pk98x"))
-              (patches (search-patches "emacs-disable-jit-compilation.patch"
+              (patches (search-patches 
                                        "emacs-fix-scheme-indent-function.patch"
                                        "emacs-native-comp-driver-options.patch"
                                        "emacs-native-comp-fix-filenames.patch"
@@ -713,9 +713,3 @@ editor (with wide ints)" )
         #~(cons "--with-wide-int" #$flags))))))
 
 
-;; INFO: Deprecated on 2026-07-24.
-(define-deprecated/public-alias m17n-db
-  (@ (gnu packages language) m17n-db))
-;; INFO: Deprecated on 2026-07-24.
-(define-deprecated/public-alias m17n-lib
-  (@ (gnu packages language) m17n-lib))

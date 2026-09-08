@@ -657,7 +657,7 @@ editor (console only)")
 of GTK.")))
 
 (define-public emacs31-lucid
-  (package/inherit emacs31-no-x
+  (package/inherit emacs31
     (name "emacs31-lucid")
     (synopsis
      "The extensible, customizable, self-documenting text editor (with Lucid toolkit)")
@@ -672,7 +672,7 @@ of GTK.")))
                 #$flags))))))
 
 (define-public emacs31-motif
-  (package/inherit emacs31-no-x
+  (package/inherit emacs31
     (name "emacs31-motif")
     (synopsis
      "The extensible, customizable, self-documenting text editor (with Motif

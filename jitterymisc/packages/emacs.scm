@@ -661,12 +661,12 @@ of GTK.")))
     (name "emacs31-lucid")
     (synopsis
      "The extensible, customizable, self-documenting text editor (with Lucid toolkit)")
-    (inputs (modify-inputs (package-inputs emacs)
+    (inputs (modify-inputs (package-inputs emacs31)
               (delete "gtk+")
               (prepend libxaw)))
     (arguments
      (substitute-keyword-arguments
-         (package-arguments emacs-no-x)
+         (package-arguments emacs31-no-x)
        ((#:configure-flags flags #~'())
         #~(cons "--with-x-toolkit=lucid"
                 #$flags))))))
@@ -678,12 +678,12 @@ of GTK.")))
      "The extensible, customizable, self-documenting text editor (with Motif
 toolkit)")
     ;; Using emacs' inputs as base, since it has all the graphical stuff
-    (inputs (modify-inputs (package-inputs emacs)
+    (inputs (modify-inputs (package-inputs emacs31)
               (delete "gtk+")
               (prepend inotify-tools motif)))
     (arguments
      (substitute-keyword-arguments
-         (package-arguments emacs-no-x)
+         (package-arguments emacs31-no-x)
        ((#:configure-flags flags #~'())
         #~(cons "--with-x-toolkit=motif"
                 #$flags))))))
@@ -694,7 +694,7 @@ toolkit)")
     (synopsis "The extensible, customizable, self-documenting text
 editor (without X toolkit)" )
     ;; Using emacs' inputs as base, since it has all the graphical stuff
-    (inputs (modify-inputs (package-inputs emacs)
+    (inputs (modify-inputs (package-inputs emacs31)
               (delete "gtk+")
               (prepend inotify-tools)))
     (arguments

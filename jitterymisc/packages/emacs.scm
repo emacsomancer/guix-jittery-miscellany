@@ -193,9 +193,9 @@
      "package-vc-tests-upgrade-after-require/test-package-three"
      "package-vc-tests-upgrade-after-require/test-package-two")))
 
-(define-public emacs-minimal
+(define-public emacs31-minimal
   (package
-    (name "emacs-minimal")
+    (name "emacs31-minimal")
     (version "31.1")
     ;; Note: When using (replacement …), ensure that comp-native-version-dir
     ;; stays the same across grafts.
@@ -496,9 +496,9 @@ languages.")
     (properties `((upstream-name . "emacs")
                   (output-synopsis "src" "C source files")))))
 
-(define-public emacs-no-x
-  (package/inherit emacs-minimal
-    (name "emacs-no-x")
+(define-public emacs31-no-x
+  (package/inherit emacs31-minimal
+    (name "emacs31-no-x")
     (synopsis "The extensible, customizable, self-documenting text
 editor (console only)")
     (arguments
@@ -596,9 +596,9 @@ editor (console only)")
               gpm
               libselinux)))))))
 
-(define-public emacs
-  (package/inherit emacs-no-x
-    (name "emacs")
+(define-public emacs31
+  (package/inherit emacs31-no-x
+    (name "emacs31")
     (synopsis "The extensible, customizable, self-documenting text editor")
     (build-system glib-or-gtk-build-system)
     (arguments
@@ -645,9 +645,9 @@ editor (console only)")
                pango
                poppler)))))
 
-(define-public emacs-pgtk
-  (package/inherit emacs
-    (name "emacs-pgtk")
+(define-public emacs31-pgtk
+  (package/inherit emacs31
+    (name "emacs31-pgtk")
     (arguments
      (substitute-keyword-arguments arguments
        ((#:configure-flags flags #~'())
@@ -656,9 +656,9 @@ editor (console only)")
     (description "This Emacs build implements graphical UI purely in terms
 of GTK.")))
 
-(define-public emacs-lucid
-  (package/inherit emacs-no-x
-    (name "emacs-lucid")
+(define-public emacs31-lucid
+  (package/inherit emacs31-no-x
+    (name "emacs31-lucid")
     (synopsis
      "The extensible, customizable, self-documenting text editor (with Lucid toolkit)")
     (inputs (modify-inputs (package-inputs emacs)
@@ -671,9 +671,9 @@ of GTK.")))
         #~(cons "--with-x-toolkit=lucid"
                 #$flags))))))
 
-(define-public emacs-motif
-  (package/inherit emacs-no-x
-    (name "emacs-motif")
+(define-public emacs31-motif
+  (package/inherit emacs31-no-x
+    (name "emacs31-motif")
     (synopsis
      "The extensible, customizable, self-documenting text editor (with Motif
 toolkit)")
@@ -688,9 +688,9 @@ toolkit)")
         #~(cons "--with-x-toolkit=motif"
                 #$flags))))))
 
-(define-public emacs-no-x-toolkit
-  (package/inherit emacs-no-x
-    (name "emacs-no-x-toolkit")
+(define-public emacs31-no-x-toolkit
+  (package/inherit emacs31-no-x
+    (name "emacs31-no-x-toolkit")
     (synopsis "The extensible, customizable, self-documenting text
 editor (without X toolkit)" )
     ;; Using emacs' inputs as base, since it has all the graphical stuff
@@ -702,9 +702,9 @@ editor (without X toolkit)" )
        ((#:configure-flags flags #~'())
         #~(cons "--with-x-toolkit=no" #$flags))))))
 
-(define-public emacs-wide-int
-  (package/inherit emacs
-    (name "emacs-wide-int")
+(define-public emacs31-wide-int
+  (package/inherit emacs31
+    (name "emacs31-wide-int")
     (synopsis "The extensible, customizable, self-documenting text
 editor (with wide ints)" )
     (arguments

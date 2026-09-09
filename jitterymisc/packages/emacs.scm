@@ -107,8 +107,8 @@
     (name "emacs-next-lucid")
     (arguments
      (substitute-keyword-arguments (package-arguments emacs-next)
-       ((#:configure-flags flags ''())
-        #~(cons "--with-x-toolkit=lucid"
-                (delete "--with-x-toolkit=gtk3" #$flags))))))
+				   ((#:configure-flags flags ''())
+				    #~(cons "--with-x-toolkit=lucid"
+					    (delete "--with-x-toolkit=gtk3" #$flags)))))
     (synopsis "Extensible, customizable, self-documenting text editor (development version, with Lucid toolkit)")
-    (description "This package builds the development branch of GNU Emacs using the Lucid/Athena X toolkit instead of the default GTK+ interface."))
+    (description "This package builds the development branch of GNU Emacs using the Lucid/Athena X toolkit instead of the default GTK+ interface.")))

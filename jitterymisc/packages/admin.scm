@@ -206,7 +206,7 @@
 (define-public fastfetch
   (package
     (name "fastfetch")
-    (version "2.33.0")
+    (version "2.68.1")
     (source
      (origin
        (method git-fetch)
@@ -215,7 +215,7 @@
              (commit version)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "16jz8rs420gjjwj3scwf8nw2l2il1z70wv5azy16nlkwpzshc98q"))))
+        (base32 "1c0imn2afswb70wnld84f5f32xs9pwhysd7v8xafviqc4g6wys62"))))
     (build-system cmake-build-system)
     (inputs (list dbus
                   glib

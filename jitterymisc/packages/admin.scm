@@ -215,7 +215,7 @@
              (commit version)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1c0imn2afswb70wnld84f5f32xs9pwhysd7v8xafviqc4g6wys62"))))
+        (base32 "1ncy11ml782f2278192j1ryb2kx2djkrm51w9yvarh1pdcly873m"))))
     (build-system cmake-build-system)
     (inputs (list dbus
                   glib

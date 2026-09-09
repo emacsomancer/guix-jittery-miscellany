@@ -209,10 +209,11 @@
                (base32
                 "11j59ybvzbkxfsm9zmhj6ixxls2424rhcw5znlr1kj40jl6pk98x"))
               (patches (search-patches 
-                                       "emacs-fix-scheme-indent-function.patch"
-                                       "emacs-native-comp-driver-options.patch"
-                                       "emacs-native-comp-fix-filenames.patch"
-                                       "emacs-native-comp-pin-packages.patch"))
+                                       ;; "emacs-fix-scheme-indent-function.patch"
+                                       ;; "emacs-native-comp-driver-options.patch"
+                                       ;; "emacs-native-comp-fix-filenames.patch"
+                                       ;; "emacs-native-comp-pin-packages.patch"
+				       ))
               (modules '((guix build utils)))
               (snippet
                '(with-directory-excursion "lisp"

@@ -68,7 +68,7 @@ This allows working with files in the current @code{binder-project-directory}.")
              (commit "master")))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1hw7ryqmp5hf0pd22kxdkp8xys9znsm4vmp84z1j86p36pcy6xq5"))))
+        (base32 "012i36l5wgzw4mbxr2knb96f7x95qfg0pqa7dfam23fmsfw57fy0"))))
     (build-system emacs-build-system)
     (arguments
      (list

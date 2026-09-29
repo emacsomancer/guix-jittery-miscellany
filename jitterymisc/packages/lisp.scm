@@ -147,7 +147,7 @@
 (define-public sbcl
   (package
     (name "sbcl")
-    (version "2.6.7")
+    (version "2.6.9")
     (source
      (origin
        (method url-fetch)

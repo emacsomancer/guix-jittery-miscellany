@@ -206,7 +206,7 @@
 (define-public fastfetch
   (package
     (name "fastfetch")
-    (version "2.68.1")
+    (version "2.69.0")
     (source
      (origin
        (method git-fetch)
@@ -215,7 +215,7 @@
              (commit version)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1ncy11ml782f2278192j1ryb2kx2djkrm51w9yvarh1pdcly873m"))))
+        (base32 "0mgzg6d4hx1bizwajgizvd30ignp5z0314m6ay7cizp39niq1s4z"))))
     (build-system cmake-build-system)
     (inputs (list dbus
                   glib
@@ -233,3 +233,11 @@
 a stylized way.  Fastfetch displays this information next to a logo of the
 system distribution, akin to many similar tools.")
     (license license:expat)))
+
+(define-public fastfetch-with-lua
+  (package
+    (inherit fastfetch)
+    (name "fastfetch-with-lua")
+    (inputs
+     (modify-inputs (package-inputs fastfetch)
+       (prepend lua)))))

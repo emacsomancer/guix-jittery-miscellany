@@ -236,7 +236,8 @@ system distribution, akin to many similar tools.")
 
 (define-public fastfetch-with-lua
   (package
-    (inherit fastfetch)
+   (inherit fastfetch)
+   (version "2.69.0")
     (name "fastfetch-with-lua")
     (inputs
      (modify-inputs (package-inputs fastfetch)

@@ -65,7 +65,9 @@ This allows working with files in the current @code{binder-project-directory}.")
        (method git-fetch)
        (uri (git-reference
              (url "https://codeberg.org/divyaranjan/emacs-reader")
-             (commit "master")))
+             ;; (commit "master")
+             (commit "release")
+             ))
        (file-name (git-file-name name version))
        (sha256
         (base32 "012i36l5wgzw4mbxr2knb96f7x95qfg0pqa7dfam23fmsfw57fy0"))))

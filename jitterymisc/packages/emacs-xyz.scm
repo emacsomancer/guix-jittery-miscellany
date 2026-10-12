@@ -56,6 +56,16 @@
 This allows working with files in the current @code{binder-project-directory}.")
     (license license:gpl3+)))
 
+;;; change to master release with:
+;; (define master-reader-transform
+;;   (options->transformation
+;;    '((with-branch . "emacs-reader-master=master"))))
+
+;; (packages (append (list
+           ;; (master-reader-transform
+           ;;  (specification->package "emacs-reader")))))
+
+
 (define-public emacs-reader-master
   (package
     (name "emacs-reader")

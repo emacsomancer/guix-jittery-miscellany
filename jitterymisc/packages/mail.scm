@@ -249,7 +249,7 @@
               (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1xwlz286xdib1zcy4mlpvy2k8wh0vhif5hhc2qnbs4a83q6yl51p"))))
+        (base32 "152f0rr82azhzjwhs8jf63vjj3bsrrj4k9ckyg69zzb1skjdr5q5"))))
     (build-system meson-build-system)
     (native-inputs
      (list pkg-config

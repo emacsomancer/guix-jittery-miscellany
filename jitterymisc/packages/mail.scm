@@ -118,6 +118,7 @@
   #:use-module (gnu packages guile)
   #:use-module (gnu packages guile-xyz)
   #:use-module (gnu packages haskell-xyz)
+  #:use-module (gnu packages pretty-print)
 ;;  #:use-module (gnu packages icu4c)
   #:use-module (gnu packages kerberos)
   #:use-module (gnu packages language)
@@ -258,7 +259,7 @@
            tzdata-for-tests           ; for tests
            texinfo))
     (inputs
-     (list glib gmime guile-3.0-latest xapian readline python))
+     (list fmt glib gmime guile-3.0-latest xapian readline python))
     (arguments
      (list
       #:modules '((guix build meson-build-system)

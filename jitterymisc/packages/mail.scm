@@ -82,6 +82,7 @@
   #:use-module (gnu packages boost)
   #:use-module (gnu packages calendar)
   #:use-module (gnu packages check)
+  #:use-module (gnu packages cmake)  
   #:use-module (gnu packages compression)
   #:use-module (gnu packages cpp)  
   #:use-module (gnu packages crypto)

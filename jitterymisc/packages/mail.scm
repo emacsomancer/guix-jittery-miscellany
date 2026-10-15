@@ -259,7 +259,14 @@
            tzdata-for-tests           ; for tests
            texinfo))
     (inputs
-     (list fmt glib gmime guile-3.0-latest xapian readline python))
+     (list cli11
+           fmt
+           glib
+           gmime
+           guile-3.0-latest
+           xapian
+           readline
+           python))
     (arguments
      (list
       #:modules '((guix build meson-build-system)

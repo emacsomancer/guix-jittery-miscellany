@@ -254,7 +254,8 @@
         (base32 "152f0rr82azhzjwhs8jf63vjj3bsrrj4k9ckyg69zzb1skjdr5q5"))))
     (build-system meson-build-system)
     (native-inputs
-     (list pkg-config
+     (list cmake                      ; need to find tl-expected (libexpected)
+           pkg-config
            emacs-minimal
            gnupg                      ; for tests
            tzdata-for-tests           ; for tests

@@ -260,7 +260,7 @@
            emacs-minimal
            gnupg                      ; for tests
            tzdata-for-tests           ; for tests
-           texinfo))
+           texinfo-7.3))
     (inputs
      (list cli11
            fmt

@@ -265,6 +265,7 @@
            glib
            gmime
            guile-3.0-latest
+           libexpected
            xapian
            readline
            python))

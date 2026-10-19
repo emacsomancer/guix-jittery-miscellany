@@ -141,7 +141,7 @@
    #:use-module (gnu packages ncurses)
   #:use-module (gnu packages nettle)
   #:use-module (gnu packages networking)
-  #:use-module (gnu packages ninja)
+  ;; #:use-module (gnu packages ninja)
   #:use-module (gnu packages onc-rpc)
   #:use-module (gnu packages openldap)
   #:use-module (gnu packages pcre)
@@ -240,76 +240,80 @@
 ;; mailboxes.  Currently Maildir and IMAP are supported types.")
 ;;     (license license:gpl2+)))
 
-(define-public mu
-  (package
-    (name "mu")
-    (version "1.14.4")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-              (url "https://github.com/djcb/mu")
-              (commit (string-append "v" version))))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "152f0rr82azhzjwhs8jf63vjj3bsrrj4k9ckyg69zzb1skjdr5q5"))))
-    (build-system meson-build-system)
-    (native-inputs
-     (list cmake                      ; need to find tl-expected (libexpected)
-           pkg-config
-           emacs-minimal
-           gnupg                      ; for tests
-           tzdata-for-tests           ; for tests
-           texinfo-7))
-    (inputs
-     (list cli11
-           fmt
-           glib
-           gmime
-           guile-3.0-latest
-           libexpected
-           xapian
-           readline
-           python))
-    (arguments
-     (list
-      #:modules '((guix build meson-build-system)
-                  (guix build emacs-utils)
-                  ((guix build guile-build-system)
-                   #:select (target-guile-effective-version))
-                  (guix build utils))
-      #:imported-modules `(,@%meson-build-system-modules
-                           (guix build guile-build-system)
-                           (guix build emacs-utils))
-      #:configure-flags
-      #~(list (format #f "-Dguile-extension-dir=~a/lib" #$output)
-              "-Dreadline=enabled"
-              "-Dtests=enabled")
-      #:phases
-      #~(modify-phases %standard-phases
-          (add-after 'install 'fix-ffi
-            (lambda _
-              (substitute* (find-files #$output "mu\\.scm")
-                (("\"libguile-mu\"")
-                 (format #f "\"~a/lib/libguile-mu\"" #$output)))))
-          (add-after 'install 'install-emacs-autoloads
-            (lambda _
-              (emacs-generate-autoloads
-               "mu4e"
-               (string-append #$output
-                              "/share/emacs/site-lisp/mu4e"))))
-          (add-after 'install 'wrap-executable
-            (lambda _
-              (let* ((bin (string-append #$output "/bin"))
-                     (version (target-guile-effective-version))
-                     (scm (string-append #$output "/share/guile/site/" version)))
-                (wrap-program (string-append bin "/mu")
-                  `("GUILE_LOAD_PATH" ":" prefix (,scm)))))))))
-    (home-page "https://www.djcbsoftware.nl/code/mu/")
-    (synopsis "Quickly find emails")
-    (description
-     "Mu is a tool for dealing with e-mail messages stored in the
-Maildir format.  Mu's purpose in life is to help you to quickly find the
-messages you need; in addition, it allows you to view messages, extract
-attachments, create new maildirs, and so on.")
-    (license license:gpl3+)))
+;; (define-public mu
+;;   (package
+;;     (name "mu")
+;;     (version "1.14.4")
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri (git-reference
+;;               (url "https://github.com/djcb/mu")
+;;               (commit (string-append "v" version))))
+;;        (file-name (git-file-name name version))
+;;        (sha256
+;;         (base32 "152f0rr82azhzjwhs8jf63vjj3bsrrj4k9ckyg69zzb1skjdr5q5"))))
+;;     (build-system meson-build-system)
+;;     (native-inputs
+;;      (list cmake-minimal     ; need to find tl-expected (=libexpected)
+;;            pkg-config
+;;            emacs-minimal
+;;            gnupg             ; for tests
+;;            tzdata-for-tests  ; for tests
+;;            texinfo-7))
+;;     (inputs
+;;      (list glib
+;;            cli11
+;;            fmt
+;;            libexpected
+;;            ;; tl-optional  ; for cli11?
+;;            ;; bash-minimal ; for cli11?
+;;            readline
+;;            gmime
+;;            python
+;;            guile-3.0-latest
+;;            xapian))
+;;     (arguments
+;;      (list
+;;       #:modules '((guix build meson-build-system)
+;;                   (guix build emacs-utils)
+;;                   ((guix build guile-build-system)
+;;                    #:select (target-guile-effective-version))
+;;                   (guix build utils))
+;;       #:imported-modules `(,@%meson-build-system-modules
+;;                            (guix build guile-build-system)
+;;                            (guix build emacs-utils))
+;;       #:configure-flags
+;;       #~(list (format #f "-Dguile-extension-dir=~a/lib" #$output)
+;;               "-Dreadline=enabled"
+;;               "-Dtests=enabled")
+;;       #:phases
+;;       #~(modify-phases %standard-phases
+;;           (add-after 'install 'fix-ffi
+;;             (lambda _
+;;               (substitute* (find-files #$output "mu\\.scm")
+;;                 (("\"libguile-mu\"")
+;;                  (format #f "\"~a/lib/libguile-mu\"" #$output)))))
+;;           (add-after 'install 'install-emacs-autoloads
+;;             (lambda _
+;;               (emacs-generate-autoloads
+;;                "mu4e"
+;;                (string-append #$output
+;;                               "/share/emacs/site-lisp/mu4e"))))
+;;           (add-after 'install 'wrap-executable
+;;             (lambda _
+;;               (let* ((bin (string-append #$output "/bin"))
+;;                      (version (target-guile-effective-version))
+;;                      (scm (string-append #$output "/share/guile/site/" version)))
+;;                 (wrap-program (string-append bin "/mu")
+;;                   `("GUILE_LOAD_PATH" ":" prefix (,scm)))))))))
+;;     (home-page "https://www.djcbsoftware.nl/code/mu/")
+;;     (synopsis "Quickly find emails")
+;;     (description
+;;      "Mu is a tool for dealing with e-mail messages stored in the
+;; Maildir format.  Mu's purpose in life is to help you to quickly find the
+;; messages you need; in addition, it allows you to view messages, extract
+;; attachments, create new maildirs, and so on.")
+;;     (license license:gpl3+)))
+
+

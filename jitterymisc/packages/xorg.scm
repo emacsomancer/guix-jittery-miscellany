@@ -137,7 +137,7 @@
              (string-append "ftp://ftp.invisible-island.net/xterm/"
                             "xterm-" version ".tgz")))
        (sha256
-        (base32 "1yvzvknfiqw7sjznw4dj6cmmmiybbavvi54awa1hls3bd30d2nrh"))
+        (base32 "0ggdh2cqsmzci90kpimc2b243d32vifsm8nykq7b6b580ryxpna8"))
        (patches
          (search-patches "xterm-370-explicit-xcursor.patch"))))
     (build-system gnu-build-system)

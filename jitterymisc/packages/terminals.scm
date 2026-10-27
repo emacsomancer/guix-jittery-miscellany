@@ -314,73 +314,73 @@
 
 
 
-(define-public zutty
-  (package
-    (name "zutty")
-    (version "0.16")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://git.hq.sig7.se/zutty.git")
-                    (commit version)))
-             (sha256 (base32 "115skr3lcw0hdshgxl72qnh635ajy7kk07dnrh9fhbx1bhvqcm3k"))))
-    (build-system waf-build-system)
-    (inputs (list pkg-config freetype glew libxmu libxt font-misc-misc))
-    (arguments
-     `(#:phases
-       (modify-phases %standard-phases
-         (delete 'check)
-         ;; Install docs: README + upstream Org files
-         (add-after 'install 'install-docs
-           (lambda* (#:key outputs #:allow-other-keys)
-             (let ((docdir (string-append (assoc-ref outputs "out")
-                                          "/share/doc/zutty")))
-               (mkdir-p docdir)
-               (install-file "README.md" docdir)
-               (for-each
-                (lambda (f)
-                  (install-file (string-append "doc/" f) docdir))
-                '("USAGE.org" "KEYS.org" "HACKING.org" "VTTEST.org"))
-               #t)))
+;; (define-public zutty
+;;   (package
+;;     (name "zutty")
+;;     (version "0.16")
+;;     (source (origin
+;;               (method git-fetch)
+;;               (uri (git-reference
+;;                     (url "https://git.hq.sig7.se/zutty.git")
+;;                     (commit version)))
+;;              (sha256 (base32 "115skr3lcw0hdshgxl72qnh635ajy7kk07dnrh9fhbx1bhvqcm3k"))))
+;;     (build-system waf-build-system)
+;;     (inputs (list pkg-config freetype glew libxmu libxt font-misc-misc))
+;;     (arguments
+;;      `(#:phases
+;;        (modify-phases %standard-phases
+;;          (delete 'check)
+;;          ;; Install docs: README + upstream Org files
+;;          (add-after 'install 'install-docs
+;;            (lambda* (#:key outputs #:allow-other-keys)
+;;              (let ((docdir (string-append (assoc-ref outputs "out")
+;;                                           "/share/doc/zutty")))
+;;                (mkdir-p docdir)
+;;                (install-file "README.md" docdir)
+;;                (for-each
+;;                 (lambda (f)
+;;                   (install-file (string-append "doc/" f) docdir))
+;;                 '("USAGE.org" "KEYS.org" "HACKING.org" "VTTEST.org"))
+;;                #t)))
 
-         ;; Install desktop file
-         (add-after 'install 'install-desktop
-           (lambda* (#:key outputs #:allow-other-keys)
-             (let ((applications-dir (string-append (assoc-ref outputs "out")
-                                                    "/share/applications")))
-               (mkdir-p applications-dir)
-               (install-file "icons/zutty.desktop" applications-dir)
-               #t)))
+;;          ;; Install desktop file
+;;          (add-after 'install 'install-desktop
+;;            (lambda* (#:key outputs #:allow-other-keys)
+;;              (let ((applications-dir (string-append (assoc-ref outputs "out")
+;;                                                     "/share/applications")))
+;;                (mkdir-p applications-dir)
+;;                (install-file "icons/zutty.desktop" applications-dir)
+;;                #t)))
 
-         ;; Install icons
-         (add-after 'install 'install-icons
-           (lambda* (#:key outputs #:allow-other-keys)
-             (let ((icons-dir (string-append (assoc-ref outputs "out")
-                                             "/share/icons/hicolor")))
+;;          ;; Install icons
+;;          (add-after 'install 'install-icons
+;;            (lambda* (#:key outputs #:allow-other-keys)
+;;              (let ((icons-dir (string-append (assoc-ref outputs "out")
+;;                                              "/share/icons/hicolor")))
 
-               ;; scalable SVG
-               (mkdir-p (string-append icons-dir "/scalable/apps"))
-               (install-file "icons/zutty.svg"
-                             (string-append icons-dir "/scalable/apps"))
+;;                ;; scalable SVG
+;;                (mkdir-p (string-append icons-dir "/scalable/apps"))
+;;                (install-file "icons/zutty.svg"
+;;                              (string-append icons-dir "/scalable/apps"))
 
-               ;; PNG sizes
-               (for-each
-                (lambda (size)
-                  (let ((dir (string-append icons-dir "/" size "x" size "/apps")))
-                    (mkdir-p dir)
-                    (install-file
-                     (string-append "icons/zutty_" size "x" size ".png")
-                     dir)))
-                '("16" "32" "48" "64" "96" "128"))
-               #t))))))
-    (synopsis "X terminal emulator rendering through OpenGL ES Compute Shaders")
-    (description
-     "Zutty [zuːc̟] is a GPU-accelerated terminal emulator for X
-Window, written in C++ and only relying on OpenGL ES 3.1 for rendering.
-It provides efficient rendering, VTxxx support, and a minimal, maintainable codebase.
-The wrapper ensures Zutty finds its default font and falls back gracefully to X core fonts if needed.")
-    (home-page "https://tomscii.sig7.se/zutty/")
-    (license license:gpl3)))
+;;                ;; PNG sizes
+;;                (for-each
+;;                 (lambda (size)
+;;                   (let ((dir (string-append icons-dir "/" size "x" size "/apps")))
+;;                     (mkdir-p dir)
+;;                     (install-file
+;;                      (string-append "icons/zutty_" size "x" size ".png")
+;;                      dir)))
+;;                 '("16" "32" "48" "64" "96" "128"))
+;;                #t))))))
+;;     (synopsis "X terminal emulator rendering through OpenGL ES Compute Shaders")
+;;     (description
+;;      "Zutty [zuːc̟] is a GPU-accelerated terminal emulator for X
+;; Window, written in C++ and only relying on OpenGL ES 3.1 for rendering.
+;; It provides efficient rendering, VTxxx support, and a minimal, maintainable codebase.
+;; The wrapper ensures Zutty finds its default font and falls back gracefully to X core fonts if needed.")
+;;     (home-page "https://tomscii.sig7.se/zutty/")
+;;     (license license:gpl3)))
  
 ;; (define-public zutty
 ;;   (package

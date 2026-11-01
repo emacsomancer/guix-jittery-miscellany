@@ -16,7 +16,6 @@
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages lisp-check)
-  #:use-module (gnu packages lisp-xyz)
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages lua)
   #:use-module (gnu packages window-management)

@@ -20,6 +20,7 @@
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages lua)
   #:use-module (gnu packages window-management)
+  #:use-module ((gnu packages lisp) #:prefix gnu:)
   #:use-module (jitterymisc packages lisp)
   #:use-module (jitterymisc packages lisp-xyz)
   #:use-module (jitterymisc packages lua))
@@ -40,9 +41,12 @@
 
 ;; Package transformations.
 
+;; (define with-sbcl
+;;   (options->transformation
+;;    `((with-input . ,sbcl-spec))))
 (define with-sbcl
-  (options->transformation
-   `((with-input . ,sbcl-spec))))
+  (package-input-rewriting
+   `((,gnu:sbcl . ,sbcl))))
 
 (define with-clx
   (options->transformation

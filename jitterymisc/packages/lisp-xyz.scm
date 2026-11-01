@@ -163,7 +163,7 @@
            (url "https://github.com/sharplispers/clx")
            (commit version)))
          (sha256
-          (base32 "06j2hq127ff3mx8ly1cvn1bcm1ficxghwy4dzzlwjj1h8dak9wvn"))
+          (base32 "1ihc2vfz8azhvv1ijzmbywyc75qazjc9b6s4ja5949z1b6gfn409"))
          (file-name (git-file-name "cl-clx" version))
          (snippet
           #~(begin

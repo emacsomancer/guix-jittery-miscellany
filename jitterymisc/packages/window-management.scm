@@ -91,7 +91,7 @@
          "01pagpxqbwdxhvdzxvj3d027ajxk1438g4fkj5nb64mm7vs33fcp"))))
     (inputs
      (modify-inputs (package-inputs stumpwm)
-       (prepend sbcl-dbus)))))
+       (prepend gnu:sbcl-dbus)))))
 
 ;; Public StumpWM package.
 ;;

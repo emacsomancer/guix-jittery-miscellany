@@ -165,22 +165,31 @@
          (sha256
           (base32 "1ihc2vfz8azhvv1ijzmbywyc75qazjc9b6s4ja5949z1b6gfn409"))
          (file-name (git-file-name "cl-clx" version))
+         ;; (snippet
+         ;;  #~(begin
+         ;;      (use-modules (ice-9 textual-ports)
+         ;;                   (srfi srfi-13))
+
+         ;;      (let* ((file "translate.lisp")
+         ;;             (old "(function (base-char card16 generalized-boolean card8) card8)")
+         ;;             (new "(function (display card8 card16) card8)")
+         ;;             (contents
+         ;;              (call-with-input-file file get-string-all)))
+         ;;        (unless (string-contains contents old)
+         ;;          (error "CLX: keysym-index-function declaration not found"))
+         ;;        (call-with-output-file file
+         ;;          (lambda (port)
+         ;;            (display (string-replace-substring contents old new)
+         ;;                     port))))))
          (snippet
           #~(begin
-              (use-modules (ice-9 textual-ports)
-                           (srfi srfi-13))
-
-              (let* ((file "translate.lisp")
-                     (old "(function (base-char card16 generalized-boolean card8) card8)")
-                     (new "(function (display card8 card16) card8)")
-                     (contents
-                      (call-with-input-file file get-string-all)))
-                (unless (string-contains contents old)
-                  (error "CLX: keysym-index-function declaration not found"))
-                (call-with-output-file file
-                  (lambda (port)
-                    (display (string-replace-substring contents old new)
-                             port))))))))
+              (use-modules (guix build utils))
+              (chmod "translate.lisp" #o644)
+              (substitute*
+                  "translate.lisp"
+                (("(function \\(base-char card16 generalized-boolean card8\\) card8)")
+                 "(function (display card8 card16) card8)"))))
+         ))
       (build-system asdf-build-system/sbcl)
       (native-inputs
        (list sbcl-fiasco xorg-server-for-tests))

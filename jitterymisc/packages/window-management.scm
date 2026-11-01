@@ -22,7 +22,7 @@
   #:use-module (gnu packages window-management)
   #:use-module ((gnu packages lisp) #:prefix gnu:)
   #:use-module (jitterymisc packages lisp)
-#:use-module ((gnu packages lisp-xyz) #:prefix gnu:)  
+  #:use-module ((gnu packages lisp-xyz) #:prefix gnu:)  
   #:use-module (jitterymisc packages lisp-xyz)
   #:use-module (jitterymisc packages lua))
 

@@ -22,6 +22,7 @@
   #:use-module (gnu packages window-management)
   #:use-module ((gnu packages lisp) #:prefix gnu:)
   #:use-module (jitterymisc packages lisp)
+#:use-module ((gnu packages lisp-xyz) #:prefix gnu:)  
   #:use-module (jitterymisc packages lisp-xyz)
   #:use-module (jitterymisc packages lua))
 
@@ -49,8 +50,8 @@
    `((,gnu:sbcl . ,sbcl))))
 
 (define with-clx
-  (options->transformation
-   `((with-input . ,clx-spec))))
+  (package-input-rewriting
+   `((,gnu:sbcl-clx . ,sbcl-clx))))
 
 ;; Apply CLX first, then SBCL, recursively throughout the
 ;; package's dependency graph.

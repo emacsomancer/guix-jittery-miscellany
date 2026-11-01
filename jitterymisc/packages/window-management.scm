@@ -13,6 +13,7 @@
   #:use-module (guix build-system asdf)
   #:use-module (guix build-system cmake)
   #:use-module (guix utils)
+  #:use-module (guix transformations)  
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages lisp-check)

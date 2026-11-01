@@ -181,18 +181,26 @@
          ;;          (lambda (port)
          ;;            (display (string-replace-substring contents old new)
          ;;                     port))))))
+         ;; (snippet
+         ;;  #~(begin
+         ;;      (use-modules (guix build utils))
+         ;;      (chmod "translate.lisp" #o644)
+         ;;      (substitute*
+         ;;          "translate.lisp"
+         ;;        (("(function \\(base-char card16 generalized-boolean card8\\) card8)")
+         ;;         "(function (display card8 card16) card8)"))))
+
          (snippet
           #~(begin
               (use-modules (guix build utils))
-              (chmod "translate.lisp" #o644)
               (substitute*
                   "translate.lisp"
-                (("(function \\(base-char card16 generalized-boolean card8\\) card8)")
-                 "(function (display card8 card16) card8)"))))
+                (("base-char card16 generalized-boolean card8")
+                 "display card8 card16"))))
          ))
       (build-system asdf-build-system/sbcl)
       (native-inputs
-       (list sbcl-fiasco xorg-server-for-tests))
+       (list sbcl sbcl-fiasco xorg-server-for-tests))
       (arguments
        (list #:phases
              #~(modify-phases %standard-phases

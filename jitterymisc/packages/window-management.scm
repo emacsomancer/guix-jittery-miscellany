@@ -42,9 +42,6 @@
 
 ;; Package transformations.
 
-;; (define with-sbcl
-;;   (options->transformation
-;;    `((with-input . ,sbcl-spec))))
 (define with-sbcl
   (package-input-rewriting
    `((,gnu:sbcl . ,sbcl))))
@@ -52,6 +49,22 @@
 (define with-clx
   (package-input-rewriting
    `((,gnu:sbcl-clx . ,sbcl-clx))))
+
+(define (with-sbcl-compiler package)
+  (package/inherit package
+    (native-inputs
+     (modify-inputs (package-native-inputs package)
+       (prepend sbcl)))))
+
+;; Apply CLX first, then SBCL, recursively throughout the
+;; package's dependency graph.
+
+(define (with-lisp-stack package)
+  (with-sbcl-compiler
+   (with-sbcl
+    (with-clx package))))
+
+
 
 ;; Apply CLX first, then SBCL, recursively throughout the
 ;; package's dependency graph.

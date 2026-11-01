@@ -215,3 +215,31 @@ originally taken from a CMUCL distribution, was modified somewhat in order to
 make it compile and run under SBCL, then a selection of patches were added
 from other CLXes around the net.")
       (license license:x11))))
+
+
+(define-public sbcl-clx-xembed
+  (let ((commit "a5c4b844d31ee68ffa58c933cc1cdddde6990743")
+        (revision "1"))
+    (package
+      (name "sbcl-clx-xembed")
+      (version (git-version "0.1" revision commit))
+      (home-page "https://github.com/laynor/clx-xembed")
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/laynor/clx-xembed")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 "1abx4v36ycmfjdwpjk4hh8058ya8whwia7ds9vd96q2qsrs57f12"))))
+      (build-system asdf-build-system/sbcl)
+      (arguments
+       `(#:asd-systems '("xembed")))
+      (native-inputs
+       (list sbcl))
+      (inputs
+       (list sbcl-clx))
+      (synopsis "CL(x) xembed protocol implementation")
+      (description "CL(x) xembed protocol implementation")
+      (license license:expat))))

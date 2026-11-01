@@ -144,6 +144,40 @@
 ;;  Lazy Evaluation à la Haskell. ")
 ;;       (license license:bsd-3))))
 
+(define-public sbcl-clx
+  (let ((version "0.7.8"))
+    (package
+      (name "sbcl-clx")
+      (version version)
+      (source
+       (origin
+         (method git-fetch)
+         (uri
+          (git-reference
+           (url "https://github.com/sharplispers/clx")
+           (commit version)))
+         (sha256
+          (base32 "06j2hq127ff3mx8ly1cvn1bcm1ficxghwy4dzzlwjj1h8dak9wvn"))
+         (file-name (git-file-name "cl-clx" version))))
+      (build-system asdf-build-system/sbcl)
+      (native-inputs
+       (list sbcl-fiasco xorg-server-for-tests))
+      (arguments
+       (list #:phases
+             #~(modify-phases %standard-phases
+                 (add-before 'check 'prepare-test-environment
+                   (lambda _
+                     (system "Xvfb :1 &")
+                     (setenv "DISPLAY" ":1"))))))
+      (home-page "https://www.cliki.net/portable-clx")
+      (synopsis "X11 client library for Common Lisp")
+      (description "CLX is an X11 client library for Common Lisp.  The code was
+originally taken from a CMUCL distribution, was modified somewhat in order to
+make it compile and run under SBCL, then a selection of patches were added
+from other CLXes around the net.")
+      (license license:x11))))
+
+
 (define-public sbcl
   (package
     (name "sbcl")

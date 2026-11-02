@@ -28,6 +28,8 @@
 
 ;; SBCL and Common Lisp package versions.
 
+;; Common Lisp toolchain versions.
+
 (define sbcl-latest "2.6.10")
 (define sbcl-base
   (string-append "sbcl@" sbcl-latest))
@@ -40,37 +42,72 @@
 (define clx-spec
   (string-append "sbcl-clx=" clx-base))
 
+
 ;; Package transformations.
 
-(define with-sbcl
-  (package-input-rewriting
-   `((,gnu:sbcl . ,sbcl))))
+;; Remove every occurrence of KEYWORD from an argument list.
+(define (remove-package-keyword arguments keyword)
+  (let loop ((arguments (or arguments '())))
+    (if (null? arguments)
+        '()
+        (let ((key (car arguments))
+              (value (cadr arguments))
+              (rest (cddr arguments)))
+          (if (eq? key keyword)
+              (loop rest)
+              (cons key
+                    (cons value
+                          (loop rest))))))))
 
-(define with-clx
-  (package-input-rewriting
-   `((,gnu:sbcl-clx . ,sbcl-clx))))
+
+;; Explicitly select our SBCL compiler for ASDF packages.
+;;
+;; The ASDF build system's #:lisp argument controls the compiler
+;; executable. Adding SBCL to native-inputs alone does not override
+;; its default compiler selection.
 
 (define (with-sbcl-compiler package)
-  (package/inherit package
-    (native-inputs
-     (modify-inputs (package-native-inputs package)
-       (prepend sbcl)))))
+  (package
+    (inherit package)
+    (arguments
+     (append
+      (remove-package-keyword
+       (package-arguments package)
+       #:lisp)
+      (list #:lisp sbcl)))))
 
-;; Apply CLX first, then SBCL, recursively throughout the
-;; package's dependency graph.
+
+;; Transform the Lisp dependency graph.
+;;
+;; - Replace upstream SBCL with our SBCL.
+;; - Replace upstream CLX with our CLX.
+;; - Select our SBCL compiler for every SBCL ASDF package.
+
+(define (lisp-stack-transform package)
+  (cond
+   ;; Replace the compiler.
+   ((eq? package gnu:sbcl)
+    sbcl)
+
+   ;; Replace CLX with the custom CLX package.
+   ((eq? package gnu:sbcl-clx)
+    sbcl-clx)
+
+   ;; Select our compiler for ASDF-built Common Lisp packages.
+   ((eq? (package-build-system package)
+         asdf-build-system/sbcl)
+    (with-sbcl-compiler package))
+
+   (else
+    package)))
+
+;; Apply the transformation recursively throughout the dependency
+;; graph, including the root package.
 
 (define (with-lisp-stack package)
-  (with-sbcl-compiler
-   (with-sbcl
-    (with-clx package))))
+  ((package-mapping lisp-stack-transform #:deep? #t)
+   package))
 
-
-
-;; Apply CLX first, then SBCL, recursively throughout the
-;; package's dependency graph.
-
-(define (with-lisp-stack package)
-  (with-sbcl (with-clx package)))
 
 ;; Convenience function for independently installed Lisp packages.
 
@@ -78,10 +115,12 @@
   (with-lisp-stack
    (specification->package name)))
 
+
 ;; StumpWM upstream revision.
 
 (define stumpwm-commit
   "902d5c214d1775a33e46db50f40dc5bc3cec22ff")
+
 
 ;; Untransformed StumpWM package definition.
 
@@ -106,13 +145,14 @@
      (modify-inputs (package-inputs stumpwm)
        (prepend gnu:sbcl-dbus)))))
 
+
 ;; Public StumpWM package.
 ;;
-;; Its dependency graph uses SBCL 2.6.10 and CLX 0.7.8.
+;; Its recursively transformed dependency graph uses SBCL 2.6.10
+;; and CLX 0.7.8.
 
 (define-public stumpwm-git
   (with-lisp-stack stumpwm-git-base))
-
 
 
 ;; (define-public stumpwm-next

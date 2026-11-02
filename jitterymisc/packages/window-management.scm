@@ -67,15 +67,13 @@
 ;; its default compiler selection.
 
 (define (with-sbcl-compiler package)
-  (package
-    (inherit package)
+  (package/inherit package
     (arguments
      (append
       (remove-package-keyword
        (package-arguments package)
        #:lisp)
       (list #:lisp sbcl)))))
-
 
 ;; Transform the Lisp dependency graph.
 ;;

@@ -190,10 +190,10 @@
      ;; (maybe post 2020 release).
      (list (match (%current-system)
              ("powerpc-linux"       ; CLISP fails to build, needs investigating.
-              ecl)
+              gnu:ecl)
              (_
-              clisp))
-           cl-asdf
+              gnu:clisp))
+           gnu:cl-asdf
            ed
            inetutils         ;for hostname(1)
            texinfo

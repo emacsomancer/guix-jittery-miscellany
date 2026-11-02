@@ -100,8 +100,8 @@
   #:use-module (gnu packages tls)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages xorg)
-  #:use-module (gnu packages lisp)
-  #:use-module (jitterymisc packages lisp-xyz)
+  #:use-module ((gnu packages lisp) #:prefix gnu:)
+  #:use-module ((gnu packages lisp-xyz) #:prefix gnu:)  
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1))
 

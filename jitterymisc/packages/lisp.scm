@@ -145,10 +145,12 @@
 ;;  Lazy Evaluation à la Haskell. ")
 ;;       (license license:bsd-3))))
 
-(define-public sbcl
+(define sbcl-latest-version "2.6.10")
+
+(define-public sbcl-latest
   (package
     (name "sbcl")
-    (version "2.6.10")
+    (version sbcl-latest-version)
     (source
      (origin
        (method url-fetch)
@@ -390,3 +392,11 @@ statistical profiler, a code coverage tool, and many other extensions.")
     ;; loop macro has its own license.  See COPYING file for further notes.
     (license (list license:public-domain license:bsd-2
                    (license:x11-style "file://src/code/loop.lisp")))))
+
+;; (define-public sbcl-latest
+;;   (package
+;;     (inherit sbcl)
+;;     (name "sbcl")
+;;     (version sbcl-latest)))
+
+

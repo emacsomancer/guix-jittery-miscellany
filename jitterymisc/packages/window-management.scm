@@ -1,5 +1,5 @@
 ;; SPDX-FileCopyrightText: 
-;;;           © 2025 B Slade <slade@lambda-y.net>
+;;;           © 2025-2026 B Slade <slade@lambda-y.net>
 ;;
 
 ;;
@@ -13,144 +13,222 @@
   #:use-module (guix build-system asdf)
   #:use-module (guix build-system cmake)
   #:use-module (guix utils)
-  #:use-module (guix transformations)  
+  #:use-module (guix transformations)
+  #:use-module (gnu packages)  
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages lisp-check)
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages lua)
   #:use-module (gnu packages window-management)
-  #:use-module ((gnu packages lisp) #:prefix gnu:)
   #:use-module (jitterymisc packages lisp)
-  #:use-module ((gnu packages lisp-xyz) #:prefix gnu:)  
   #:use-module (jitterymisc packages lisp-xyz)
+  #:use-module (gnu packages lisp)      
+  #:use-module (gnu packages lisp-xyz)
+  #:use-module (gnu packages lisp-check)      
   #:use-module (jitterymisc packages lua))
 
-;; SBCL and Common Lisp package versions.
 
-;; Common Lisp toolchain versions.
+(define use-latest-sbcl
+  (package-input-rewriting
+   `((,sbcl . ,sbcl-latest))
+   #:recursive? #t)) ; Force it to apply deeply down the dependency tree
 
-(define sbcl-latest "2.6.10")
-(define sbcl-base
-  (string-append "sbcl@" sbcl-latest))
-(define sbcl-spec
-  (string-append "sbcl=" sbcl-base))
-
-(define clx-latest "0.7.8")
-(define clx-base
-  (string-append "sbcl-clx@" clx-latest))
-(define clx-spec
-  (string-append "sbcl-clx=" clx-base))
-
-
-;; Package transformations.
-
-;; Remove every occurrence of KEYWORD from an argument list.
-(define (remove-package-keyword arguments keyword)
-  (let loop ((arguments (or arguments '())))
-    (if (null? arguments)
-        '()
-        (let ((key (car arguments))
-              (value (cadr arguments))
-              (rest (cddr arguments)))
-          (if (eq? key keyword)
-              (loop rest)
-              (cons key
-                    (cons value
-                          (loop rest))))))))
-
-
-;; Explicitly select our SBCL compiler for ASDF packages.
-;;
-;; The ASDF build system's #:lisp argument controls the compiler
-;; executable. Adding SBCL to native-inputs alone does not override
-;; its default compiler selection.
-
-(define (with-sbcl-compiler package)
-  (package/inherit package
-    (arguments
-     (append
-      (remove-package-keyword
-       (package-arguments package)
-       #:lisp)
-      (list #:lisp sbcl)))))
-
-;; Transform the Lisp dependency graph.
-;;
-;; - Replace upstream SBCL with our SBCL.
-;; - Replace upstream CLX with our CLX.
-;; - Select our SBCL compiler for every SBCL ASDF package.
-
-(define (lisp-stack-transform package)
-  (cond
-   ;; Replace the compiler.
-   ((eq? package gnu:sbcl)
-    sbcl)
-
-   ;; Replace CLX with the custom CLX package.
-   ((eq? package gnu:sbcl-clx)
-    sbcl-clx)
-
-   ;; Select our compiler for ASDF-built Common Lisp packages.
-   ((eq? (package-build-system package)
-         asdf-build-system/sbcl)
-    (with-sbcl-compiler package))
-
-   (else
-    package)))
-
-;; Apply the transformation recursively throughout the dependency
-;; graph, including the root package.
-
-(define (with-lisp-stack package)
-  ((package-mapping lisp-stack-transform #:deep? #t)
-   package))
-
-
-;; Convenience function for independently installed Lisp packages.
-
-(define (sbcl-package name)
-  (with-lisp-stack
-   (specification->package name)))
-
-
-;; StumpWM upstream revision.
-
-(define stumpwm-commit
+(define stumpwm-head-commit
   "902d5c214d1775a33e46db50f40dc5bc3cec22ff")
 
-
-;; Untransformed StumpWM package definition.
-
-(define stumpwm-git-base
+(define-public stumpwm-git-base
   (package
-    (inherit stumpwm)
+    (name "stumpwm")
     (version
-     (git-version "24.11" "1" stumpwm-commit))
+     (git-version "24.11" "1" stumpwm-head-commit))
     (source
      (origin
        (method git-fetch)
        (uri
         (git-reference
          (url "https://github.com/stumpwm/stumpwm")
-         (commit stumpwm-commit)))
+         (commit stumpwm-head-commit)))
        (file-name
         (git-file-name "stumpwm" version))
        (sha256
         (base32
          "01pagpxqbwdxhvdzxvj3d027ajxk1438g4fkj5nb64mm7vs33fcp"))))
+    (build-system asdf-build-system/sbcl)
+    (native-inputs
+     (list sbcl-fiasco
+           texinfo
+
+           ;; To build the manual.
+           autoconf
+           automake))
     (inputs
-     (modify-inputs (package-inputs stumpwm)
-       (prepend gnu:sbcl-dbus)))))
+     (list sbcl-alexandria
+           sbcl-cl-ppcre
+           sbcl-dbus
+           sbcl-clx-new))
+    (arguments
+     (list
+      #:phases
+      #~(modify-phases %standard-phases
+          ;; (add-after 'unpack 'fix-tests
+          ;;   (lambda _
+          ;;     (substitute* "stumpwm-tests.asd"
+          ;;       (("\"ALL-TESTS\"")
+          ;;        "\"RUN-PACKAGE-TESTS\" :package"))))
+          (add-after 'create-asdf-configuration 'build-program
+            (lambda* (#:key outputs #:allow-other-keys)
+              (build-program
+               (string-append #$output "/bin/stumpwm")
+               outputs
+               #:entry-program '((stumpwm:stumpwm) 0))))
+          (add-after 'build-program 'create-desktop-file
+            (lambda* (#:key outputs #:allow-other-keys)
+              (let* ((out #$output)
+                     (xsessions (string-append out "/share/xsessions")))
+                (mkdir-p xsessions)
+                (call-with-output-file
+                    (string-append xsessions "/stumpwm.desktop")
+                  (lambda (file)
+                    (format file
+                       "[Desktop Entry]~@
+                        Name=stumpwm~@
+                        Comment=The Stump Window Manager~@
+                        Exec=~a/bin/stumpwm~@
+                        TryExec=~@*~a/bin/stumpwm~@
+                        Icon=~@
+                        Type=Application~%"
+                       out))))))
+          (add-after 'create-desktop-file 'install-manual
+            (lambda* (#:key (make-flags '()) outputs #:allow-other-keys)
+              (let* ((out  #$output)
+                     (info (string-append out "/share/info")))
+                (invoke "./autogen.sh")
+                (invoke "sh" "./configure" "SHELL=sh")
+                (apply invoke "make" "stumpwm.info" make-flags)
+                (install-file "stumpwm.info" info))))
+          ;; (add-after 'install-manual 'remove-temporary-cache
+          ;;   (lambda* (#:key outputs #:allow-other-keys)
+          ;;     (delete-file-recursively (string-append #$output "/.cache"))))
+          )))
+    (synopsis "Window manager written in Common Lisp")
+    (description
+     "Stumpwm is a window manager written entirely in Common Lisp.
+It attempts to be highly customizable while relying entirely on the keyboard
+for input.  These design decisions reflect the growing popularity of
+productive, customizable lisp based systems.")
+    (home-page "https://github.com/stumpwm/stumpwm")
+    (license license:gpl2+)
+    (properties `((cl-source-variant . ,(delay cl-stumpwm))))))
 
-
-;; Public StumpWM package.
-;;
-;; Its recursively transformed dependency graph uses SBCL 2.6.10
-;; and CLX 0.7.8.
 
 (define-public stumpwm-git
-  (with-lisp-stack stumpwm-git-base))
+  (use-latest-sbcl stumpwm-git-base))
+
+;; ;; Package transformations.
+
+;; ;; Remove every occurrence of KEYWORD from an argument list.
+;; (define (remove-package-keyword arguments keyword)
+;;   (let loop ((arguments (or arguments '())))
+;;     (if (null? arguments)
+;;         '()
+;;         (let ((key (car arguments))
+;;               (value (cadr arguments))
+;;               (rest (cddr arguments)))
+;;           (if (eq? key keyword)
+;;               (loop rest)
+;;               (cons key
+;;                     (cons value
+;;                           (loop rest))))))))
+
+
+;; ;; Explicitly select our SBCL compiler for ASDF packages.
+;; ;;
+;; ;; The ASDF build system's #:lisp argument controls the compiler
+;; ;; executable. Adding SBCL to native-inputs alone does not override
+;; ;; its default compiler selection.
+
+;; (define (with-sbcl-compiler package)
+;;   (package/inherit package
+;;     (arguments
+;;      (append
+;;       (remove-package-keyword
+;;        (package-arguments package)
+;;        #:lisp)
+;;       (list #:lisp sbcl)))))
+
+;; ;; Transform the Lisp dependency graph.
+;; ;;
+;; ;; - Replace upstream SBCL with our SBCL.
+;; ;; - Replace upstream CLX with our CLX.
+;; ;; - Select our SBCL compiler for every SBCL ASDF package.
+
+;; (define (lisp-stack-transform package)
+;;   (cond
+;;    ;; Replace the compiler.
+;;    ((eq? package gnu:sbcl)
+;;     sbcl)
+
+;;    ;; Replace CLX with the custom CLX package.
+;;    ((eq? package gnu:sbcl-clx)
+;;     sbcl-clx)
+
+;;    ;; Select our compiler for ASDF-built Common Lisp packages.
+;;    ((eq? (package-build-system package)
+;;          asdf-build-system/sbcl)
+;;     (with-sbcl-compiler package))
+
+;;    (else
+;;     package)))
+
+;; ;; Apply the transformation recursively throughout the dependency
+;; ;; graph, including the root package.
+
+;; (define (with-lisp-stack package)
+;;   ((package-mapping lisp-stack-transform #:deep? #t)
+;;    package))
+
+
+;; ;; Convenience function for independently installed Lisp packages.
+
+;; (define (sbcl-package name)
+;;   (with-lisp-stack
+;;    (specification->package name)))
+
+
+
+
+;; Untransformed StumpWM package definition.
+
+;; (define stumpwm-git-base
+;;   (package
+;;     (inherit stumpwm)
+;;     (version
+;;      (git-version "24.11" "1" stumpwm-commit))
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri
+;;         (git-reference
+;;          (url "https://github.com/stumpwm/stumpwm")
+;;          (commit stumpwm-commit)))
+;;        (file-name
+;;         (git-file-name "stumpwm" version))
+;;        (sha256
+;;         (base32
+;;          "01pagpxqbwdxhvdzxvj3d027ajxk1438g4fkj5nb64mm7vs33fcp"))))
+;;     (inputs
+;;      (modify-inputs (package-inputs stumpwm)
+;;        (prepend gnu:sbcl-dbus)))))
+
+
+;; ;; Public StumpWM package.
+;; ;;
+;; ;; Its recursively transformed dependency graph uses SBCL 2.6.10
+;; ;; and CLX 0.7.8.
+
+;; (define-public stumpwm-git
+;;   (with-lisp-stack stumpwm-git-base))
 
 
 ;; (define-public stumpwm-next
@@ -290,3 +368,5 @@
 ;;               `("GI_TYPELIB_PATH" ":" prefix (,(getenv "GI_TYPELIB_PATH")))
 ;;               `("LD_LIBRARY_PATH" suffix (,cairo)))
 ;;              #t)))))))))
+
+;; stumpwm-git

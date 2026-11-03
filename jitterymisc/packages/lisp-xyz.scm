@@ -115,9 +115,8 @@
   #:use-module (gnu packages libffi)
   #:use-module (gnu packages linux)
   #:use-module (jitterymisc packages lisp)
-  #:use-module ((gnu packages lisp) #:prefix gnu:)
-  #:use-module ((gnu packages lisp-xyz) #:prefix gnu:)  
-  #:use-module (gnu packages lisp-check)
+  #:use-module (gnu packages lisp-xyz)  
+  #:use-module (gnu packages lisp-check)  
   #:use-module (gnu packages maths)
   #:use-module (gnu packages mp3)
   #:use-module (gnu packages mpi)
@@ -151,7 +150,8 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-19))
 
-(define-public sbcl-clx
+
+(define-public sbcl-clx-new
   (let ((version "0.7.8"))
     (package
       (name "sbcl-clx")
@@ -166,31 +166,6 @@
          (sha256
           (base32 "1ihc2vfz8azhvv1ijzmbywyc75qazjc9b6s4ja5949z1b6gfn409"))
          (file-name (git-file-name "cl-clx" version))
-         ;; (snippet
-         ;;  #~(begin
-         ;;      (use-modules (ice-9 textual-ports)
-         ;;                   (srfi srfi-13))
-
-         ;;      (let* ((file "translate.lisp")
-         ;;             (old "(function (base-char card16 generalized-boolean card8) card8)")
-         ;;             (new "(function (display card8 card16) card8)")
-         ;;             (contents
-         ;;              (call-with-input-file file get-string-all)))
-         ;;        (unless (string-contains contents old)
-         ;;          (error "CLX: keysym-index-function declaration not found"))
-         ;;        (call-with-output-file file
-         ;;          (lambda (port)
-         ;;            (display (string-replace-substring contents old new)
-         ;;                     port))))))
-         ;; (snippet
-         ;;  #~(begin
-         ;;      (use-modules (guix build utils))
-         ;;      (chmod "translate.lisp" #o644)
-         ;;      (substitute*
-         ;;          "translate.lisp"
-         ;;        (("(function \\(base-char card16 generalized-boolean card8\\) card8)")
-         ;;         "(function (display card8 card16) card8)"))))
-
          (snippet
           #~(begin
               (use-modules (guix build utils))
@@ -201,7 +176,9 @@
          ))
       (build-system asdf-build-system/sbcl)
       (native-inputs
-       (list sbcl sbcl-fiasco xorg-server-for-tests))
+       (list sbcl-latest             
+             sbcl-fiasco
+             xorg-server-for-tests))
       (arguments
        (list #:phases
              #~(modify-phases %standard-phases
@@ -238,9 +215,9 @@ from other CLXes around the net.")
       (arguments
        `(#:asd-systems '("xembed")))
       (native-inputs
-       (list sbcl))
+       (list sbcl-latest))
       (inputs
-       (list sbcl-clx))
+       (list sbcl-clx-new))
       (synopsis "CL(x) xembed protocol implementation")
       (description "CL(x) xembed protocol implementation")
       (license license:expat))))

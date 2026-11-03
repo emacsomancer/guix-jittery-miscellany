@@ -166,13 +166,13 @@
          (sha256
           (base32 "1ihc2vfz8azhvv1ijzmbywyc75qazjc9b6s4ja5949z1b6gfn409"))
          (file-name (git-file-name "cl-clx" version))
-         ;; (snippet
-         ;;  #~(begin
-         ;;      (use-modules (guix build utils))
-         ;;      (substitute*
-         ;;          "translate.lisp"
-         ;;        (("base-char card16 generalized-boolean card8")
-         ;;         "display card8 card16"))))
+         (snippet
+          #~(begin
+              (use-modules (guix build utils))
+              (substitute*
+                  "translate.lisp"
+                (("base-char card16 generalized-boolean card8")
+                 "display card8 card16"))))
          ))
       (build-system asdf-build-system/sbcl)
       (native-inputs

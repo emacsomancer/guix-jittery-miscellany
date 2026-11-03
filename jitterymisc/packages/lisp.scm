@@ -100,8 +100,8 @@
   #:use-module (gnu packages tls)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages xorg)
-  #:use-module (gnu packages lisp)
-  ;; #:use-module ((gnu packages lisp) #:prefix gnu:)
+  ;; #:use-module (gnu packages lisp)
+  #:use-module ((gnu packages lisp) #:prefix gnu:)
   ;; #:use-module ((gnu packages lisp-xyz) #:prefix gnu:)  
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1))
@@ -150,11 +150,6 @@
 (define-public sbcl-latest-base (string-append "sbcl@" sbcl-latest-version))
 ;; (define sbcl-latest-spec (string-append "sbcl=" sbcl-latest-base))
 
-(define-public use-latest-sbcl
-  (package-input-rewriting
-   `((,sbcl . ,(specification->package sbcl-latest-base)))
-   #:recursive? #t
-   #:deep? #t))
 
 ;; (define-public use-latest-sbcl-stack
 ;;   (package-input-rewriting
@@ -408,10 +403,8 @@ statistical profiler, a code coverage tool, and many other extensions.")
     (license (list license:public-domain license:bsd-2
                    (license:x11-style "file://src/code/loop.lisp")))))
 
-;; (define-public sbcl-latest
-;;   (package
-;;     (inherit sbcl)
-;;     (name "sbcl")
-;;     (version sbcl-latest)))
-
-
+(define-public use-latest-sbcl
+  (package-input-rewriting
+   `((,gnu:sbcl . ,(specification->package sbcl-latest-base)))
+   #:recursive? #t
+   #:deep? #t))

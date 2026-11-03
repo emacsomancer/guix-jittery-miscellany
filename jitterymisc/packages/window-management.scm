@@ -32,7 +32,7 @@
 (define use-latest-sbcl
   (package-input-rewriting
    `((,sbcl . ,sbcl-latest))
-   #:recursive? #t)) ; Force it to apply deeply down the dependency tree
+   #:recursive? #t)) 
 
 (define stumpwm-head-commit
   "902d5c214d1775a33e46db50f40dc5bc3cec22ff")

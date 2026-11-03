@@ -195,7 +195,7 @@ from other CLXes around the net.")
       (license license:x11))))
 
 
-(define-public sbcl-clx-xembed
+(define-public sbcl-clx-xembed-latest
   (let ((commit "a5c4b844d31ee68ffa58c933cc1cdddde6990743")
         (revision "1"))
     (package

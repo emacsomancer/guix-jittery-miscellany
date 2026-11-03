@@ -176,7 +176,8 @@
          ))
       (build-system asdf-build-system/sbcl)
       (native-inputs
-       (list sbcl-latest             
+       (list (specification->package sbcl-latest-base)
+             ;; sbcl-latest
              sbcl-fiasco
              xorg-server-for-tests))
       (arguments
@@ -215,7 +216,9 @@ from other CLXes around the net.")
       (arguments
        `(#:asd-systems '("xembed")))
       (native-inputs
-       (list sbcl-latest))
+       (list (specification->package sbcl-latest-base)
+        ;; sbcl-latest
+             ))
       (inputs
        (list sbcl-clx-new))
       (synopsis "CL(x) xembed protocol implementation")

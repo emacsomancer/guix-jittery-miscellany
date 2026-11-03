@@ -145,7 +145,10 @@
 ;;  Lazy Evaluation à la Haskell. ")
 ;;       (license license:bsd-3))))
 
-(define sbcl-latest-version "2.6.10")
+(define-public sbcl-latest-version "2.6.10")
+(define-public sbcl-latest-base (string-append "sbcl@" sbcl-latest-version))
+;; (define sbcl-latest-spec (string-append "sbcl=" sbcl-latest-base))
+
 
 (define-public sbcl-latest
   (package

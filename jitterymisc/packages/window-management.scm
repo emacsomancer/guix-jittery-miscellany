@@ -29,10 +29,16 @@
   #:use-module (jitterymisc packages lua))
 
 
+;; (define use-latest-sbcl
+;;   (package-input-rewriting
+;;    `((,sbcl . ,sbcl-latest))
+;;    #:recursive? #t))
+
 (define use-latest-sbcl
-  (package-input-rewriting
-   `((,sbcl . ,sbcl-latest))
-   #:recursive? #t)) 
+  (package-input-rewriting/spec
+   `(("sbcl" .
+      ,(lambda (_)
+         (specification->package sbcl-latest-base)))))) 
 
 (define stumpwm-head-commit
   "902d5c214d1775a33e46db50f40dc5bc3cec22ff")

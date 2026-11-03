@@ -224,3 +224,11 @@ from other CLXes around the net.")
       (synopsis "CL(x) xembed protocol implementation")
       (description "CL(x) xembed protocol implementation")
       (license license:expat))))
+
+(define-public use-latest-sbcl-stack
+  (package-input-rewriting
+   `(("sbcl" .
+      ,(lambda (_)
+         (specification->package sbcl-latest-base)))
+     (,sbcl-clx . ,sbcl-clx-new))
+   #:recursive? #t))

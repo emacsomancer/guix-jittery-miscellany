@@ -403,8 +403,3 @@ statistical profiler, a code coverage tool, and many other extensions.")
     (license (list license:public-domain license:bsd-2
                    (license:x11-style "file://src/code/loop.lisp")))))
 
-(define-public use-latest-sbcl
-  (package-input-rewriting
-   `((,gnu:sbcl . ,(specification->package sbcl-latest-base)))
-   #:recursive? #t
-   #:deep? #t))

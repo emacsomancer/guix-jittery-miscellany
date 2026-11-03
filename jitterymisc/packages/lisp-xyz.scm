@@ -115,6 +115,7 @@
   #:use-module (gnu packages libffi)
   #:use-module (gnu packages linux)
   #:use-module (jitterymisc packages lisp)
+  #:use-module ((gnu packages lisp) #:prefix gnu:)
   #:use-module (gnu packages lisp-xyz)  
   #:use-module (gnu packages lisp-check)  
   #:use-module (gnu packages maths)
@@ -149,6 +150,12 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-19))
+
+(define-public use-latest-sbcl
+  (package-input-rewriting
+   `((,gnu:sbcl . ,(specification->package sbcl-latest-base)))
+   #:recursive? #t
+   #:deep? #t))
 
 
 (define-public sbcl-clx-new

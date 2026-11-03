@@ -227,8 +227,15 @@ from other CLXes around the net.")
 
 (define-public use-latest-sbcl-stack
   (package-input-rewriting
-   `(("sbcl" .
-      ,(lambda (_)
-         (specification->package sbcl-latest-base)))
+   `((,sbcl . ,(specification->package sbcl-latest-base))
      (,sbcl-clx . ,sbcl-clx-new))
    #:recursive? #t))
+
+;; (define-public use-latest-sbcl-stack
+;;   (package-input-rewriting
+;;    `(("sbcl" .
+;;       ,(lambda (_)
+;;          (specification->package sbcl-latest-base)))
+;;      (,sbcl-clx . ,sbcl-clx-new))
+;;    #:recursive? #t))
+

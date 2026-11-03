@@ -150,10 +150,10 @@
 ;; (define sbcl-latest-spec (string-append "sbcl=" sbcl-latest-base))
 
 (define-public use-latest-sbcl
-  (package-input-rewriting/spec
-   `(("sbcl" .
-      ,(lambda (_)
-         (specification->package sbcl-latest-base)))))) 
+  (package-input-rewriting
+   `((,sbcl . ,(specification->package sbcl-latest-base)))
+   #:recursive? #t
+   #:deep? #t))
 
 ;; (define-public use-latest-sbcl-stack
 ;;   (package-input-rewriting

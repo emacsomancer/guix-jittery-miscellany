@@ -149,8 +149,28 @@
 (define-public sbcl-latest-base (string-append "sbcl@" sbcl-latest-version))
 ;; (define sbcl-latest-spec (string-append "sbcl=" sbcl-latest-base))
 
+(define-public use-latest-sbcl
+  (package-input-rewriting/spec
+   `(("sbcl" .
+      ,(lambda (_)
+         (specification->package sbcl-latest-base)))))) 
 
-(define-public sbcl-latest
+(define-public use-latest-sbcl-stack
+  (package-input-rewriting
+   `(("sbcl" .
+      ,(lambda (_)
+         (specification->package sbcl-latest-base)))
+     (,sbcl-clx . ,sbcl-clx-new))
+   #:recursive? #t))
+
+
+;; (define-public use-latest-sbcl-stack
+;;   (package-input-rewriting
+;;    `((,sbcl . ,sbcl-latest)
+;;      (,sbcl-clx . ,sbcl-clx-new))
+;;    #:recursive? #t))
+
+(define-public sbcl
   (package
     (name "sbcl")
     (version sbcl-latest-version)

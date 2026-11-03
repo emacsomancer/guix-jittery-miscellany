@@ -34,12 +34,6 @@
 ;;    `((,sbcl . ,sbcl-latest))
 ;;    #:recursive? #t))
 
-(define use-latest-sbcl
-  (package-input-rewriting/spec
-   `(("sbcl" .
-      ,(lambda (_)
-         (specification->package sbcl-latest-base)))))) 
-
 (define stumpwm-head-commit
   "902d5c214d1775a33e46db50f40dc5bc3cec22ff")
 
@@ -126,7 +120,6 @@ productive, customizable lisp based systems.")
     (home-page "https://github.com/stumpwm/stumpwm")
     (license license:gpl2+)
     (properties `((cl-source-variant . ,(delay cl-stumpwm))))))
-
 
 (define-public stumpwm-git
   (use-latest-sbcl stumpwm-git-base))

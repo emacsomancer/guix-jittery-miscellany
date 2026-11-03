@@ -151,13 +151,15 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-19))
 
+
 (define-public use-latest-sbcl
   (package-input-rewriting
-   `((,gnu:sbcl . ,(specification->package sbcl-latest-base)))
+   `((,gnu:sbcl . ,(lambda () 
+                     (specification->package sbcl-latest-base))))
    #:recursive? #t
    #:deep? #t))
 
-
+ 
 (define-public sbcl-clx-new
   (let ((version "0.7.8"))
     (package
@@ -232,11 +234,23 @@ from other CLXes around the net.")
       (description "CL(x) xembed protocol implementation")
       (license license:expat))))
 
+
 (define-public use-latest-sbcl-stack
   (package-input-rewriting
-   `((,gnu:sbcl . ,(specification->package sbcl-latest-base))
-     (,gnu:sbcl-clx . ,sbcl-clx-new))
-   #:recursive? #t))
+   `((,gnu:sbcl     . ,(lambda () 
+                     (specification->package sbcl-latest-base)))
+     (,gnu:sbcl-clx . ,(lambda () 
+                     (specification->package sbcl-clx-new))))
+   #:recursive? #t
+   #:deep? #t))
+
+
+;; (define-public use-latest-sbcl-stack
+;;   (package-input-rewriting
+;;    `((,gnu:sbcl . ,(specification->package sbcl-latest-base))
+;;      (,gnu:sbcl-clx . ,sbcl-clx-new))
+;;    #:recursive? #t))
+
 
 ;; (define-public use-latest-sbcl-stack
 ;;   (package-input-rewriting

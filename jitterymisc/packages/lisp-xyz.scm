@@ -153,12 +153,19 @@
   #:use-module (srfi srfi-19))
 
 
+;; (define-public use-latest-sbcl
+;;   (package-input-rewriting
+;;    `((,gnu:sbcl . ,(lambda () 
+;;                      (specification->package sbcl-latest-base))))
+;;    #:recursive? #t
+;;    #:deep? #t))
+
+
+
+
 (define-public use-latest-sbcl
-  (package-input-rewriting
-   `((,gnu:sbcl . ,(lambda () 
-                     (specification->package sbcl-latest-base))))
-   #:recursive? #t
-   #:deep? #t))
+  (package-input-rewriting/spec
+   `(("sbcl" . ,(lambda (_) (specification->package sbcl-latest-base))))))
 
  
 (define-public sbcl-clx-new
@@ -237,13 +244,19 @@ from other CLXes around the net.")
 
 
 (define-public use-latest-sbcl-stack
-  (package-input-rewriting
-   `((,gnu:sbcl     . ,(lambda () 
-                     (specification->package sbcl-latest-base)))
-     (,gnu:sbcl-clx . ,(lambda () 
-                     (specification->package sbcl-clx-new))))
-   #:recursive? #t
-   #:deep? #t))
+  (package-input-rewriting/spec
+   `(("sbcl" . ,(lambda (_) (specification->package sbcl-latest-base)))
+     ("sbcl-clx" . ,(lambda (_) (specification->package sbcl-clx-new))))
+   #:deep? #t)) 
+
+;; (define-public use-latest-sbcl-stack
+;;   (package-input-rewriting
+;;    `((,gnu:sbcl     . ,(lambda () 
+;;                      (specification->package sbcl-latest-base)))
+;;      (,gnu:sbcl-clx . ,(lambda () 
+;;                      (specification->package sbcl-clx-new))))
+;;    #:recursive? #t
+;;    #:deep? #t))
 
 
 ;; (define-public use-latest-sbcl-stack

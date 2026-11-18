@@ -27,7 +27,7 @@
          (commit "2d140322ce3773e66d30e23cd87b3b68538b5ea9")))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0hmkzrlknaqq6cxiaz58b44c8aw0j5i3nx71xwb3x2iw1qwnkn6j"))))
+        (base32 "123l19hzvqikgh047qvnwxmp3jqb9dk51jy94g0rzkp9vlrkhbbc"))))
     (build-system gnu-build-system)
     (arguments
      (list
@@ -64,3 +64,4 @@ OOM score before executing Emacs as the invoking user.")
 
 
 
+emacs-oom-launcher
